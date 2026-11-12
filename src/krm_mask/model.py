@@ -153,6 +153,38 @@ class LocalCausalLM:
                     results[index] = float(sums[row])
         return results
 
+    def next_token_logprobs(
+        self, context: list[int], suffixes: list[tuple[int, ...]], wanted: list[list[int]],
+    ) -> list[list[float]]:
+        """log P(token | context + suffix) for the `wanted` tokens of each suffix, one batch."""
+        import torch
+
+        width = max(len(suffix) for suffix in suffixes)
+        pad = self.tokenizer.pad_token_id
+        pad = self.tokenizer.eos_token_id if pad is None else pad
+        length = len(context) + width
+        ids = torch.full((len(suffixes), length), pad, dtype=torch.long, device=self.device)
+        attention = torch.zeros_like(ids)
+        base = torch.tensor(context, device=self.device)
+        for row, suffix in enumerate(suffixes):
+            ids[row, : len(context)] = base
+            if suffix:
+                ids[row, len(context) : len(context) + len(suffix)] = torch.tensor(
+                    suffix, device=self.device
+                )
+            attention[row, : len(context) + len(suffix)] = 1
+        with torch.inference_mode():
+            # Kept rows cover positions len(context) - 1 ... length - 1.
+            logits = self.model(
+                input_ids=ids, attention_mask=attention, logits_to_keep=width + 1
+            ).logits
+            results: list[list[float]] = []
+            for row, suffix in enumerate(suffixes):
+                log_probs = torch.log_softmax(logits[row, len(suffix)].float(), dim=-1)
+                index = torch.tensor(wanted[row], device=self.device, dtype=torch.long)
+                results.append(log_probs[index].tolist())
+        return results
+
     def sample_decision_path(
         self, input_ids: object, mask: object, max_new_tokens: int,
     ) -> tuple[list[int], list[dict[str, object]]]:
