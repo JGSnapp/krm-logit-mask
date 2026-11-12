@@ -24,6 +24,7 @@ from .graph import NONE_ID, PhraseGraph
 WORD_RE = re.compile(r"[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9+#\-]*")
 STOP_POS = {"PREP", "CONJ", "PRCL", "INTJ", "NPRO", "NUMR", "PRED"}
 WORD_DELIMITER = "\n"
+SENTENCE_RE = re.compile(r"\.\s+(?=[A-ZА-ЯЁ])")
 
 
 def word_messages(text: str) -> list[dict[str, str]]:
@@ -83,17 +84,21 @@ class WordIndex:
             competency_ids = set(competency_ids) - {NONE_ID}
             if not competency_ids:
                 continue
-            lemmas: set[str] = set()
-            for word in split_words(phrase):
-                lemma = lemmatize(word)
-                if not lemma:
+            # Some topic cells list several topics separated by dots.
+            for sentence in SENTENCE_RE.split(phrase):
+                lemmas: set[str] = set()
+                for word in split_words(sentence):
+                    lemma = lemmatize(word)
+                    if not lemma:
+                        continue
+                    lemmas.add(lemma)
+                    for surface in (word, word.lower(), lemma):
+                        surfaces.setdefault(surface, lemma)
+                if not lemmas:
                     continue
-                lemmas.add(lemma)
-                for surface in (word, word.lower(), lemma):
-                    surfaces.setdefault(surface, lemma)
-            for competency_id in competency_ids:
-                competency_lemmas[competency_id].update(lemmas)
-            phrase_lemmas.append((competency_ids, lemmas))
+                for competency_id in competency_ids:
+                    competency_lemmas[competency_id].update(lemmas)
+                phrase_lemmas.append((competency_ids, lemmas))
         total = len(competency_lemmas)
         frequency: dict[str, int] = defaultdict(int)
         for lemmas in competency_lemmas.values():
@@ -120,6 +125,15 @@ class WordBagConfig:
     path_beam: int = 6  # word paths kept after each step
     word_branches: int = 3  # next words tried from each path
     min_words: int = 1  # words a path needs before it may end on one competency
+    # PMI floor (experiment 7): log P(word | empty text) is clipped from below,
+    # so very rare words do not get an unbounded bonus. None = no floor.
+    prior_floor: float | None = None
+    # Phrase coherence (experiment 7): words come in signals; all words of a
+    # signal must occur in one catalog phrase; competencies are intersected
+    # across signals, as in the phrase-signal mode of the pipeline.
+    words_per_signal: int = 2
+    min_signals: int = 2
+    max_signals: int = 4
 
 
 @dataclass
@@ -154,6 +168,13 @@ class WordPath:
         return frozenset(word.lemma for word in self.words)
 
 
+@dataclass
+class SignalPath(WordPath):
+    signals: tuple[frozenset[str], ...] = ()  # lemmas of closed signals
+    current: frozenset[str] = frozenset()  # lemmas of the open signal
+    phrases: frozenset[int] = frozenset()  # phrases holding all lemmas of the open signal
+
+
 class WordBagSelector:
     def __init__(
         self,
@@ -168,6 +189,8 @@ class WordBagSelector:
         self.config = config or WordBagConfig()
         tokenizer = lm.tokenizer
         delimiter = tokenizer.encode(WORD_DELIMITER, add_special_tokens=False)
+        # Signals are separated by an empty line (one more delimiter after the word's own).
+        self.signal_separator: tuple[int, ...] = tuple(delimiter)
         self.tokens: dict[str, tuple[int, ...]] = {
             surface: tuple(tokenizer.encode(surface, add_special_tokens=False) + delimiter)
             for surface in index.surfaces
@@ -230,18 +253,20 @@ class WordBagSelector:
         }
 
     def select_paths(
-        self, text: str, count: int, blocked: set[str] | None = None,
+        self, text: str, count: int, blocked: set[str] | None = None, coherent: bool = False,
     ) -> tuple[list[tuple[str, WordPath]], int]:
         """Up to `count` competencies, ranked by their best finished word path.
 
         One search usually yields several competencies; it is repeated with the
-        found ones blocked only if it ended with fewer than `count`.
+        found ones blocked only if it ended with fewer than `count`. With
+        `coherent`, words are grouped into signals from single phrases.
         """
         blocked = set(blocked or ())
         found: list[tuple[str, WordPath]] = []
         calls = 0
+        search = self._signal_search if coherent else self._path_search
         while len(found) < count:
-            finished, used = self._path_search(text, blocked)
+            finished, used = search(text, blocked)
             calls += used
             best: dict[str, WordPath] = {}
             for path in finished:
@@ -306,6 +331,81 @@ class WordBagSelector:
                 break
         return sorted(finished.values(), key=lambda p: -p.score), calls
 
+    def _signal_search(self, text: str, blocked: set[str]) -> tuple[list[WordPath], int]:
+        """Path search where words form signals taken from single catalog phrases.
+
+        Inside a signal the words come in any order but must all occur in one
+        phrase. A signal closes after `words_per_signal` words (or when its
+        phrases have no unused words left); the competencies of its phrases are
+        then intersected with the path's candidates. A path finishes on one
+        competency with at least `min_signals` signals. Branches exist both
+        between words of a signal and between signals.
+        """
+        config = self.config
+        index = self.index
+        start = SignalPath(
+            [], frozenset(set(index.competency_lemmas) - blocked), list(self.prompt(text)), 0.0,
+        )
+        live: list[SignalPath] = [start]
+        finished: dict[tuple, SignalPath] = {}
+        calls = 0
+        for _ in range(config.max_signals * config.words_per_signal):
+            children: dict[tuple, SignalPath] = {}
+            for path in live:
+                phrases = path.phrases if path.current else self._open_phrases(path)
+                used = path.lemmas
+                allowed = {
+                    lemma for phrase in phrases for lemma in index.phrase_lemmas[phrase][1]
+                } - used
+                if not allowed:
+                    continue
+                options, used_calls = self._word_options(path.context, allowed, config.word_branches)
+                calls += used_calls
+                for option in options:
+                    kept = frozenset(p for p in phrases if option.lemma in index.phrase_lemmas[p][1])
+                    current = path.current | {option.lemma}
+                    left = {
+                        lemma for phrase in kept for lemma in index.phrase_lemmas[phrase][1]
+                    } - used - {option.lemma}
+                    closes = len(current) >= config.words_per_signal or not left
+                    context = path.context + list(self.tokens[option.word])
+                    candidates, signals = path.candidates, path.signals
+                    if closes:
+                        competencies = {c for p in kept for c in index.phrase_lemmas[p][0]}
+                        candidates = frozenset(path.candidates & competencies)
+                        if not candidates:
+                            continue
+                        signals = signals + (current,)
+                        context += list(self.signal_separator)
+                    word = WordChoice(**{**option.__dict__, "candidates_after": len(candidates)})
+                    child = SignalPath(
+                        path.words + [word], candidates, context, path.score + option.score,
+                        signals=signals,
+                        current=frozenset() if closes else current,
+                        phrases=frozenset() if closes else kept,
+                    )
+                    key = (frozenset(child.signals), child.current)
+                    if closes and len(candidates) == 1 and len(signals) >= config.min_signals:
+                        if key not in finished or child.score > finished[key].score:
+                            finished[key] = child
+                    elif closes and len(signals) >= config.max_signals:
+                        continue
+                    elif key not in children or child.score > children[key].score:
+                        children[key] = child
+            live = sorted(children.values(), key=lambda p: -p.score)[: config.path_beam]
+            if not live:
+                break
+        return sorted(finished.values(), key=lambda p: -p.score), calls
+
+    def _open_phrases(self, path: "SignalPath") -> frozenset[int]:
+        """Phrases a new signal may come from: phrases of the remaining candidates,
+        except phrases that already contain an earlier signal (no repeating it)."""
+        return frozenset(
+            i for i, (competencies, lemmas) in enumerate(self.index.phrase_lemmas)
+            if competencies & path.candidates
+            and not any(signal <= lemmas for signal in path.signals)
+        )
+
     def _choose_word(self, context: list[int], allowed: set[str]) -> tuple[WordChoice | None, int]:
         options, calls = self._word_options(context, allowed, 1)
         return (options[0] if options else None), calls
@@ -330,8 +430,10 @@ class WordBagSelector:
             terminal.setdefault(sequence, surface)
 
         def score(node: tuple[int, ...]) -> float:
-            return (log_prob[node] - config.alpha * self.prior.get(node, 0.0)
-                    + config.beta * best_idf[node])
+            prior = self.prior.get(node, 0.0)
+            if config.prior_floor is not None:
+                prior = max(prior, config.prior_floor)
+            return log_prob[node] - config.alpha * prior + config.beta * best_idf[node]
 
         log_prob: dict[tuple[int, ...], float] = {(): 0.0}
         live: list[tuple[int, ...]] = [()]

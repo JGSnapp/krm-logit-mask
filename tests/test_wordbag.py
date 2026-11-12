@@ -132,3 +132,85 @@ def test_path_branches_reject_word_that_is_not_confirmed_later():
 def test_path_branches_need_more_than_one_word_to_help():
     found, _ = _trap_selector(1).select_paths("text", count=1)
     assert found[0][0] == "LAW"  # One word ends the path: nothing later to compare.
+
+
+def _table_selector(phrases, likes, priors, config):
+    """Selector with one token per word; log-probs and priors looked up by word."""
+    pytest.importorskip("torch")
+    names = {}
+    for phrase, ids in phrases.items():
+        names.update({c: c for c in ids})
+    index = WordIndex.build(PhraseGraph(phrases, names), lemmatize)
+    vocabulary = {}
+
+    class Tokenizer:
+        eos_token_id = 0
+
+        def encode(self, text, add_special_tokens=False):
+            if text == "\n":
+                return [1]
+            return [vocabulary.setdefault(text.lower(), len(vocabulary) + 10)]
+
+    def word(token):
+        return {v: k for k, v in vocabulary.items()}.get(token)
+
+    class LM:
+        tokenizer = Tokenizer()
+        device = "cpu"
+
+        def score_continuations(self, prompt, continuations, per_token=False):
+            return [[-0.1 if t == 1 else priors.get(word(t), -2.0) for t in c]
+                    for c in continuations]
+
+        def next_token_logprobs(self, context, suffixes, wanted):
+            return [[-0.01 if t == 1 else likes.get(word(t), -12.0) for t in row]
+                    for row in wanted]
+
+    return WordBagSelector(LM(), index, lambda text: [5], config)
+
+
+def test_coherent_signal_words_must_share_one_phrase():
+    # "прогнозирование" and "обучение" both occur in ART, but in different phrases.
+    phrases = {
+        "прогнозирование спроса": {"ART"},
+        "обучение художников": {"ART"},
+        "обучение прогнозирование моделей": {"ML"},
+    }
+    likes = {"прогнозирование": -0.2, "обучение": -0.3}
+    config = WordBagConfig(alpha=0.0, beta=0.0, beam=4, path_beam=4, word_branches=3,
+                           words_per_signal=2, min_signals=1)
+    selector = _table_selector(phrases, likes, {}, config)
+    found, _ = selector.select_paths("text", count=1, coherent=True)
+    competency, path = found[0]
+    assert competency == "ML"
+    assert path.signals == (frozenset({"прогнозирование", "обучение"}),)
+
+
+def test_coherent_search_intersects_competencies_across_signals():
+    phrases = {
+        "python инструменты": {"PY", "SEC"},
+        "git тестирование": {"PY", "QA"},
+        "угрозы аудит": {"SEC"},
+    }
+    likes = {"python": -0.1, "инструменты": -0.2, "git": -0.3, "тестирование": -0.3}
+    config = WordBagConfig(alpha=0.0, beta=0.0, beam=4, path_beam=4, word_branches=3,
+                           words_per_signal=2, min_signals=2)
+    found, _ = _table_selector(phrases, likes, {}, config).select_paths(
+        "text", count=1, coherent=True)
+    competency, path = found[0]
+    assert competency == "PY" and len(path.signals) == 2
+
+
+def test_prior_floor_stops_rare_word_bonus():
+    phrases = {"onnx": {"RARE"}, "python": {"PY"}}
+    likes = {"onnx": -6.0, "python": -1.0}
+    priors = {"onnx": -20.0, "python": -2.0}
+
+    def first_word(floor):
+        config = WordBagConfig(alpha=1.0, beta=0.0, beam=4, prior_floor=floor)
+        selector = _table_selector(phrases, likes, priors, config)
+        options, _ = selector._word_options([5], {"onnx", "python"}, 1)
+        return options[0].lemma
+
+    assert first_word(None) == "onnx"  # PMI +14 for a word the model barely wants.
+    assert first_word(-5.0) == "python"
