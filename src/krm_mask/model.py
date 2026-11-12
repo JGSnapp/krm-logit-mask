@@ -104,8 +104,13 @@ class LocalCausalLM:
 
     def score_continuations(
         self, prompt_ids: object, continuations: list[list[int]], batch_size: int = 16,
-    ) -> list[float]:
-        """Sum of log P(continuation tokens | prompt) for each continuation (teacher forcing)."""
+        per_token: bool = False,
+    ) -> list[float] | list[list[float]]:
+        """log P(continuation | prompt) for each continuation (teacher forcing).
+
+        Returns the sum per continuation, or with `per_token` the list of
+        per-token log-probabilities.
+        """
         import torch
 
         prompt = prompt_ids[0].tolist()
@@ -113,7 +118,7 @@ class LocalCausalLM:
         pad = self.tokenizer.pad_token_id
         pad = self.tokenizer.eos_token_id if pad is None else pad
         order = sorted(range(len(continuations)), key=lambda i: len(continuations[i]))
-        results = [0.0] * len(continuations)
+        results: list = [0.0] * len(continuations)
         with torch.inference_mode():
             for start in range(0, len(order), batch_size):
                 indices = order[start : start + batch_size]
@@ -138,6 +143,11 @@ class LocalCausalLM:
                 picked = logits.gather(-1, targets.unsqueeze(-1)).squeeze(-1)
                 log_probs = picked - torch.logsumexp(logits, dim=-1)
                 valid = attention[:, prompt_length:].bool()
+                if per_token:
+                    rows = log_probs.tolist()
+                    for row, index in enumerate(indices):
+                        results[index] = rows[row][: len(continuations[index])]
+                    continue
                 sums = (log_probs * valid).sum(dim=1).tolist()
                 for row, index in enumerate(indices):
                     results[index] = float(sums[row])
