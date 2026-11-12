@@ -23,8 +23,13 @@ from krm_mask.pipeline import ExtractionPipeline
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def load_cases(role_filter: bool = True) -> tuple[list[dict[str, object]], dict[str, object]]:
-    spec = json.loads((ROOT / "experiments/eval_set.json").read_text("utf-8"))
+def load_cases(
+    role_filter: bool = True, eval_set: str = "experiments/eval_set.json",
+) -> tuple[list[dict[str, object]], dict[str, object]]:
+    """Cases of an evaluation set. A set may override synthetic gold
+    (`synthetic_gold`) when it targets another catalog."""
+    spec = json.loads((ROOT / eval_set).read_text("utf-8"))
+    synthetic_gold = spec.get("synthetic_gold")
     profiles = {p["id"]: p for p in json.loads((ROOT / "web/profiles.json").read_text("utf-8"))}
     cases = []
     for profile_id, acceptable in spec["web_profiles"].items():
@@ -37,7 +42,10 @@ def load_cases(role_filter: bool = True) -> tuple[list[dict[str, object]], dict[
             "max_competencies": spec["web_max_competencies"],
         })
     for record in read_jsonl(ROOT / "data/synthetic_profiles.jsonl"):
-        gold = [item["competency_id"] for item in record.get("gold", [])] or [NONE_ID]
+        gold = (
+            synthetic_gold[record["id"]] if synthetic_gold is not None
+            else [item["competency_id"] for item in record.get("gold", [])]
+        ) or [NONE_ID]
         cases.append({
             "id": record["id"], "kind": "synthetic", "text": record["text"],
             "role_id": record.get("role_id") if role_filter else None, "acceptable": gold,
@@ -76,12 +84,13 @@ def main() -> None:
     parser.add_argument("configs")
     parser.add_argument("--repeats", type=int, default=2)
     parser.add_argument("--model", default=DEFAULT_MODEL)
+    parser.add_argument("--eval-set", default="experiments/eval_set.json")
     parser.add_argument("--no-role-filter", action="store_true",
                         help="select from the whole catalog instead of the role's competencies")
     args = parser.parse_args()
 
-    cases, spec = load_cases(role_filter=not args.no_role_filter)
-    catalog = Catalog.from_json(ROOT / "data/itmo_krm_3.json")
+    cases, spec = load_cases(role_filter=not args.no_role_filter, eval_set=args.eval_set)
+    catalog = Catalog.from_json(ROOT / spec.get("catalog", "data/itmo_krm_3.json"))
     roles = {role.id: set(role.competencies) for role in catalog.roles}
     roles[None] = {item.id for item in catalog.competencies}
     pipeline = ExtractionPipeline(catalog, LocalCausalLM.load(args.model))

@@ -1,0 +1,21 @@
+{
+  "note": "Test set on the MIPT catalog (data/mipt_krm.json). Acceptable competencies were labelled by Claude from the profile texts BEFORE any run on this catalog and committed separately; the method was tuned only on ITMO (validation). Provisional, not expert labels. Selection is from the whole catalog (no role filter). An empty gold means the correct selection is __NONE__ (the word-signal mode has no NONE option, so it always misses it).",
+  "catalog": "data/mipt_krm.json",
+  "web_profiles": {
+    "retail-data-platform": ["ИД-3", "ИД-4", "АД-2", "АД-5", "ППК-ДА2", "ППК-Р4", "ППК-ОС6", "УНК-02"],
+    "industrial-ml-product": ["ППК-ДА1", "ППК-ДА4", "ППК-ДА5", "ППК-ДА7", "ППК-У2", "МП-1", "МП-2", "МП-5", "УНК-01"],
+    "ai-security-reviewer": ["КБ-1", "КБ-2", "КБ-4", "ППК-У1", "ИТ-10", "ДСО-1", "УНК-01"],
+    "applied-research-engineer": ["МО-1", "МО-2", "УНК-05", "ППК-ДА5", "ППК-ДА2"],
+    "backend-llm-agents": ["ППК-Р1", "ППК-Р2", "ППК-Р3", "ППК-Р4", "ППК-Р5", "ППК-Р6", "ИП-1", "АД-6", "БСА-3"]
+  },
+  "extra_without_role_filter": {},
+  "synthetic_gold": {
+    "syn-001": ["ППК-ДА2"],
+    "syn-002": ["ППК-Р1", "УНК-04"],
+    "syn-003": ["МО-2"],
+    "syn-004": []
+  },
+  "web_max_competencies": 3,
+  "synthetic_max_competencies": 1,
+  "max_quotes": 3
+}

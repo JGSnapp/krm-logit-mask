@@ -34,8 +34,10 @@ def main() -> None:
     parser.add_argument("--only", nargs="*", help="run only these configs")
     parser.add_argument("--out", default="exp07_signals")
     parser.add_argument("--cases", nargs="*", help="run only these profile ids")
+    parser.add_argument("--eval-set", default="experiments/eval_set.json")
     args = parser.parse_args()
-    catalog = Catalog.from_json(ROOT / "data/itmo_krm_3.json")
+    cases, spec = load_cases(role_filter=False, eval_set=args.eval_set)
+    catalog = Catalog.from_json(ROOT / spec.get("catalog", "data/itmo_krm_3.json"))
     lm = LocalCausalLM.load(args.model)
     graph = PhraseGraph.from_catalog(catalog, None, {"indicators", "keywords"})
     index = WordIndex.build(graph, pymorphy_lemmatizer())
@@ -59,12 +61,12 @@ def main() -> None:
     ]
     if args.only:
         configs = [config for config in configs if config[0] in args.only]
-    cases, _ = load_cases(role_filter=False)
     if args.cases:
         cases = [case for case in cases if case["id"] in args.cases]
     base = WordBagConfig()
     report: dict[str, object] = {
         "experiment": args.out, "model": args.model, "role_filter": False,
+        "catalog": spec.get("catalog", "data/itmo_krm_3.json"), "eval_set": args.eval_set,
         "phrases": len(index.phrase_lemmas), "word_prior_quartiles": quartiles,
         "floors": floors, "words_per_signal": base.words_per_signal,
         "min_signals": base.min_signals, "max_signals": base.max_signals,
