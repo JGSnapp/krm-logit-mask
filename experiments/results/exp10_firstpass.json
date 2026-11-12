@@ -1,0 +1,3288 @@
+{
+ "experiment": "exp10_firstpass",
+ "model": "Qwen/Qwen2.5-1.5B-Instruct",
+ "eval_set": "experiments/eval_set.json",
+ "catalog": "data/itmo_krm_3.json",
+ "list_tokens": 96,
+ "expand": 128,
+ "configs": {
+  "pos0_raw_bag": {
+   "params": [
+    "first",
+    1,
+    0.0,
+    null,
+    0.0,
+    "bag"
+   ],
+   "summary": {
+    "web_precision": 0.13333333333333333,
+    "web_hits": 2,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 10.565999999999999,
+    "best_acceptable_rank_web": [
+     7,
+     23,
+     1,
+     4,
+     3
+    ]
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "S-2",
+      "LC-4",
+      "S-3"
+     ],
+     "best_acceptable_rank": 7,
+     "top_words": [
+      "продвинуть",
+      "продукционный",
+      "продуктивный",
+      "продукт",
+      "продовольственный",
+      "продвижение",
+      "комплекс",
+      "комбинация",
+      "комбинированный",
+      "комбинировать",
+      "компьютерный",
+      "компания"
+     ],
+     "seconds": 5.57
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "S-5",
+      "O-3",
+      "AC-1"
+     ],
+     "best_acceptable_rank": 23,
+     "top_words": [
+      "анализ",
+      "анализировать",
+      "аналог",
+      "аномалия",
+      "аналогичный",
+      "аналитический",
+      "аналитик",
+      "анклав",
+      "анонимизация",
+      "аналитика",
+      "обосновывать",
+      "обучение"
+     ],
+     "seconds": 5.01
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "AI-S-3",
+      "S-4",
+      "S-3"
+     ],
+     "best_acceptable_rank": 1,
+     "top_words": [
+      "концентрационный",
+      "конкретный",
+      "конструирование",
+      "конфликт",
+      "концепция",
+      "конфиденциальность",
+      "конфликтовать",
+      "конфигурация",
+      "конечный",
+      "конкурировать",
+      "консультация",
+      "конвейер"
+     ],
+     "seconds": 27.3
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "MF-1",
+      "MF-2",
+      "MF-6"
+     ],
+     "best_acceptable_rank": 4,
+     "top_words": [
+      "метод",
+      "модель",
+      "модификация",
+      "машинный",
+      "максимальный",
+      "моделирование",
+      "макнемара",
+      "модальный",
+      "многообразие",
+      "многомерный",
+      "многорукий",
+      "микро-пакетный"
+     ],
+     "seconds": 7.82
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "DL-1",
+      "DL-4",
+      "PL-1"
+     ],
+     "best_acceptable_rank": 3,
+     "top_words": [
+      "размерность",
+      "разработка",
+      "разведочный",
+      "разложение",
+      "разрабатывать",
+      "разрозненный",
+      "разметка",
+      "различный",
+      "разность",
+      "различать",
+      "разностный",
+      "размер"
+     ],
+     "seconds": 7.13
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "CS-1"
+     ],
+     "best_acceptable_rank": 41,
+     "top_words": [
+      "обработка",
+      "обрабатывать",
+      "искусственный",
+      "исследование",
+      "использовать",
+      "использование",
+      "исчисление",
+      "испытывать",
+      "испытательный",
+      "исходный",
+      "исправление",
+      "исследовательский"
+     ],
+     "seconds": 1.53
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "MF-4"
+     ],
+     "best_acceptable_rank": 3,
+     "top_words": [
+      "python",
+      "знание",
+      "знать",
+      "применение",
+      "применять",
+      "принятие",
+      "пространство",
+      "программирование",
+      "прогнозирование",
+      "прогноз",
+      "примение",
+      "принцип"
+     ],
+     "seconds": 1.34
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "AC-1"
+     ],
+     "best_acceptable_rank": 6,
+     "top_words": [
+      "процесс",
+      "проектировать",
+      "процедура",
+      "проект",
+      "проектирование",
+      "процессный",
+      "происхождение",
+      "профиль",
+      "проектный",
+      "процедурный",
+      "планирование",
+      "планировщик"
+     ],
+     "seconds": 2.54
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "DL-3"
+     ],
+     "best_acceptable_rank": null,
+     "top_words": [
+      "продвинуть",
+      "продукционный",
+      "продуктивный",
+      "продукт",
+      "продовольственный",
+      "продвижение",
+      "обосновывать",
+      "обучение",
+      "обучать",
+      "обоснование",
+      "обращение",
+      "обнаружение"
+     ],
+     "seconds": 1.51
+    }
+   ]
+  },
+  "pos0_pmi_bag": {
+   "params": [
+    "first",
+    1,
+    1.0,
+    null,
+    0.0,
+    "bag"
+   ],
+   "summary": {
+    "web_precision": 0.2,
+    "web_hits": 3,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 10.565999999999999,
+    "best_acceptable_rank_web": [
+     3,
+     24,
+     2,
+     1,
+     4
+    ]
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "S-3",
+      "S-2",
+      "SS2"
+     ],
+     "best_acceptable_rank": 3,
+     "top_words": [
+      "dataops",
+      "data",
+      "data-to-visuals",
+      "product",
+      "платформа",
+      "строить",
+      "analytics",
+      "rouge",
+      "обработка",
+      "обрабатывать",
+      "формулирование",
+      "формализация"
+     ],
+     "seconds": 5.57
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "S-2",
+      "DL-4",
+      "DL-3"
+     ],
+     "best_acceptable_rank": 24,
+     "top_words": [
+      "model",
+      "панель",
+      "проводить",
+      "проводник",
+      "зондирование",
+      "система",
+      "системный",
+      "систематизация",
+      "строить",
+      "вести",
+      "идентификация",
+      "идентичность"
+     ],
+     "seconds": 5.01
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "S-2",
+      "AI-S-3",
+      "S-4"
+     ],
+     "best_acceptable_rank": 2,
+     "top_words": [
+      "идентификация",
+      "идентичность",
+      "ценность",
+      "architectures",
+      "api",
+      "kernel",
+      "оценка",
+      "оценочный",
+      "trust",
+      "концентрационный",
+      "конкретный",
+      "конструирование"
+     ],
+     "seconds": 27.3
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "DL-1",
+      "FC-1",
+      "S-5"
+     ],
+     "best_acceptable_rank": 1,
+     "top_words": [
+      "model",
+      "lstm-блок",
+      "lstm",
+      "lora",
+      "lens",
+      "lifecycle",
+      "идентификация",
+      "идентичность",
+      "pca",
+      "methods",
+      "блок",
+      "tf-graph"
+     ],
+     "seconds": 7.82
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "AI-S-3",
+      "AI-S-2",
+      "LLM-5"
+     ],
+     "best_acceptable_rank": 4,
+     "top_words": [
+      "api",
+      "reranking",
+      "ar",
+      "arima",
+      "ar-экспозиция",
+      "python",
+      "байес",
+      "байесовский",
+      "бутстрап-тестирование",
+      "бутстрепирование",
+      "бандит",
+      "бд"
+     ],
+     "seconds": 7.13
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "S-1"
+     ],
+     "best_acceptable_rank": 56,
+     "top_words": [
+      "search",
+      "обработка",
+      "обрабатывать",
+      "искажение",
+      "иск",
+      "поиск",
+      "поисковый",
+      "по",
+      "поезд",
+      "поэтапный",
+      "sev",
+      "прослеживать"
+     ],
+     "seconds": 1.53
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "AI-S-3"
+     ],
+     "best_acceptable_rank": 20,
+     "top_words": [
+      "python",
+      "знать",
+      "он-лайна",
+      "онлайн-консультация",
+      "онлайн-выставка",
+      "pvc",
+      "pasta",
+      "ppo",
+      "p2p",
+      "p-tuning",
+      "knowledge",
+      "понимать"
+     ],
+     "seconds": 1.34
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "AC-1"
+     ],
+     "best_acceptable_rank": 7,
+     "top_words": [
+      "lifecycle",
+      "life-long",
+      "планирование",
+      "планировщик",
+      "плотный",
+      "планирута",
+      "плагин",
+      "design",
+      "ci",
+      "колоночный",
+      "устройство",
+      "siem"
+     ],
+     "seconds": 2.54
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "DL-3"
+     ],
+     "best_acceptable_rank": null,
+     "top_words": [
+      "продвинуть",
+      "продукционный",
+      "продуктивный",
+      "продукт",
+      "продовольственный",
+      "продвижение",
+      "проведение",
+      "провенанс",
+      "representation",
+      "построение",
+      "проверка",
+      "предсказательный"
+     ],
+     "seconds": 1.51
+    }
+   ]
+  },
+  "list_raw_bag": {
+   "params": [
+    "list",
+    1,
+    0.0,
+    null,
+    0.0,
+    "bag"
+   ],
+   "summary": {
+    "web_precision": 0.2,
+    "web_hits": 3,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 10.565999999999999,
+    "best_acceptable_rank_web": [
+     2,
+     9,
+     2,
+     8,
+     4
+    ]
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "S-2",
+      "SS2",
+      "AI-S-1"
+     ],
+     "best_acceptable_rank": 2,
+     "top_words": [
+      "комплекс",
+      "комбинация",
+      "комбинированный",
+      "комбинировать",
+      "компьютерный",
+      "компания",
+      "компаративный",
+      "команда",
+      "компетенция",
+      "комплаенс-требование",
+      "компьютер",
+      "коммуникация"
+     ],
+     "seconds": 5.57
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "ER-2",
+      "MF-7",
+      "ML-6"
+     ],
+     "best_acceptable_rank": 9,
+     "top_words": [
+      "оценка",
+      "оценочный",
+      "обосновывать",
+      "обучение",
+      "обучать",
+      "обоснование",
+      "обращение",
+      "обнаружение",
+      "объяснимость",
+      "обобщаемость",
+      "объяснение",
+      "объяснимый"
+     ],
+     "seconds": 5.01
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "MM-1",
+      "AI-S-2",
+      "AI-S-3"
+     ],
+     "best_acceptable_rank": 2,
+     "top_words": [
+      "воркфлоу",
+      "отличие",
+      "отклик",
+      "отбирать",
+      "отбор",
+      "отлаживать",
+      "отрасль",
+      "отступ",
+      "отслеживание",
+      "отклонение",
+      "отношение",
+      "отказоустойчивость"
+     ],
+     "seconds": 27.3
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "S-1",
+      "S-3",
+      "AI-S-1"
+     ],
+     "best_acceptable_rank": 8,
+     "top_words": [
+      "корректность",
+      "корпоративный",
+      "корреляция",
+      "корректировка",
+      "корректировать",
+      "короткий",
+      "корректный",
+      "метод",
+      "модель",
+      "модификация",
+      "машинный",
+      "максимальный"
+     ],
+     "seconds": 7.82
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "AI-S-1",
+      "S-2",
+      "S-5"
+     ],
+     "best_acceptable_rank": 4,
+     "top_words": [
+      "dvc",
+      "docker",
+      "dread",
+      "dpia",
+      "dpo",
+      "dpr",
+      "darts",
+      "openmined",
+      "r2",
+      "rrls",
+      "rmsprop",
+      "rbf-сеть"
+     ],
+     "seconds": 7.13
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "MF-4"
+     ],
+     "best_acceptable_rank": 36,
+     "top_words": [
+      "eda",
+      "построение",
+      "проверка",
+      "предсказательный",
+      "представление",
+      "поле",
+      "помощь",
+      "предикат",
+      "предварительный",
+      "проверять",
+      "построить",
+      "пакетный"
+     ],
+     "seconds": 1.53
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "FC-2"
+     ],
+     "best_acceptable_rank": 24,
+     "top_words": [
+      "pca",
+      "pvc",
+      "pasta",
+      "p2p",
+      "pali",
+      "palm-e",
+      "p-tuning",
+      "python",
+      "курс",
+      "учёт",
+      "учитель",
+      "учитывать"
+     ],
+     "seconds": 1.34
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "AI-S-2"
+     ],
+     "best_acceptable_rank": 46,
+     "top_words": [
+      "отличие",
+      "отклик",
+      "отбирать",
+      "отбор",
+      "отлаживать",
+      "отрасль",
+      "отступ",
+      "отслеживание",
+      "отклонение",
+      "отношение",
+      "отказоустойчивость",
+      "отравление"
+     ],
+     "seconds": 2.54
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "LC-4"
+     ],
+     "best_acceptable_rank": null,
+     "top_words": [
+      "организация",
+      "оркестрация",
+      "организовать",
+      "оригинальность",
+      "тот",
+      "техника",
+      "технический",
+      "технико-экономический",
+      "техногенный",
+      "технически",
+      "искусственный",
+      "исследование"
+     ],
+     "seconds": 1.51
+    }
+   ]
+  },
+  "list_pmi_bag": {
+   "params": [
+    "list",
+    1,
+    1.0,
+    null,
+    0.0,
+    "bag"
+   ],
+   "summary": {
+    "web_precision": 0.06666666666666667,
+    "web_hits": 1,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 10.565999999999999,
+    "best_acceptable_rank_web": [
+     6,
+     13,
+     1,
+     5,
+     12
+    ]
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "FC-3",
+      "S-3",
+      "S-1"
+     ],
+     "best_acceptable_rank": 6,
+     "top_words": [
+      "устройство",
+      "панель",
+      "contract",
+      "индекс",
+      "индуктивный",
+      "индустрия",
+      "индикатор",
+      "платформа",
+      "соединение",
+      "естественный",
+      "зондирование",
+      "распределение"
+     ],
+     "seconds": 5.57
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "DL-1",
+      "MF-4",
+      "S-3"
+     ],
+     "best_acceptable_rank": 13,
+     "top_words": [
+      "зондирование",
+      "панель",
+      "model",
+      "регрессия",
+      "регрессионный",
+      "регуляризация",
+      "регулирование",
+      "регулярный",
+      "регуляторик",
+      "регуляризатор",
+      "региональный",
+      "оценка"
+     ],
+     "seconds": 5.01
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "AI-S-3",
+      "S-1",
+      "MM-1"
+     ],
+     "best_acceptable_rank": 1,
+     "top_words": [
+      "воркфлоу",
+      "схема",
+      "корректность",
+      "корпоративный",
+      "корреляция",
+      "корректировка",
+      "корректировать",
+      "короткий",
+      "корректный",
+      "инфраструктура",
+      "устройство",
+      "зондирование"
+     ],
+     "seconds": 27.3
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "S-3",
+      "AI-S-3",
+      "S-1"
+     ],
+     "best_acceptable_rank": 5,
+     "top_words": [
+      "api",
+      "корректность",
+      "корпоративный",
+      "корреляция",
+      "корректировка",
+      "корректировать",
+      "короткий",
+      "корректный",
+      "устройство",
+      "model",
+      "панель",
+      "reranking"
+     ],
+     "seconds": 7.82
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "LLM-3",
+      "MF-4",
+      "AI-S-1"
+     ],
+     "best_acceptable_rank": 12,
+     "top_words": [
+      "dvc",
+      "docker",
+      "dread",
+      "dpia",
+      "dpo",
+      "dpr",
+      "darts",
+      "api",
+      "openmined",
+      "architectures",
+      "r2",
+      "rrls"
+     ],
+     "seconds": 7.13
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "MF-4"
+     ],
+     "best_acceptable_rank": 43,
+     "top_words": [
+      "eda",
+      "search",
+      "pca",
+      "зондирование",
+      "панель",
+      "обработка",
+      "обрабатывать",
+      "идентификация",
+      "идентичность",
+      "etl",
+      "проводить",
+      "проводник"
+     ],
+     "seconds": 1.53
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "FC-2"
+     ],
+     "best_acceptable_rank": 24,
+     "top_words": [
+      "pca",
+      "pvc",
+      "pasta",
+      "p2p",
+      "pali",
+      "palm-e",
+      "p-tuning",
+      "inception-блок",
+      "no-code",
+      "он-лайна",
+      "онлайн-консультация",
+      "онлайн-выставка"
+     ],
+     "seconds": 1.34
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "S-1"
+     ],
+     "best_acceptable_rank": 5,
+     "top_words": [
+      "ci",
+      "life-long",
+      "цикл",
+      "монте-карло",
+      "мониторинг",
+      "lifecycle",
+      "дрейф",
+      "др",
+      "lstm-блок",
+      "lstm",
+      "lora",
+      "lens"
+     ],
+     "seconds": 2.54
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "AI-S-3"
+     ],
+     "best_acceptable_rank": null,
+     "top_words": [
+      "tee",
+      "тот",
+      "техника",
+      "технический",
+      "технико-экономический",
+      "техногенный",
+      "технически",
+      "мера",
+      "мероприятие",
+      "устройство",
+      "siem",
+      "ibm"
+     ],
+     "seconds": 1.51
+    }
+   ]
+  },
+  "list_pmi_idf_bag": {
+   "params": [
+    "list",
+    1,
+    1.0,
+    null,
+    0.3,
+    "bag"
+   ],
+   "summary": {
+    "web_precision": 0.06666666666666667,
+    "web_hits": 1,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 10.565999999999999,
+    "best_acceptable_rank_web": [
+     6,
+     10,
+     1,
+     5,
+     12
+    ]
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "S-1",
+      "FC-3",
+      "S-3"
+     ],
+     "best_acceptable_rank": 6,
+     "top_words": [
+      "устройство",
+      "панель",
+      "contract",
+      "индекс",
+      "индуктивный",
+      "индустрия",
+      "индикатор",
+      "зондирование",
+      "распараллеливание",
+      "распределительный",
+      "распределять",
+      "платформа"
+     ],
+     "seconds": 5.57
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "DL-1",
+      "S-4",
+      "MF-5"
+     ],
+     "best_acceptable_rank": 10,
+     "top_words": [
+      "зондирование",
+      "панель",
+      "model",
+      "регрессионный",
+      "регулирование",
+      "регулярный",
+      "регуляторик",
+      "регуляризатор",
+      "оценочный",
+      "графовый",
+      "графический",
+      "графика"
+     ],
+     "seconds": 5.01
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "AI-S-3",
+      "S-1",
+      "MM-1"
+     ],
+     "best_acceptable_rank": 1,
+     "top_words": [
+      "воркфлоу",
+      "схема",
+      "корреляция",
+      "корректировка",
+      "корректировать",
+      "короткий",
+      "корректность",
+      "корпоративный",
+      "корректный",
+      "инфраструктура",
+      "зондирование",
+      "устройство"
+     ],
+     "seconds": 27.3
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "S-3",
+      "AI-S-3",
+      "S-1"
+     ],
+     "best_acceptable_rank": 5,
+     "top_words": [
+      "api",
+      "корреляция",
+      "корректировка",
+      "корректировать",
+      "короткий",
+      "корректность",
+      "корпоративный",
+      "корректный",
+      "model",
+      "устройство",
+      "панель",
+      "reranking"
+     ],
+     "seconds": 7.82
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "LLM-3",
+      "MF-4",
+      "DL-1"
+     ],
+     "best_acceptable_rank": 12,
+     "top_words": [
+      "dvc",
+      "docker",
+      "dread",
+      "dpia",
+      "dpo",
+      "dpr",
+      "darts",
+      "api",
+      "openmined",
+      "architectures",
+      "r2",
+      "rrls"
+     ],
+     "seconds": 7.13
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "MF-4"
+     ],
+     "best_acceptable_rank": 51,
+     "top_words": [
+      "eda",
+      "search",
+      "pca",
+      "зондирование",
+      "панель",
+      "обрабатывать",
+      "etl",
+      "идентификация",
+      "идентичность",
+      "проводник",
+      "регрессионный",
+      "регулирование"
+     ],
+     "seconds": 1.53
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "FC-2"
+     ],
+     "best_acceptable_rank": 29,
+     "top_words": [
+      "pvc",
+      "pasta",
+      "p2p",
+      "pali",
+      "palm-e",
+      "p-tuning",
+      "pca",
+      "inception-блок",
+      "no-code",
+      "он-лайна",
+      "онлайн-консультация",
+      "онлайн-выставка"
+     ],
+     "seconds": 1.34
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "S-1"
+     ],
+     "best_acceptable_rank": 7,
+     "top_words": [
+      "ci",
+      "life-long",
+      "lifecycle",
+      "цикл",
+      "монте-карло",
+      "дрейф",
+      "др",
+      "мониторинг",
+      "lstm-блок",
+      "lstm",
+      "lens",
+      "зондирование"
+     ],
+     "seconds": 2.54
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "AI-S-3"
+     ],
+     "best_acceptable_rank": null,
+     "top_words": [
+      "технико-экономический",
+      "техногенный",
+      "технически",
+      "tee",
+      "мероприятие",
+      "siem",
+      "техника",
+      "технический",
+      "ibm",
+      "тот",
+      "мера",
+      "устройство"
+     ],
+     "seconds": 1.51
+    }
+   ]
+  },
+  "list_pmi_phrases": {
+   "params": [
+    "list",
+    1,
+    1.0,
+    null,
+    0.0,
+    "phrases"
+   ],
+   "summary": {
+    "web_precision": 0.06666666666666667,
+    "web_hits": 1,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 10.565999999999999,
+    "best_acceptable_rank_web": [
+     4,
+     15,
+     3,
+     4,
+     17
+    ]
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "S-3",
+      "T-2",
+      "DL-1"
+     ],
+     "best_acceptable_rank": 4,
+     "top_words": [
+      "устройство",
+      "панель",
+      "contract",
+      "индекс",
+      "индуктивный",
+      "индустрия",
+      "индикатор",
+      "платформа",
+      "соединение",
+      "естественный",
+      "зондирование",
+      "распределение"
+     ],
+     "seconds": 5.57
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "LLM-2",
+      "DL-1",
+      "MF-5"
+     ],
+     "best_acceptable_rank": 15,
+     "top_words": [
+      "зондирование",
+      "панель",
+      "model",
+      "регрессия",
+      "регрессионный",
+      "регуляризация",
+      "регулирование",
+      "регулярный",
+      "регуляторик",
+      "регуляризатор",
+      "региональный",
+      "оценка"
+     ],
+     "seconds": 5.01
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "Tr-1",
+      "S-3",
+      "AI-S-3"
+     ],
+     "best_acceptable_rank": 3,
+     "top_words": [
+      "воркфлоу",
+      "схема",
+      "корректность",
+      "корпоративный",
+      "корреляция",
+      "корректировка",
+      "корректировать",
+      "короткий",
+      "корректный",
+      "инфраструктура",
+      "устройство",
+      "зондирование"
+     ],
+     "seconds": 27.3
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "S-3",
+      "LLM-4",
+      "LLM-2"
+     ],
+     "best_acceptable_rank": 4,
+     "top_words": [
+      "api",
+      "корректность",
+      "корпоративный",
+      "корреляция",
+      "корректировка",
+      "корректировать",
+      "короткий",
+      "корректный",
+      "устройство",
+      "model",
+      "панель",
+      "reranking"
+     ],
+     "seconds": 7.82
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "DL-1",
+      "AI-S-1",
+      "SS2"
+     ],
+     "best_acceptable_rank": 17,
+     "top_words": [
+      "dvc",
+      "docker",
+      "dread",
+      "dpia",
+      "dpo",
+      "dpr",
+      "darts",
+      "api",
+      "openmined",
+      "architectures",
+      "r2",
+      "rrls"
+     ],
+     "seconds": 7.13
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "MF-4"
+     ],
+     "best_acceptable_rank": 64,
+     "top_words": [
+      "eda",
+      "search",
+      "pca",
+      "зондирование",
+      "панель",
+      "обработка",
+      "обрабатывать",
+      "идентификация",
+      "идентичность",
+      "etl",
+      "проводить",
+      "проводник"
+     ],
+     "seconds": 1.53
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "FC-2"
+     ],
+     "best_acceptable_rank": 9,
+     "top_words": [
+      "pca",
+      "pvc",
+      "pasta",
+      "p2p",
+      "pali",
+      "palm-e",
+      "p-tuning",
+      "inception-блок",
+      "no-code",
+      "он-лайна",
+      "онлайн-консультация",
+      "онлайн-выставка"
+     ],
+     "seconds": 1.34
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LLM-2"
+     ],
+     "best_acceptable_rank": 17,
+     "top_words": [
+      "ci",
+      "life-long",
+      "цикл",
+      "монте-карло",
+      "мониторинг",
+      "lifecycle",
+      "дрейф",
+      "др",
+      "lstm-блок",
+      "lstm",
+      "lora",
+      "lens"
+     ],
+     "seconds": 2.54
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "AI-S-2"
+     ],
+     "best_acceptable_rank": null,
+     "top_words": [
+      "tee",
+      "тот",
+      "техника",
+      "технический",
+      "технико-экономический",
+      "техногенный",
+      "технически",
+      "мера",
+      "мероприятие",
+      "устройство",
+      "siem",
+      "ibm"
+     ],
+     "seconds": 1.51
+    }
+   ]
+  },
+  "list_pmi_idf_phrases": {
+   "params": [
+    "list",
+    1,
+    1.0,
+    null,
+    0.3,
+    "phrases"
+   ],
+   "summary": {
+    "web_precision": 0.06666666666666667,
+    "web_hits": 1,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 10.565999999999999,
+    "best_acceptable_rank_web": [
+     4,
+     16,
+     5,
+     2,
+     16
+    ]
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "S-3",
+      "DL-1",
+      "T-2"
+     ],
+     "best_acceptable_rank": 4,
+     "top_words": [
+      "устройство",
+      "панель",
+      "contract",
+      "индекс",
+      "индуктивный",
+      "индустрия",
+      "индикатор",
+      "зондирование",
+      "распараллеливание",
+      "распределительный",
+      "распределять",
+      "платформа"
+     ],
+     "seconds": 5.57
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "LLM-2",
+      "DL-1",
+      "BD-3"
+     ],
+     "best_acceptable_rank": 16,
+     "top_words": [
+      "зондирование",
+      "панель",
+      "model",
+      "регрессионный",
+      "регулирование",
+      "регулярный",
+      "регуляторик",
+      "регуляризатор",
+      "оценочный",
+      "графовый",
+      "графический",
+      "графика"
+     ],
+     "seconds": 5.01
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "Tr-1",
+      "S-3",
+      "MM-1"
+     ],
+     "best_acceptable_rank": 5,
+     "top_words": [
+      "воркфлоу",
+      "схема",
+      "корреляция",
+      "корректировка",
+      "корректировать",
+      "короткий",
+      "корректность",
+      "корпоративный",
+      "корректный",
+      "инфраструктура",
+      "зондирование",
+      "устройство"
+     ],
+     "seconds": 27.3
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "S-3",
+      "DL-1",
+      "LLM-4"
+     ],
+     "best_acceptable_rank": 2,
+     "top_words": [
+      "api",
+      "корреляция",
+      "корректировка",
+      "корректировать",
+      "короткий",
+      "корректность",
+      "корпоративный",
+      "корректный",
+      "model",
+      "устройство",
+      "панель",
+      "reranking"
+     ],
+     "seconds": 7.82
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "DL-1",
+      "AI-S-1",
+      "SS2"
+     ],
+     "best_acceptable_rank": 16,
+     "top_words": [
+      "dvc",
+      "docker",
+      "dread",
+      "dpia",
+      "dpo",
+      "dpr",
+      "darts",
+      "api",
+      "openmined",
+      "architectures",
+      "r2",
+      "rrls"
+     ],
+     "seconds": 7.13
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "MF-4"
+     ],
+     "best_acceptable_rank": 70,
+     "top_words": [
+      "eda",
+      "search",
+      "pca",
+      "зондирование",
+      "панель",
+      "обрабатывать",
+      "etl",
+      "идентификация",
+      "идентичность",
+      "проводник",
+      "регрессионный",
+      "регулирование"
+     ],
+     "seconds": 1.53
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "FC-2"
+     ],
+     "best_acceptable_rank": 9,
+     "top_words": [
+      "pvc",
+      "pasta",
+      "p2p",
+      "pali",
+      "palm-e",
+      "p-tuning",
+      "pca",
+      "inception-блок",
+      "no-code",
+      "он-лайна",
+      "онлайн-консультация",
+      "онлайн-выставка"
+     ],
+     "seconds": 1.34
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LLM-2"
+     ],
+     "best_acceptable_rank": 17,
+     "top_words": [
+      "ci",
+      "life-long",
+      "lifecycle",
+      "цикл",
+      "монте-карло",
+      "дрейф",
+      "др",
+      "мониторинг",
+      "lstm-блок",
+      "lstm",
+      "lens",
+      "зондирование"
+     ],
+     "seconds": 2.54
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "AI-S-2"
+     ],
+     "best_acceptable_rank": null,
+     "top_words": [
+      "технико-экономический",
+      "техногенный",
+      "технически",
+      "tee",
+      "мероприятие",
+      "siem",
+      "техника",
+      "технический",
+      "ibm",
+      "тот",
+      "мера",
+      "устройство"
+     ],
+     "seconds": 1.51
+    }
+   ]
+  },
+  "list2_pmi_bag": {
+   "params": [
+    "list",
+    2,
+    1.0,
+    null,
+    0.0,
+    "bag"
+   ],
+   "summary": {
+    "web_precision": 0.2,
+    "web_hits": 3,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 10.565999999999999,
+    "best_acceptable_rank_web": [
+     2,
+     14,
+     1,
+     2,
+     10
+    ]
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "DL-1",
+      "BD-2",
+      "AC-1"
+     ],
+     "best_acceptable_rank": 2,
+     "top_words": [
+      "формирование",
+      "индекс",
+      "датасет",
+      "датчик",
+      "плагин",
+      "план",
+      "расчёт",
+      "панель",
+      "несбалансированный",
+      "dataops",
+      "индикатор",
+      "устройство"
+     ],
+     "seconds": 5.57
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "MF-4",
+      "S-4",
+      "BD-2"
+     ],
+     "best_acceptable_rank": 14,
+     "top_words": [
+      "графика",
+      "система",
+      "признак",
+      "признаковый",
+      "интервал",
+      "регрессия",
+      "регрессионный",
+      "сигнал",
+      "сигнализация",
+      "фрейм",
+      "фреймворк",
+      "единица"
+     ],
+     "seconds": 5.01
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "AI-S-3",
+      "MM-1",
+      "S-1"
+     ],
+     "best_acceptable_rank": 1,
+     "top_words": [
+      "воркфлоу",
+      "понятный",
+      "схема",
+      "фрейм",
+      "фреймворк",
+      "понижение",
+      "встроить",
+      "загрязнение",
+      "загрузка",
+      "понятие",
+      "фазовый",
+      "сектор"
+     ],
+     "seconds": 27.3
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "DL-2",
+      "DL-1",
+      "S-3"
+     ],
+     "best_acceptable_rank": 2,
+     "top_words": [
+      "короткий",
+      "добывать",
+      "сеть",
+      "api",
+      "датасет",
+      "датчик",
+      "изображение",
+      "изображение-текст",
+      "количество",
+      "количественный",
+      "устройство",
+      "функция"
+     ],
+     "seconds": 7.82
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "MF-4",
+      "LLM-3",
+      "AI-S-3"
+     ],
+     "best_acceptable_rank": 10,
+     "top_words": [
+      "асинхронный",
+      "rbf-сеть",
+      "api",
+      "rag",
+      "architectures",
+      "rmsprop",
+      "slam",
+      "rasci",
+      "raci",
+      "фрейм",
+      "фреймворк",
+      "ar"
+     ],
+     "seconds": 7.13
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "MF-4"
+     ],
+     "best_acceptable_rank": 7,
+     "top_words": [
+      "eda",
+      "search",
+      "регрессия",
+      "регрессионный",
+      "проверка",
+      "проверять",
+      "проверяемость",
+      "энтропия",
+      "энтропийный",
+      "датасет",
+      "датчик",
+      "выбор"
+     ],
+     "seconds": 1.53
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "FC-2"
+     ],
+     "best_acceptable_rank": 28,
+     "top_words": [
+      "pasta",
+      "pali",
+      "pvc",
+      "inception-блок",
+      "pca",
+      "no-code",
+      "знать",
+      "пайплайна",
+      "пайплайн",
+      "онлайн-консультация",
+      "онлайн-выставка",
+      "зондирование"
+     ],
+     "seconds": 1.34
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "S-5"
+     ],
+     "best_acceptable_rank": 15,
+     "top_words": [
+      "lifecycle",
+      "дрейф",
+      "ии",
+      "ии-система",
+      "ии-проект",
+      "ия-система",
+      "ии-модель",
+      "ия-инфраструктура",
+      "ии-компонент",
+      "ия-ассистент",
+      "ии-управление",
+      "ии-технология"
+     ],
+     "seconds": 2.54
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "S-1"
+     ],
+     "best_acceptable_rank": null,
+     "top_words": [
+      "ии",
+      "ии-система",
+      "ии-проект",
+      "ия-система",
+      "ии-модель",
+      "ия-инфраструктура",
+      "ии-компонент",
+      "ия-ассистент",
+      "ии-управление",
+      "ии-технология",
+      "ии-решение",
+      "ии-платформа"
+     ],
+     "seconds": 1.51
+    }
+   ]
+  },
+  "list2_pmi_idf_bag": {
+   "params": [
+    "list",
+    2,
+    1.0,
+    null,
+    0.3,
+    "bag"
+   ],
+   "summary": {
+    "web_precision": 0.2,
+    "web_hits": 3,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 10.565999999999999,
+    "best_acceptable_rank_web": [
+     2,
+     7,
+     1,
+     2,
+     10
+    ]
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "DL-1",
+      "BD-2",
+      "S-1"
+     ],
+     "best_acceptable_rank": 2,
+     "top_words": [
+      "индекс",
+      "формирование",
+      "плагин",
+      "датасет",
+      "датчик",
+      "план",
+      "панель",
+      "расчёт",
+      "несбалансированный",
+      "dataops",
+      "индикатор",
+      "устройство"
+     ],
+     "seconds": 5.57
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "MF-4",
+      "S-4",
+      "BD-2"
+     ],
+     "best_acceptable_rank": 7,
+     "top_words": [
+      "графика",
+      "регрессионный",
+      "сигнал",
+      "сигнализация",
+      "интервал",
+      "признаковый",
+      "фрейм",
+      "регрессия",
+      "система",
+      "единица",
+      "признак",
+      "фреймворк"
+     ],
+     "seconds": 5.01
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "AI-S-3",
+      "MM-1",
+      "S-1"
+     ],
+     "best_acceptable_rank": 1,
+     "top_words": [
+      "воркфлоу",
+      "понятный",
+      "схема",
+      "фрейм",
+      "фреймворк",
+      "встроить",
+      "понижение",
+      "загрузка",
+      "понятие",
+      "загрязнение",
+      "фазовый",
+      "сектор"
+     ],
+     "seconds": 27.3
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "DL-2",
+      "DL-1",
+      "S-3"
+     ],
+     "best_acceptable_rank": 2,
+     "top_words": [
+      "короткий",
+      "добывать",
+      "датасет",
+      "датчик",
+      "изображение-текст",
+      "api",
+      "сеть",
+      "изображение",
+      "количественный",
+      "количество",
+      "model",
+      "функция"
+     ],
+     "seconds": 7.82
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "MF-4",
+      "LLM-3",
+      "DL-1"
+     ],
+     "best_acceptable_rank": 10,
+     "top_words": [
+      "асинхронный",
+      "rbf-сеть",
+      "api",
+      "architectures",
+      "rmsprop",
+      "rag",
+      "slam",
+      "rasci",
+      "raci",
+      "фрейм",
+      "arima",
+      "ar-экспозиция"
+     ],
+     "seconds": 7.13
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "MF-4"
+     ],
+     "best_acceptable_rank": 10,
+     "top_words": [
+      "eda",
+      "search",
+      "регрессионный",
+      "регрессия",
+      "проверять",
+      "проверяемость",
+      "энтропия",
+      "энтропийный",
+      "датасет",
+      "датчик",
+      "pca",
+      "проверка"
+     ],
+     "seconds": 1.53
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "FC-2"
+     ],
+     "best_acceptable_rank": 28,
+     "top_words": [
+      "pasta",
+      "pali",
+      "pvc",
+      "inception-блок",
+      "pca",
+      "no-code",
+      "знать",
+      "пайплайн",
+      "пайплайна",
+      "онлайн-консультация",
+      "онлайн-выставка",
+      "зондирование"
+     ],
+     "seconds": 1.34
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "S-5"
+     ],
+     "best_acceptable_rank": 17,
+     "top_words": [
+      "lifecycle",
+      "дрейф",
+      "ии-проект",
+      "ия-система",
+      "ия-инфраструктура",
+      "ия-ассистент",
+      "ии-управление",
+      "ии-платформа",
+      "ии-генерация",
+      "ии-сервис",
+      "ия-инструмент",
+      "ии-агент"
+     ],
+     "seconds": 2.54
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "S-1"
+     ],
+     "best_acceptable_rank": null,
+     "top_words": [
+      "ии-проект",
+      "ия-система",
+      "ия-инфраструктура",
+      "ия-ассистент",
+      "ии-управление",
+      "ии-платформа",
+      "ии-генерация",
+      "ии-сервис",
+      "ия-инструмент",
+      "ии-агент",
+      "ии-компонент",
+      "ии-технология"
+     ],
+     "seconds": 1.51
+    }
+   ]
+  },
+  "list2_pmi_idf_phrases": {
+   "params": [
+    "list",
+    2,
+    1.0,
+    null,
+    0.3,
+    "phrases"
+   ],
+   "summary": {
+    "web_precision": 0.2,
+    "web_hits": 3,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 10.565999999999999,
+    "best_acceptable_rank_web": [
+     1,
+     4,
+     2,
+     2,
+     18
+    ]
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "BD-5",
+      "ML-2",
+      "DL-1"
+     ],
+     "best_acceptable_rank": 1,
+     "top_words": [
+      "индекс",
+      "формирование",
+      "плагин",
+      "датасет",
+      "датчик",
+      "план",
+      "панель",
+      "расчёт",
+      "несбалансированный",
+      "dataops",
+      "индикатор",
+      "устройство"
+     ],
+     "seconds": 5.57
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "Tr-1",
+      "BD-1",
+      "MF-7"
+     ],
+     "best_acceptable_rank": 4,
+     "top_words": [
+      "графика",
+      "регрессионный",
+      "сигнал",
+      "сигнализация",
+      "интервал",
+      "признаковый",
+      "фрейм",
+      "регрессия",
+      "система",
+      "единица",
+      "признак",
+      "фреймворк"
+     ],
+     "seconds": 5.01
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "S-1",
+      "AI-S-3",
+      "Tr-1"
+     ],
+     "best_acceptable_rank": 2,
+     "top_words": [
+      "воркфлоу",
+      "понятный",
+      "схема",
+      "фрейм",
+      "фреймворк",
+      "встроить",
+      "понижение",
+      "загрузка",
+      "понятие",
+      "загрязнение",
+      "фазовый",
+      "сектор"
+     ],
+     "seconds": 27.3
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "DL-2",
+      "DL-1",
+      "S-3"
+     ],
+     "best_acceptable_rank": 2,
+     "top_words": [
+      "короткий",
+      "добывать",
+      "датасет",
+      "датчик",
+      "изображение-текст",
+      "api",
+      "сеть",
+      "изображение",
+      "количественный",
+      "количество",
+      "model",
+      "функция"
+     ],
+     "seconds": 7.82
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "DL-1",
+      "FC-1",
+      "SS2"
+     ],
+     "best_acceptable_rank": 18,
+     "top_words": [
+      "асинхронный",
+      "rbf-сеть",
+      "api",
+      "architectures",
+      "rmsprop",
+      "rag",
+      "slam",
+      "rasci",
+      "raci",
+      "фрейм",
+      "arima",
+      "ar-экспозиция"
+     ],
+     "seconds": 7.13
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "MF-4"
+     ],
+     "best_acceptable_rank": 6,
+     "top_words": [
+      "eda",
+      "search",
+      "регрессионный",
+      "регрессия",
+      "проверять",
+      "проверяемость",
+      "энтропия",
+      "энтропийный",
+      "датасет",
+      "датчик",
+      "pca",
+      "проверка"
+     ],
+     "seconds": 1.53
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "FC-2"
+     ],
+     "best_acceptable_rank": 14,
+     "top_words": [
+      "pasta",
+      "pali",
+      "pvc",
+      "inception-блок",
+      "pca",
+      "no-code",
+      "знать",
+      "пайплайн",
+      "пайплайна",
+      "онлайн-консультация",
+      "онлайн-выставка",
+      "зондирование"
+     ],
+     "seconds": 1.34
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "S-5"
+     ],
+     "best_acceptable_rank": 32,
+     "top_words": [
+      "lifecycle",
+      "дрейф",
+      "ии-проект",
+      "ия-система",
+      "ия-инфраструктура",
+      "ия-ассистент",
+      "ии-управление",
+      "ии-платформа",
+      "ии-генерация",
+      "ии-сервис",
+      "ия-инструмент",
+      "ии-агент"
+     ],
+     "seconds": 2.54
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "best_acceptable_rank": null,
+     "top_words": [
+      "ии-проект",
+      "ия-система",
+      "ия-инфраструктура",
+      "ия-ассистент",
+      "ии-управление",
+      "ии-платформа",
+      "ии-генерация",
+      "ии-сервис",
+      "ия-инструмент",
+      "ии-агент",
+      "ии-компонент",
+      "ии-технология"
+     ],
+     "seconds": 1.51
+    }
+   ]
+  },
+  "list2_raw_idf_phrases": {
+   "params": [
+    "list",
+    2,
+    0.0,
+    null,
+    0.3,
+    "phrases"
+   ],
+   "summary": {
+    "web_precision": 0.13333333333333333,
+    "web_hits": 2,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 10.565999999999999,
+    "best_acceptable_rank_web": [
+     7,
+     3,
+     5,
+     4,
+     3
+    ]
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "DL-3",
+      "LC-6",
+      "DL-1"
+     ],
+     "best_acceptable_rank": 7,
+     "top_words": [
+      "команда",
+      "продукционный",
+      "платформа",
+      "данные",
+      "аналогичный",
+      "продуктивный",
+      "форма",
+      "продукт",
+      "аналитический",
+      "индекс",
+      "аналитик",
+      "компаративный"
+     ],
+     "seconds": 5.57
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "S-1",
+      "MF-4",
+      "LC-7"
+     ],
+     "best_acceptable_rank": 3,
+     "top_words": [
+      "прогнозировать",
+      "прогнозный",
+      "интервал",
+      "модальный",
+      "модернизированный",
+      "модифиция",
+      "модифицировать",
+      "модифицироовать",
+      "модельный",
+      "модальностно-независимый",
+      "модерация",
+      "прогноз"
+     ],
+     "seconds": 5.01
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "LC-7",
+      "S-1",
+      "LC-1"
+     ],
+     "best_acceptable_rank": 5,
+     "top_words": [
+      "воркфлоу",
+      "риск-аппетит",
+      "риск-метка",
+      "технически",
+      "языковой",
+      "загрузка",
+      "проверять",
+      "проверяемость",
+      "язык",
+      "документный",
+      "документооборот",
+      "технический"
+     ],
+     "seconds": 27.3
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "LC-5",
+      "Tr-1",
+      "MF-1"
+     ],
+     "best_acceptable_rank": 4,
+     "top_words": [
+      "модальный",
+      "модернизированный",
+      "модифиция",
+      "модифицировать",
+      "модифицироовать",
+      "модельный",
+      "модальностно-независимый",
+      "модерация",
+      "короткий",
+      "модификация",
+      "мода",
+      "модуль"
+     ],
+     "seconds": 7.82
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "FC-1",
+      "Tr-1",
+      "PL-1"
+     ],
+     "best_acceptable_rank": 3,
+     "top_words": [
+      "валидировать",
+      "валидация",
+      "рефлексия",
+      "асинхронный",
+      "испытательный",
+      "автомобильный",
+      "высказывание",
+      "высокий",
+      "разработать",
+      "автоматизированный",
+      "испытывать",
+      "api"
+     ],
+     "seconds": 7.13
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "AI-S-3"
+     ],
+     "best_acceptable_rank": 16,
+     "top_words": [
+      "eda",
+      "проверять",
+      "проверяемость",
+      "по",
+      "проверка",
+      "обработка",
+      "очистка",
+      "воспроизводимость",
+      "воспроизводить",
+      "воссоздание",
+      "испытательный",
+      "поиск"
+     ],
+     "seconds": 1.53
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "ER-2"
+     ],
+     "best_acceptable_rank": 2,
+     "top_words": [
+      "курс",
+      "python",
+      "учебно-методический",
+      "учебный",
+      "знать",
+      "управлять",
+      "управляемый",
+      "программный",
+      "онлайн-консультация",
+      "онлайн-выставка",
+      "языковой",
+      "знание"
+     ],
+     "seconds": 1.34
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-5"
+     ],
+     "best_acceptable_rank": 35,
+     "top_words": [
+      "версионирование",
+      "версионность",
+      "модальный",
+      "модернизированный",
+      "модифиция",
+      "модифицировать",
+      "модифицироовать",
+      "модельный",
+      "модальностно-независимый",
+      "модерация",
+      "автомобильный",
+      "модификация"
+     ],
+     "seconds": 2.54
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "FC-5"
+     ],
+     "best_acceptable_rank": null,
+     "top_words": [
+      "организовать",
+      "технически",
+      "организация",
+      "технический",
+      "тот",
+      "инженерия",
+      "инкрементальный",
+      "ии-проект",
+      "ия-система",
+      "ия-инфраструктура",
+      "ия-ассистент",
+      "ии-управление"
+     ],
+     "seconds": 1.51
+    }
+   ]
+  }
+ }
+}
