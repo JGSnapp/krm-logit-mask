@@ -1,0 +1,180 @@
+{
+ "experiment": "exp09_mipt_greedy",
+ "model": "Qwen/Qwen2.5-1.5B-Instruct",
+ "eval_set_note": "Test set on the MIPT catalog (data/mipt_krm.json). Acceptable competencies were labelled by Claude from the profile texts BEFORE any run on this catalog and committed separately; the method was tuned only on ITMO (validation). Provisional, not expert labels. Selection is from the whole catalog (no role filter). An empty gold means the correct selection is __NONE__ (the word-signal mode has no NONE option, so it always misses it).",
+ "role_filter": false,
+ "base_rate": {
+  "retail-data-platform": 0.096,
+  "industrial-ml-product": 0.108,
+  "ai-security-reviewer": 0.084,
+  "applied-research-engineer": 0.06,
+  "backend-llm-agents": 0.108
+ },
+ "configs": {
+  "greedy": {
+   "kwargs": {
+    "use_disc": false
+   },
+   "repeats": 1,
+   "summary": {
+    "web_precision": 0.0,
+    "web_hits": 0,
+    "web_predicted": 10,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 5.946
+   },
+   "rows": [
+    {
+     "repeat": 0,
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "ИД-3",
+      "ИД-4",
+      "АД-2",
+      "АД-5",
+      "ППК-ДА2",
+      "ППК-Р4",
+      "ППК-ОС6",
+      "УНК-02"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "КБ-3",
+      "__NONE__"
+     ],
+     "seconds": 13.16
+    },
+    {
+     "repeat": 0,
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "ППК-ДА1",
+      "ППК-ДА4",
+      "ППК-ДА5",
+      "ППК-ДА7",
+      "ППК-У2",
+      "МП-1",
+      "МП-2",
+      "МП-5",
+      "УНК-01"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "ППК-Р4",
+      "ИТ-4"
+     ],
+     "seconds": 2.7
+    },
+    {
+     "repeat": 0,
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "КБ-1",
+      "КБ-2",
+      "КБ-4",
+      "ППК-У1",
+      "ИТ-10",
+      "ДСО-1",
+      "УНК-01"
+     ],
+     "selected": [
+      "ППК-Р6",
+      "ППК-Р4",
+      "ППК-ДА4"
+     ],
+     "seconds": 10.29
+    },
+    {
+     "repeat": 0,
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "МО-1",
+      "МО-2",
+      "УНК-05",
+      "ППК-ДА5",
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "ППК-Р4",
+      "__NONE__"
+     ],
+     "seconds": 2.72
+    },
+    {
+     "repeat": 0,
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "ППК-Р1",
+      "ППК-Р2",
+      "ППК-Р3",
+      "ППК-Р4",
+      "ППК-Р5",
+      "ППК-Р6",
+      "ИП-1",
+      "АД-6",
+      "БСА-3"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "seconds": 0.86
+    },
+    {
+     "repeat": 0,
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "ППК-Р2"
+     ],
+     "seconds": 2.38
+    },
+    {
+     "repeat": 0,
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-Р1",
+      "УНК-04"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "seconds": 1.16
+    },
+    {
+     "repeat": 0,
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "МО-2"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "seconds": 0.87
+    },
+    {
+     "repeat": 0,
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "МО-2"
+     ],
+     "seconds": 1.4
+    }
+   ]
+  }
+ }
+}
