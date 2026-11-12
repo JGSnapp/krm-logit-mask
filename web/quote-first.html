@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>KRM Trace Lab · Quote First</title>
+  <link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/enhancements.css"><link rel="stylesheet" href="/results.css"><link rel="stylesheet" href="/validation.css"><link rel="stylesheet" href="/quote-first.css"><link rel="stylesheet" href="/catalog-details.css">
+</head>
+<body>
+  <div class="noise"></div>
+  <header class="topbar">
+    <a class="brand" href="#top"><span class="brand-mark"><i></i><i></i><i></i></span><span>KRM <b>TRACE LAB</b></span></a>
+    <nav class="mode-nav"><a href="/#decision">Как модель решает</a><a href="/#analysis">Компетенция → цитата</a><a class="active" href="/quote-first.html">Цитата → компетенции</a><a href="/catalog.html">КРМ</a></nav>
+    <div class="status"><span></span><span id="qfStatus">проверяем runtime</span></div>
+  </header>
+  <main id="top">
+    <section class="qf-hero">
+      <div class="eyebrow">QUOTE-FIRST CONSTRAINED DECODING</div>
+      <h1>Сначала фрагмент опыта.<br><em>Потом — компетенции.</em></h1>
+      <p>Qwen копирует дословный фрагмент резюме, затем граф определяет одну или несколько совместимых компетенций. Уровень оценивается отдельно для каждой пары «цитата × компетенция».</p>
+      <div class="flow-diagram"><span>Резюме</span><i>→</i><span class="hot">Цитата</span><i>→</i><span>Компетенция 1 · уровень</span><span>Компетенция 2 · уровень</span><i>→</i><span>Следующая цитата</span></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div><span class="section-no">01</span><h2>Профиль кандидата</h2></div><p>Цитаты не могут начинаться с одной токенной позиции. Перекрытие возможно, если начало отличается.</p></div>
+      <div class="input-panel">
+        <div class="input-topline"><label for="qfText">Исходное резюме</label><div class="preset-controls"><select id="qfPreset"><option value="">Выбрать синтетический профиль…</option></select><button class="text-button" id="qfInsert">Вставить ↘</button></div></div>
+        <textarea id="qfText" spellcheck="false">Осуществлял поиск, сбор и очистку данных из нескольких систем. Для регулярной отчётности строил витрины, проверял пропуски и исследовал причины аномалий. На Python автоматизировал проверки и подготовил набор тестов.</textarea>
+        <div class="run-row">
+          <label class="select-wrap"><span>Целевая роль</span><select id="qfRole"><option value="">Все компетенции КРМ</option></select></label>
+          <label class="select-wrap"><span>Режим графа</span><select id="qfBasis"><option value="competencies">Компетенции напрямую</option><option value="indicators">Индикаторы компетенции</option><option value="keywords">Ключевые слова</option><option value="both" selected>Индикаторы + ключевые слова</option></select></label>
+          <label class="select-wrap"><span>Модель</span><select id="qfModel"><option value="">Загружаем список…</option></select></label>
+          <label class="select-wrap compact"><span>Лимит цитат</span><select id="qfMaxQuotes"><option>2</option><option>3</option><option selected>5</option><option>8</option></select></label>
+          <label class="select-wrap compact"><span>Компетенций на цитату</span><select id="qfMaxCompetencies"><option>2</option><option selected>4</option><option>6</option><option>8</option></select></label>
+          <button class="run-button" id="qfRun"><span class="run-icon">▶</span><span class="run-copy"><b>Запустить quote-first</b><small>Qwen 2.5 · CUDA</small></span></button>
+        </div>
+        <div class="decode-options"><label><input id="qfAbort" type="checkbox"><span>Разрешить аварийную точку <code>.</code><small>Текущий шаг станет невалидным</small></span></label><label><input id="qfExtra" type="checkbox"><span>+2 символа после однозначности<small>Для выбора компетенции по цитате</small></span></label></div>
+        <div class="disc-controls"><button type="button" class="text-button" id="discToggle" aria-pressed="false">DISC: выключен</button><label>Попыток <select id="discBudget" disabled><option>1</option><option>2</option><option selected>4</option><option>8</option></select></label><small>DISC при выборе компетенций по цитате; однозначные продолжения автоматически.</small></div>
+        <div class="loading-bar" id="qfLoading"><i></i><span>Qwen извлекает цитаты и сопоставляет компетенции…</span></div>
+      </div>
+    </section>
+
+    <section class="section hidden" id="qfTraceSection">
+      <div class="section-head"><div><span class="section-no">02</span><h2>Трасса quote-first</h2></div><div class="result-pill" id="qfTime">—</div></div>
+      <div class="process-rail" id="qfRail"></div>
+      <div class="qf-controls"><button id="qfPrev">←</button><button class="play" id="qfPlay">▶</button><button id="qfNext">→</button><input id="qfTimeline" type="range" min="0" max="0" value="0"><span id="qfStep">0 / 0</span><label>Красный ниже <input id="qfThreshold" type="range" min="1" max="50" value="10"><b id="qfThresholdValue">10%</b></label></div>
+      <div class="qf-trace-grid">
+        <article class="trace-card"><header><span>ВЫХОД МОДЕЛИ</span><span class="confidence-badge" id="qfConfidence">token p — · min p —</span></header><div class="generated-output" id="qfOutput"></div><div class="decision-note" id="qfNote"></div></article>
+        <article class="trace-card"><header><span>СОСТОЯНИЕ ОГРАНИЧЕНИЙ</span><strong id="qfStateCount">—</strong></header><div class="qf-state" id="qfState"></div></article>
+        <article class="trace-card"><header><span>ИСХОДНЫЙ ТЕКСТ</span><span id="qfSpanCount">—</span></header><div class="source-text" id="qfSource"></div></article>
+      </div>
+    </section>
+
+    <section class="section hidden" id="qfResultsSection">
+      <div class="section-head"><div><span class="section-no">03</span><h2>Итог: цитаты и компетенции</h2></div><button class="result-pill result-link" id="qfExport">Скачать JSON</button></div>
+      <div class="summary-strip" id="qfSummary"></div><div class="final-validation" id="qfValidation"></div><div class="qf-results" id="qfResults"></div>
+      <div class="method-warning">Каждый уровень относится только к конкретной паре «цитата × компетенция». Одна компетенция может повторяться у разных цитат.</div>
+    </section>
+  </main>
+  <footer><span>KRM TRACE LAB · QUOTE-FIRST MODE</span><span>Exact source spans → competency graph</span></footer>
+  <script src="/disc-ui.js" defer></script>
+  <script src="/quote-first.js" defer></script>
+</body></html>

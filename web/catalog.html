@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>KRM Trace Lab · Каталог КРМ</title>
+  <link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/enhancements.css"><link rel="stylesheet" href="/catalog-details.css">
+</head>
+<body>
+  <div class="noise"></div>
+  <header class="topbar">
+    <a class="brand" href="/"><span class="brand-mark"><i></i><i></i><i></i></span><span>KRM <b>TRACE LAB</b></span></a>
+    <nav class="mode-nav"><a href="/#decision">Как модель решает</a><a href="/#analysis">Компетенция → цитата</a><a href="/quote-first.html">Цитата → компетенции</a><a class="active" href="/catalog.html">КРМ</a></nav>
+    <div class="status"><span></span><span id="catalogStatus">загружаем каталог</span></div>
+  </header>
+  <main>
+    <section class="catalog-hero">
+      <div class="eyebrow">ITMO KRM 3.0 · NORMALIZED CATALOG</div>
+      <h1>Что находится<br><em>в КРМ.</em></h1>
+      <p>Компетенции, официальные индикаторы с якорями уровней, рекомендуемые темы и матрица целевых ролей — отдельно от экспериментальной трассировки модели.</p>
+      <div class="metric-row" id="catalogMetrics"></div>
+    </section>
+    <section class="section explorer-section">
+      <div class="section-head"><div><span class="section-no">01</span><h2>Каталог</h2></div><p>Ищите по коду, названию, формулировке или тексту индикатора.</p></div>
+      <div class="explorer">
+        <div class="explorer-toolbar">
+          <div class="tabs" role="tablist"><button class="tab active" data-tab="competencies">Компетенции <span id="competencyCount"></span></button><button class="tab" data-tab="indicators">Индикаторы <span id="indicatorCount"></span></button><button class="tab" data-tab="roles">Роли <span id="roleCount"></span></button></div>
+          <label class="search"><span>⌕</span><input id="catalogSearch" placeholder="Найти по коду или названию"></label>
+        </div>
+        <div class="catalog-grid" id="catalogGrid"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+      </div>
+    </section>
+  </main>
+  <footer><span>KRM TRACE LAB · CATALOG</span><span>83 competencies · 274 indicators · 11 roles</span></footer>
+  <script src="/catalog.js" defer></script>
+</body></html>
