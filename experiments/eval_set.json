@@ -1,0 +1,13 @@
+{
+  "note": "Acceptable competencies for the long web profiles were labelled by Claude from the profile text, within the role filter. This is a provisional proxy, not an expert gold standard. Synthetic profiles use the gold from data/synthetic_profiles.jsonl; an empty gold means the correct selection is __NONE__.",
+  "web_profiles": {
+    "retail-data-platform": ["BD-1", "BD-2", "BD-3", "BD-4", "BD-5", "LC-5"],
+    "industrial-ml-product": ["LC-1", "LC-2", "LC-4", "ML-2", "AI-S-1"],
+    "ai-security-reviewer": ["AI-S-1", "AI-S-2", "AI-S-3", "ML-5", "PL-1"],
+    "applied-research-engineer": ["DL-1", "DL-3", "LC-2", "ML-2", "ML-8", "MF-4"],
+    "backend-llm-agents": ["LLM-1", "LLM-4", "PL-1", "LC-3", "LC-5"]
+  },
+  "web_max_competencies": 3,
+  "synthetic_max_competencies": 1,
+  "max_quotes": 3
+}
