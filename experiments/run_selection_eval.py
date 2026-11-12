@@ -23,22 +23,24 @@ from krm_mask.pipeline import ExtractionPipeline
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def load_cases() -> tuple[list[dict[str, object]], dict[str, object]]:
+def load_cases(role_filter: bool = True) -> tuple[list[dict[str, object]], dict[str, object]]:
     spec = json.loads((ROOT / "experiments/eval_set.json").read_text("utf-8"))
     profiles = {p["id"]: p for p in json.loads((ROOT / "web/profiles.json").read_text("utf-8"))}
     cases = []
     for profile_id, acceptable in spec["web_profiles"].items():
         profile = profiles[profile_id]
+        if not role_filter:
+            acceptable = acceptable + spec["extra_without_role_filter"].get(profile_id, [])
         cases.append({
             "id": profile_id, "kind": "web", "text": profile["text"],
-            "role_id": profile["role_hint"], "acceptable": acceptable,
+            "role_id": profile["role_hint"] if role_filter else None, "acceptable": acceptable,
             "max_competencies": spec["web_max_competencies"],
         })
     for record in read_jsonl(ROOT / "data/synthetic_profiles.jsonl"):
         gold = [item["competency_id"] for item in record.get("gold", [])] or [NONE_ID]
         cases.append({
             "id": record["id"], "kind": "synthetic", "text": record["text"],
-            "role_id": record.get("role_id"), "acceptable": gold,
+            "role_id": record.get("role_id") if role_filter else None, "acceptable": gold,
             "max_competencies": spec["synthetic_max_competencies"],
         })
     return cases, spec
@@ -74,15 +76,19 @@ def main() -> None:
     parser.add_argument("configs")
     parser.add_argument("--repeats", type=int, default=2)
     parser.add_argument("--model", default=DEFAULT_MODEL)
+    parser.add_argument("--no-role-filter", action="store_true",
+                        help="select from the whole catalog instead of the role's competencies")
     args = parser.parse_args()
 
-    cases, spec = load_cases()
+    cases, spec = load_cases(role_filter=not args.no_role_filter)
     catalog = Catalog.from_json(ROOT / "data/itmo_krm_3.json")
     roles = {role.id: set(role.competencies) for role in catalog.roles}
+    roles[None] = {item.id for item in catalog.competencies}
     pipeline = ExtractionPipeline(catalog, LocalCausalLM.load(args.model))
     configs = json.loads(args.configs)
     report: dict[str, object] = {
         "experiment": args.experiment, "model": args.model, "eval_set_note": spec["note"],
+        "role_filter": not args.no_role_filter,
         "base_rate": {
             case["id"]: round(len(set(case["acceptable"]) & roles[case["role_id"]])
                               / len(roles[case["role_id"]]), 3)
