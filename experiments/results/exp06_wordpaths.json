@@ -1,0 +1,1990 @@
+{
+ "experiment": "exp06_wordpaths",
+ "model": "Qwen/Qwen2.5-1.5B-Instruct",
+ "role_filter": false,
+ "path_beam": 6,
+ "word_branches": 3,
+ "token_beam": 8,
+ "max_words": 6,
+ "configs": {
+  "raw/min1": {
+   "alpha": 0.0,
+   "beta": 0.0,
+   "min_words": 1,
+   "summary": {
+    "web_precision": 0.4,
+    "web_hits": 6,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 17.526,
+    "mean_forward_calls_web": 111.8
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "LC-4",
+      "SS2",
+      "S-2"
+     ],
+     "picks": [
+      {
+       "competency_id": "LC-4",
+       "score": -11.36,
+       "words": [
+        "команды",
+        "продукт"
+       ]
+      },
+      {
+       "competency_id": "SS2",
+       "score": -12.31,
+       "words": [
+        "команды",
+        "работа",
+        "данные"
+       ]
+      },
+      {
+       "competency_id": "S-2",
+       "score": -12.76,
+       "words": [
+        "данные",
+        "форматы",
+        "системы"
+       ]
+      }
+     ],
+     "forward_calls": 108,
+     "seconds": 16.53
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "MF-4",
+      "S-2",
+      "S-5"
+     ],
+     "picks": [
+      {
+       "competency_id": "MF-4",
+       "score": -8.94,
+       "words": [
+        "обучение",
+        "прогноз"
+       ]
+      },
+      {
+       "competency_id": "S-2",
+       "score": -10.74,
+       "words": [
+        "участие",
+        "прогнозирование"
+       ]
+      },
+      {
+       "competency_id": "S-5",
+       "score": -18.79,
+       "words": [
+        "прогнозирование",
+        "технологии",
+        "обучение",
+        "управление"
+       ]
+      }
+     ],
+     "forward_calls": 98,
+     "seconds": 16.32
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "H-3",
+      "AI-S-3",
+      "SS2"
+     ],
+     "picks": [
+      {
+       "competency_id": "H-3",
+       "score": -7.77,
+       "words": [
+        "консультирование"
+       ]
+      },
+      {
+       "competency_id": "AI-S-3",
+       "score": -11.0,
+       "words": [
+        "проверка",
+        "идентификация"
+       ]
+      },
+      {
+       "competency_id": "SS2",
+       "score": -14.02,
+       "words": [
+        "инструменты",
+        "команды",
+        "документы"
+       ]
+      }
+     ],
+     "forward_calls": 111,
+     "seconds": 17.7
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "MM-1",
+      "ER-1",
+      "DL-3"
+     ],
+     "picks": [
+      {
+       "competency_id": "MM-1",
+       "score": -9.07,
+       "words": [
+        "моделирование",
+        "тестирование"
+       ]
+      },
+      {
+       "competency_id": "ER-1",
+       "score": -9.56,
+       "words": [
+        "моделирование",
+        "поиск"
+       ]
+      },
+      {
+       "competency_id": "DL-3",
+       "score": -9.87,
+       "words": [
+        "модели",
+        "детекция"
+       ]
+      }
+     ],
+     "forward_calls": 136,
+     "seconds": 22.22
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "AI-S-3",
+      "LLM-5"
+     ],
+     "picks": [
+      {
+       "competency_id": "PL-1",
+       "score": -7.13,
+       "words": [
+        "разработка",
+        "Python"
+       ]
+      },
+      {
+       "competency_id": "AI-S-3",
+       "score": -8.2,
+       "words": [
+        "Python",
+        "API"
+       ]
+      },
+      {
+       "competency_id": "LLM-5",
+       "score": -8.32,
+       "words": [
+        "разработка",
+        "API"
+       ]
+      }
+     ],
+     "forward_calls": 106,
+     "seconds": 14.86
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-5"
+     ],
+     "picks": [
+      {
+       "competency_id": "BD-5",
+       "score": -6.54,
+       "words": [
+        "поиск",
+        "сбор"
+       ]
+      }
+     ],
+     "forward_calls": 54,
+     "seconds": 2.37
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "LLM-1"
+     ],
+     "picks": [
+      {
+       "competency_id": "LLM-1",
+       "score": -6.4,
+       "words": [
+        "знать"
+       ]
+      }
+     ],
+     "forward_calls": 30,
+     "seconds": 1.22
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "FC-2"
+     ],
+     "picks": [
+      {
+       "competency_id": "FC-2",
+       "score": -10.29,
+       "words": [
+        "инженерия"
+       ]
+      }
+     ],
+     "forward_calls": 144,
+     "seconds": 7.58
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "S-4"
+     ],
+     "picks": [
+      {
+       "competency_id": "S-4",
+       "score": -12.04,
+       "words": [
+        "обслуживание",
+        "маркетинг"
+       ]
+      }
+     ],
+     "forward_calls": 99,
+     "seconds": 4.24
+    }
+   ]
+  },
+  "raw/min2": {
+   "alpha": 0.0,
+   "beta": 0.0,
+   "min_words": 2,
+   "summary": {
+    "web_precision": 0.4,
+    "web_hits": 6,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 18.009999999999998,
+    "mean_forward_calls_web": 113.2
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "LC-4",
+      "SS2",
+      "S-2"
+     ],
+     "picks": [
+      {
+       "competency_id": "LC-4",
+       "score": -11.36,
+       "words": [
+        "команды",
+        "продукт"
+       ]
+      },
+      {
+       "competency_id": "SS2",
+       "score": -12.31,
+       "words": [
+        "команды",
+        "работа",
+        "данные"
+       ]
+      },
+      {
+       "competency_id": "S-2",
+       "score": -12.76,
+       "words": [
+        "данные",
+        "форматы",
+        "системы"
+       ]
+      }
+     ],
+     "forward_calls": 108,
+     "seconds": 16.76
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "MF-4",
+      "S-2",
+      "S-5"
+     ],
+     "picks": [
+      {
+       "competency_id": "MF-4",
+       "score": -8.94,
+       "words": [
+        "обучение",
+        "прогноз"
+       ]
+      },
+      {
+       "competency_id": "S-2",
+       "score": -10.74,
+       "words": [
+        "участие",
+        "прогнозирование"
+       ]
+      },
+      {
+       "competency_id": "S-5",
+       "score": -18.79,
+       "words": [
+        "прогнозирование",
+        "технологии",
+        "обучение",
+        "управление"
+       ]
+      }
+     ],
+     "forward_calls": 98,
+     "seconds": 16.95
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "AI-S-3",
+      "H-3",
+      "SS2"
+     ],
+     "picks": [
+      {
+       "competency_id": "AI-S-3",
+       "score": -11.0,
+       "words": [
+        "проверка",
+        "идентификация"
+       ]
+      },
+      {
+       "competency_id": "H-3",
+       "score": -12.28,
+       "words": [
+        "консультирование",
+        "исследование"
+       ]
+      },
+      {
+       "competency_id": "SS2",
+       "score": -14.02,
+       "words": [
+        "инструменты",
+        "команды",
+        "документы"
+       ]
+      }
+     ],
+     "forward_calls": 118,
+     "seconds": 18.82
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "MM-1",
+      "ER-1",
+      "DL-3"
+     ],
+     "picks": [
+      {
+       "competency_id": "MM-1",
+       "score": -9.07,
+       "words": [
+        "моделирование",
+        "тестирование"
+       ]
+      },
+      {
+       "competency_id": "ER-1",
+       "score": -9.56,
+       "words": [
+        "моделирование",
+        "поиск"
+       ]
+      },
+      {
+       "competency_id": "DL-3",
+       "score": -9.87,
+       "words": [
+        "модели",
+        "детекция"
+       ]
+      }
+     ],
+     "forward_calls": 136,
+     "seconds": 22.35
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "AI-S-3",
+      "LLM-5"
+     ],
+     "picks": [
+      {
+       "competency_id": "PL-1",
+       "score": -7.13,
+       "words": [
+        "разработка",
+        "Python"
+       ]
+      },
+      {
+       "competency_id": "AI-S-3",
+       "score": -8.2,
+       "words": [
+        "Python",
+        "API"
+       ]
+      },
+      {
+       "competency_id": "LLM-5",
+       "score": -8.32,
+       "words": [
+        "разработка",
+        "API"
+       ]
+      }
+     ],
+     "forward_calls": 106,
+     "seconds": 15.17
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-5"
+     ],
+     "picks": [
+      {
+       "competency_id": "BD-5",
+       "score": -6.54,
+       "words": [
+        "поиск",
+        "сбор"
+       ]
+      }
+     ],
+     "forward_calls": 54,
+     "seconds": 2.58
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "ER-2"
+     ],
+     "picks": [
+      {
+       "competency_id": "ER-2",
+       "score": -7.94,
+       "words": [
+        "знание",
+        "курс"
+       ]
+      }
+     ],
+     "forward_calls": 36,
+     "seconds": 1.55
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "S-1"
+     ],
+     "picks": [
+      {
+       "competency_id": "S-1",
+       "score": -10.95,
+       "words": [
+        "проектирование",
+        "изменения"
+       ]
+      }
+     ],
+     "forward_calls": 150,
+     "seconds": 7.98
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "S-4"
+     ],
+     "picks": [
+      {
+       "competency_id": "S-4",
+       "score": -12.04,
+       "words": [
+        "обслуживание",
+        "маркетинг"
+       ]
+      }
+     ],
+     "forward_calls": 99,
+     "seconds": 4.36
+    }
+   ]
+  },
+  "idf/min1": {
+   "alpha": 0.0,
+   "beta": 1.0,
+   "min_words": 1,
+   "summary": {
+    "web_precision": 0.3333333333333333,
+    "web_hits": 5,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.25,
+    "mean_seconds_web": 7.12,
+    "mean_forward_calls_web": 44.0
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "S-5",
+      "LC-4",
+      "SS2"
+     ],
+     "picks": [
+      {
+       "competency_id": "S-5",
+       "score": -3.84,
+       "words": [
+        "контракты"
+       ]
+      },
+      {
+       "competency_id": "LC-4",
+       "score": -5.56,
+       "words": [
+        "команды",
+        "продукт"
+       ]
+      },
+      {
+       "competency_id": "SS2",
+       "score": -6.04,
+       "words": [
+        "команды",
+        "данные",
+        "форматы"
+       ]
+      }
+     ],
+     "forward_calls": 23,
+     "seconds": 4.09
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "S-2",
+      "FC-5",
+      "MF-4"
+     ],
+     "picks": [
+      {
+       "competency_id": "S-2",
+       "score": -5.47,
+       "words": [
+        "участие",
+        "исследование"
+       ]
+      },
+      {
+       "competency_id": "FC-5",
+       "score": -6.04,
+       "words": [
+        "объяснение",
+        "причины"
+       ]
+      },
+      {
+       "competency_id": "MF-4",
+       "score": -7.27,
+       "words": [
+        "прогнозирование",
+        "инжиниринг"
+       ]
+      }
+     ],
+     "forward_calls": 32,
+     "seconds": 5.43
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "H-3",
+      "AI-S-3",
+      "AI-S-1"
+     ],
+     "picks": [
+      {
+       "competency_id": "H-3",
+       "score": -3.35,
+       "words": [
+        "консультирование"
+       ]
+      },
+      {
+       "competency_id": "AI-S-3",
+       "score": -5.09,
+       "words": [
+        "проверка",
+        "служба"
+       ]
+      },
+      {
+       "competency_id": "AI-S-1",
+       "score": -5.43,
+       "words": [
+        "консультация"
+       ]
+      }
+     ],
+     "forward_calls": 27,
+     "seconds": 4.31
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "AI-S-1",
+      "DL-3",
+      "MM-1"
+     ],
+     "picks": [
+      {
+       "competency_id": "AI-S-1",
+       "score": -4.28,
+       "words": [
+        "моделирует",
+        "определение"
+       ]
+      },
+      {
+       "competency_id": "DL-3",
+       "score": -5.04,
+       "words": [
+        "модели",
+        "детекция"
+       ]
+      },
+      {
+       "competency_id": "MM-1",
+       "score": -5.1,
+       "words": [
+        "моделирование",
+        "тестирование"
+       ]
+      }
+     ],
+     "forward_calls": 31,
+     "seconds": 5.22
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "AI-S-3",
+      "PL-1",
+      "LLM-5"
+     ],
+     "picks": [
+      {
+       "competency_id": "AI-S-3",
+       "score": -1.85,
+       "words": [
+        "Python",
+        "API"
+       ]
+      },
+      {
+       "competency_id": "PL-1",
+       "score": -2.69,
+       "words": [
+        "разработка",
+        "Python"
+       ]
+      },
+      {
+       "competency_id": "LLM-5",
+       "score": -4.17,
+       "words": [
+        "разработка",
+        "API"
+       ]
+      }
+     ],
+     "forward_calls": 107,
+     "seconds": 16.55
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "MF-4"
+     ],
+     "picks": [
+      {
+       "competency_id": "MF-4",
+       "score": -2.24,
+       "words": [
+        "проверка",
+        "EDA"
+       ]
+      }
+     ],
+     "forward_calls": 56,
+     "seconds": 2.76
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "LLM-1"
+     ],
+     "picks": [
+      {
+       "competency_id": "LLM-1",
+       "score": -1.98,
+       "words": [
+        "знать"
+       ]
+      }
+     ],
+     "forward_calls": 19,
+     "seconds": 0.8
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-4"
+     ],
+     "picks": [
+      {
+       "competency_id": "LC-4",
+       "score": -4.11,
+       "words": [
+        "планирование",
+        "ведение"
+       ]
+      }
+     ],
+     "forward_calls": 29,
+     "seconds": 1.51
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "S-4"
+     ],
+     "picks": [
+      {
+       "competency_id": "S-4",
+       "score": -4.3,
+       "words": [
+        "обслуживание",
+        "маркетинг"
+       ]
+      }
+     ],
+     "forward_calls": 29,
+     "seconds": 1.32
+    }
+   ]
+  },
+  "idf/min2": {
+   "alpha": 0.0,
+   "beta": 1.0,
+   "min_words": 2,
+   "summary": {
+    "web_precision": 0.3333333333333333,
+    "web_hits": 5,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.25,
+    "mean_seconds_web": 7.8420000000000005,
+    "mean_forward_calls_web": 48.4
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "LC-4",
+      "SS2",
+      "S-5"
+     ],
+     "picks": [
+      {
+       "competency_id": "LC-4",
+       "score": -5.56,
+       "words": [
+        "команды",
+        "продукт"
+       ]
+      },
+      {
+       "competency_id": "SS2",
+       "score": -6.04,
+       "words": [
+        "команды",
+        "данные",
+        "форматы"
+       ]
+      },
+      {
+       "competency_id": "S-5",
+       "score": -7.01,
+       "words": [
+        "контракты",
+        "изменения"
+       ]
+      }
+     ],
+     "forward_calls": 30,
+     "seconds": 5.23
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "S-2",
+      "FC-5",
+      "MF-4"
+     ],
+     "picks": [
+      {
+       "competency_id": "S-2",
+       "score": -5.47,
+       "words": [
+        "участие",
+        "исследование"
+       ]
+      },
+      {
+       "competency_id": "FC-5",
+       "score": -6.04,
+       "words": [
+        "объяснение",
+        "причины"
+       ]
+      },
+      {
+       "competency_id": "MF-4",
+       "score": -7.27,
+       "words": [
+        "прогнозирование",
+        "инжиниринг"
+       ]
+      }
+     ],
+     "forward_calls": 32,
+     "seconds": 5.54
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "AI-S-3",
+      "H-3",
+      "AI-S-1"
+     ],
+     "picks": [
+      {
+       "competency_id": "AI-S-3",
+       "score": -5.09,
+       "words": [
+        "проверка",
+        "служба"
+       ]
+      },
+      {
+       "competency_id": "H-3",
+       "score": -5.74,
+       "words": [
+        "консультирование",
+        "исследование"
+       ]
+      },
+      {
+       "competency_id": "AI-S-1",
+       "score": -7.91,
+       "words": [
+        "консультация",
+        "модельный"
+       ]
+      }
+     ],
+     "forward_calls": 42,
+     "seconds": 6.72
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "AI-S-1",
+      "DL-3",
+      "MM-1"
+     ],
+     "picks": [
+      {
+       "competency_id": "AI-S-1",
+       "score": -4.28,
+       "words": [
+        "моделирует",
+        "определение"
+       ]
+      },
+      {
+       "competency_id": "DL-3",
+       "score": -5.04,
+       "words": [
+        "модели",
+        "детекция"
+       ]
+      },
+      {
+       "competency_id": "MM-1",
+       "score": -5.1,
+       "words": [
+        "моделирование",
+        "тестирование"
+       ]
+      }
+     ],
+     "forward_calls": 31,
+     "seconds": 5.2
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "AI-S-3",
+      "PL-1",
+      "LLM-5"
+     ],
+     "picks": [
+      {
+       "competency_id": "AI-S-3",
+       "score": -1.85,
+       "words": [
+        "Python",
+        "API"
+       ]
+      },
+      {
+       "competency_id": "PL-1",
+       "score": -2.69,
+       "words": [
+        "разработка",
+        "Python"
+       ]
+      },
+      {
+       "competency_id": "LLM-5",
+       "score": -4.17,
+       "words": [
+        "разработка",
+        "API"
+       ]
+      }
+     ],
+     "forward_calls": 107,
+     "seconds": 16.52
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "MF-4"
+     ],
+     "picks": [
+      {
+       "competency_id": "MF-4",
+       "score": -2.24,
+       "words": [
+        "проверка",
+        "EDA"
+       ]
+      }
+     ],
+     "forward_calls": 56,
+     "seconds": 2.72
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "ER-2"
+     ],
+     "picks": [
+      {
+       "competency_id": "ER-2",
+       "score": -2.94,
+       "words": [
+        "курс",
+        "учебный"
+       ]
+      }
+     ],
+     "forward_calls": 33,
+     "seconds": 1.82
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-4"
+     ],
+     "picks": [
+      {
+       "competency_id": "LC-4",
+       "score": -4.11,
+       "words": [
+        "планирование",
+        "ведение"
+       ]
+      }
+     ],
+     "forward_calls": 34,
+     "seconds": 1.62
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "S-4"
+     ],
+     "picks": [
+      {
+       "competency_id": "S-4",
+       "score": -4.3,
+       "words": [
+        "обслуживание",
+        "маркетинг"
+       ]
+      }
+     ],
+     "forward_calls": 35,
+     "seconds": 1.49
+    }
+   ]
+  },
+  "pmi+idf/min1": {
+   "alpha": 1.0,
+   "beta": 1.0,
+   "min_words": 1,
+   "summary": {
+    "web_precision": 0.2,
+    "web_hits": 3,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 0.986,
+    "mean_forward_calls_web": 7.6
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "BD-2",
+      "SS2",
+      "S-1"
+     ],
+     "picks": [
+      {
+       "competency_id": "BD-2",
+       "score": 15.8,
+       "words": [
+        "dataops"
+       ]
+      },
+      {
+       "competency_id": "SS2",
+       "score": 14.75,
+       "words": [
+        "product"
+       ]
+      },
+      {
+       "competency_id": "S-1",
+       "score": 14.08,
+       "words": [
+        "pipelines"
+       ]
+      }
+     ],
+     "forward_calls": 3,
+     "seconds": 0.53
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "S-4",
+      "S-1",
+      "MF-4"
+     ],
+     "picks": [
+      {
+       "competency_id": "S-4",
+       "score": 35.33,
+       "words": [
+        "система",
+        "панелей"
+       ]
+      },
+      {
+       "competency_id": "S-1",
+       "score": 30.82,
+       "words": [
+        "система",
+        "зондирование"
+       ]
+      },
+      {
+       "competency_id": "MF-4",
+       "score": 15.24,
+       "words": [
+        "регрессионного"
+       ]
+      }
+     ],
+     "forward_calls": 13,
+     "seconds": 1.71
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "O-3",
+      "AI-S-3",
+      "S-3"
+     ],
+     "picks": [
+      {
+       "competency_id": "O-3",
+       "score": 30.35,
+       "words": [
+        "идентификацией",
+        "параметрам"
+       ]
+      },
+      {
+       "competency_id": "AI-S-3",
+       "score": 26.71,
+       "words": [
+        "идентификацией",
+        "схем"
+       ]
+      },
+      {
+       "competency_id": "S-3",
+       "score": 18.64,
+       "words": [
+        "концептов"
+       ]
+      }
+     ],
+     "forward_calls": 9,
+     "seconds": 1.35
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "AI-S-3",
+      "AI-S-1",
+      "FC-1"
+     ],
+     "picks": [
+      {
+       "competency_id": "AI-S-3",
+       "score": 17.02,
+       "words": [
+        "tf-graph"
+       ]
+      },
+      {
+       "competency_id": "AI-S-1",
+       "score": 15.27,
+       "words": [
+        "лаборатории"
+       ]
+      },
+      {
+       "competency_id": "FC-1",
+       "score": 14.05,
+       "words": [
+        "model"
+       ]
+      }
+     ],
+     "forward_calls": 6,
+     "seconds": 0.71
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "LLM-3",
+      "MF-4",
+      "ML-8"
+     ],
+     "picks": [
+      {
+       "competency_id": "LLM-3",
+       "score": 11.64,
+       "words": [
+        "reranking"
+       ]
+      },
+      {
+       "competency_id": "MF-4",
+       "score": 11.35,
+       "words": [
+        "ARIMA"
+       ]
+      },
+      {
+       "competency_id": "ML-8",
+       "score": 10.47,
+       "words": [
+        "бэггинг"
+       ]
+      }
+     ],
+     "forward_calls": 7,
+     "seconds": 0.63
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "LLM-1"
+     ],
+     "picks": [
+      {
+       "competency_id": "LLM-1",
+       "score": 17.52,
+       "words": [
+        "search"
+       ]
+      }
+     ],
+     "forward_calls": 6,
+     "seconds": 0.26
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "ML-4"
+     ],
+     "picks": [
+      {
+       "competency_id": "ML-4",
+       "score": 28.38,
+       "words": [
+        "понижения",
+        "изоляционный"
+       ]
+      }
+     ],
+     "forward_calls": 21,
+     "seconds": 0.69
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "S-4"
+     ],
+     "picks": [
+      {
+       "competency_id": "S-4",
+       "score": 33.76,
+       "words": [
+        "планирования",
+        "панелей"
+       ]
+      }
+     ],
+     "forward_calls": 12,
+     "seconds": 0.54
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "T-1"
+     ],
+     "picks": [
+      {
+       "competency_id": "T-1",
+       "score": 31.22,
+       "words": [
+        "предотвращения",
+        "низкоуровневых"
+       ]
+      }
+     ],
+     "forward_calls": 21,
+     "seconds": 0.88
+    }
+   ]
+  },
+  "pmi+idf/min2": {
+   "alpha": 1.0,
+   "beta": 1.0,
+   "min_words": 2,
+   "summary": {
+    "web_precision": 0.13333333333333333,
+    "web_hits": 2,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 2.718,
+    "mean_forward_calls_web": 20.6
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "SS2",
+      "S-1",
+      "BD-2"
+     ],
+     "picks": [
+      {
+       "competency_id": "SS2",
+       "score": 32.12,
+       "words": [
+        "product",
+        "tech"
+       ]
+      },
+      {
+       "competency_id": "S-1",
+       "score": 27.13,
+       "words": [
+        "pipelines",
+        "for"
+       ]
+      },
+      {
+       "competency_id": "BD-2",
+       "score": 24.72,
+       "words": [
+        "dataops",
+        "распределения"
+       ]
+      }
+     ],
+     "forward_calls": 18,
+     "seconds": 2.41
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "S-4",
+      "MF-4",
+      "S-1"
+     ],
+     "picks": [
+      {
+       "competency_id": "S-4",
+       "score": 38.09,
+       "words": [
+        "панелей",
+        "отчётов"
+       ]
+      },
+      {
+       "competency_id": "MF-4",
+       "score": 37.67,
+       "words": [
+        "регрессионного",
+        "предсказательных"
+       ]
+      },
+      {
+       "competency_id": "S-1",
+       "score": 30.82,
+       "words": [
+        "система",
+        "зондирование"
+       ]
+      }
+     ],
+     "forward_calls": 25,
+     "seconds": 3.31
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "S-3",
+      "O-3",
+      "FC-4"
+     ],
+     "picks": [
+      {
+       "competency_id": "S-3",
+       "score": 37.4,
+       "words": [
+        "концептов",
+        "баланса"
+       ]
+      },
+      {
+       "competency_id": "O-3",
+       "score": 30.35,
+       "words": [
+        "идентификацией",
+        "параметрам"
+       ]
+      },
+      {
+       "competency_id": "FC-4",
+       "score": 28.61,
+       "words": [
+        "architectures",
+        "embodiment"
+       ]
+      }
+     ],
+     "forward_calls": 20,
+     "seconds": 3.03
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "AI-S-1",
+      "AI-S-3",
+      "FC-1"
+     ],
+     "picks": [
+      {
+       "competency_id": "AI-S-1",
+       "score": 39.37,
+       "words": [
+        "лаборатории",
+        "модели"
+       ]
+      },
+      {
+       "competency_id": "AI-S-3",
+       "score": 37.04,
+       "words": [
+        "tf-graph",
+        "sev"
+       ]
+      },
+      {
+       "competency_id": "FC-1",
+       "score": 32.63,
+       "words": [
+        "model",
+        "flops"
+       ]
+      }
+     ],
+     "forward_calls": 19,
+     "seconds": 2.6
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "MF-4",
+      "LLM-3",
+      "ML-8"
+     ],
+     "picks": [
+      {
+       "competency_id": "MF-4",
+       "score": 45.0,
+       "words": [
+        "ARIMA",
+        "GARCH"
+       ]
+      },
+      {
+       "competency_id": "LLM-3",
+       "score": 34.08,
+       "words": [
+        "reranking",
+        "weaviate"
+       ]
+      },
+      {
+       "competency_id": "ML-8",
+       "score": 24.56,
+       "words": [
+        "бэггинг",
+        "обрабатывающей"
+       ]
+      }
+     ],
+     "forward_calls": 21,
+     "seconds": 2.24
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "S-5"
+     ],
+     "picks": [
+      {
+       "competency_id": "S-5",
+       "score": 34.79,
+       "words": [
+        "иск",
+        "след"
+       ]
+      }
+     ],
+     "forward_calls": 20,
+     "seconds": 0.84
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "ML-4"
+     ],
+     "picks": [
+      {
+       "competency_id": "ML-4",
+       "score": 28.38,
+       "words": [
+        "понижения",
+        "изоляционный"
+       ]
+      }
+     ],
+     "forward_calls": 25,
+     "seconds": 0.85
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "S-3"
+     ],
+     "picks": [
+      {
+       "competency_id": "S-3",
+       "score": 33.84,
+       "words": [
+        "плагин",
+        "коротких"
+       ]
+      }
+     ],
+     "forward_calls": 22,
+     "seconds": 0.96
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "T-1"
+     ],
+     "picks": [
+      {
+       "competency_id": "T-1",
+       "score": 31.22,
+       "words": [
+        "предотвращения",
+        "низкоуровневых"
+       ]
+      }
+     ],
+     "forward_calls": 27,
+     "seconds": 1.15
+    }
+   ]
+  }
+ }
+}

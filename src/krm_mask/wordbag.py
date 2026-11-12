@@ -116,6 +116,10 @@ class WordBagConfig:
     beta: float = 1.0
     beam: int = 8
     max_words: int = 6
+    # Path search (experiment 6): alternative branches between words.
+    path_beam: int = 6  # word paths kept after each step
+    word_branches: int = 3  # next words tried from each path
+    min_words: int = 1  # words a path needs before it may end on one competency
 
 
 @dataclass
@@ -136,6 +140,18 @@ class WordBagResult:
     resolved: bool
     forward_calls: int
     remaining: list[str] = field(default_factory=list)
+
+
+@dataclass
+class WordPath:
+    words: list[WordChoice]
+    candidates: frozenset[str]
+    context: list[int]
+    score: float
+
+    @property
+    def lemmas(self) -> frozenset[str]:
+        return frozenset(word.lemma for word in self.words)
 
 
 class WordBagSelector:
@@ -213,7 +229,91 @@ class WordBagSelector:
             if count < len(candidates) and lemma not in used
         }
 
+    def select_paths(
+        self, text: str, count: int, blocked: set[str] | None = None,
+    ) -> tuple[list[tuple[str, WordPath]], int]:
+        """Up to `count` competencies, ranked by their best finished word path.
+
+        One search usually yields several competencies; it is repeated with the
+        found ones blocked only if it ended with fewer than `count`.
+        """
+        blocked = set(blocked or ())
+        found: list[tuple[str, WordPath]] = []
+        calls = 0
+        while len(found) < count:
+            finished, used = self._path_search(text, blocked)
+            calls += used
+            best: dict[str, WordPath] = {}
+            for path in finished:
+                (competency_id,) = path.candidates
+                if competency_id not in best or path.score > best[competency_id].score:
+                    best[competency_id] = path
+            ranked = sorted(best.items(), key=lambda item: -item[1].score)
+            if not ranked:
+                break
+            for competency_id, path in ranked[: count - len(found)]:
+                found.append((competency_id, path))
+                blocked.add(competency_id)
+        return found, calls
+
+    def _path_search(self, text: str, blocked: set[str]) -> tuple[list[WordPath], int]:
+        """Beam search over word sequences: alternative branches between words.
+
+        Paths are compared by the sum of their word scores, so a first word that
+        looks good alone but is poorly confirmed by the next words loses.
+        """
+        config = self.config
+        start = WordPath(
+            [], frozenset(set(self.index.competency_lemmas) - blocked),
+            list(self.prompt(text)), 0.0,
+        )
+        live = [start]
+        finished: dict[frozenset[str], WordPath] = {}
+        calls = 0
+        for _ in range(config.max_words):
+            children: dict[frozenset[str], WordPath] = {}
+            for path in live:
+                used = path.lemmas
+                if len(path.candidates) > 1:
+                    allowed = self._narrowing_lemmas(set(path.candidates), set(used))
+                else:  # Confirmation words of the only remaining competency.
+                    (only,) = path.candidates
+                    allowed = self.index.competency_lemmas[only] - used
+                if not allowed:
+                    continue
+                options, used_calls = self._word_options(path.context, allowed, config.word_branches)
+                calls += used_calls
+                for option in options:
+                    candidates = frozenset(
+                        c for c in path.candidates
+                        if option.lemma in self.index.competency_lemmas[c]
+                    )
+                    if not candidates:
+                        continue
+                    word = WordChoice(**{**option.__dict__, "candidates_after": len(candidates)})
+                    child = WordPath(
+                        path.words + [word], candidates,
+                        path.context + list(self.tokens[option.word]), path.score + option.score,
+                    )
+                    key = child.lemmas  # Same words in another order = same path.
+                    if len(candidates) == 1 and len(child.words) >= config.min_words:
+                        if key not in finished or child.score > finished[key].score:
+                            finished[key] = child
+                    elif key not in children or child.score > children[key].score:
+                        children[key] = child
+            live = sorted(children.values(), key=lambda p: -p.score)[: config.path_beam]
+            if not live:
+                break
+        return sorted(finished.values(), key=lambda p: -p.score), calls
+
     def _choose_word(self, context: list[int], allowed: set[str]) -> tuple[WordChoice | None, int]:
+        options, calls = self._word_options(context, allowed, 1)
+        return (options[0] if options else None), calls
+
+    def _word_options(
+        self, context: list[int], allowed: set[str], top: int,
+    ) -> tuple[list[WordChoice], int]:
+        """Best `top` complete words (distinct lemmas) by token-level beam search."""
         config = self.config
         children: dict[tuple[int, ...], set[int]] = defaultdict(set)
         terminal: dict[tuple[int, ...], str] = {}
@@ -254,16 +354,22 @@ class WordBagSelector:
                     finished.append(node)
                 if children.get(node):
                     live.append(node)
-        if not finished:
-            return None, calls
-        best = max(finished, key=score)
-        surface = terminal[best]
-        lemma = self.index.surfaces[surface]
-        return WordChoice(
-            word=surface, lemma=lemma, log_probability=log_prob[best],
-            log_prior=self.prior.get(best, 0.0), idf=self.index.idf.get(lemma, 0.0),
-            score=score(best), candidates_after=0,
-        ), calls
+        options: list[WordChoice] = []
+        seen: set[str] = set()
+        for node in sorted(finished, key=score, reverse=True):
+            surface = terminal[node]
+            lemma = self.index.surfaces[surface]
+            if lemma in seen:
+                continue
+            seen.add(lemma)
+            options.append(WordChoice(
+                word=surface, lemma=lemma, log_probability=log_prob[node],
+                log_prior=self.prior.get(node, 0.0), idf=self.index.idf.get(lemma, 0.0),
+                score=score(node), candidates_after=0,
+            ))
+            if len(options) == top:
+                break
+        return options, calls
 
 
 def lm_prompt_tensor(lm: object, ids: list[int]) -> object:
