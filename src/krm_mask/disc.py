@@ -30,7 +30,13 @@ def select_disc(
     sample: Callable[[], Candidate[T]],
     budget: int = 4,
     rng: random.Random | None = None,
+    log_bound: float = 0.0,
 ) -> tuple[T, dict[str, object]]:
+    """`log_bound` is log M with weight <= M; acceptance probability is weight / M.
+
+    The plain DISC weight is a probability, so M = 1. A reweighted target (for
+    example PMI, which divides by a phrase prior) can exceed 1 and needs M > 1.
+    """
     if not 1 <= budget <= 8:
         raise ValueError("DISC budget must be between 1 and 8")
     rng = rng or random.Random()
@@ -39,7 +45,7 @@ def select_disc(
     def draw(phase: str) -> Candidate[T] | None:
         try:
             candidate = sample()
-            if not math.isfinite(candidate.log_weight) or candidate.log_weight > 1e-6:
+            if not math.isfinite(candidate.log_weight) or candidate.log_weight > log_bound + 1e-6:
                 raise DiscDecodingError("Invalid DISC weight")
         except DiscDecodingError as error:
             attempts.append({"phase": phase, "status": "invalid", "reason": str(error)})
@@ -47,7 +53,7 @@ def select_disc(
         attempts.append({
             **candidate.details, "phase": phase, "status": "sampled",
             "log_weight": candidate.log_weight,
-            "weight": math.exp(candidate.log_weight),
+            "weight": math.exp(candidate.log_weight - log_bound),
         })
         return candidate
 
@@ -56,15 +62,15 @@ def select_disc(
         return candidate.value, {
             "enabled": True, "budget": budget, "mode": mode,
             "selected_attempt": index + 1, "attempt_count": len(attempts),
-            "log_weight": candidate.log_weight,
-            "weight": math.exp(candidate.log_weight), "attempts": attempts,
-            "weight_scope": "ambiguous_decisions",
+            "log_weight": candidate.log_weight, "log_bound": log_bound,
+            "weight": math.exp(candidate.log_weight - log_bound), "attempts": attempts,
+            "weight_scope": "all_steps",
         }
 
     for _ in range(budget):
         candidate = draw("acceptance")
         if candidate is not None:
-            if math.log(max(rng.random(), 1e-300)) < candidate.log_weight:
+            if math.log(max(rng.random(), 1e-300)) < candidate.log_weight - log_bound:
                 return result(candidate, len(attempts) - 1, "accepted")
             attempts[-1]["status"] = "rejected"
 

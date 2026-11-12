@@ -43,6 +43,23 @@ def test_unit_weight_accepts_immediately():
     assert len(calls) == 1
 
 
+def test_log_bound_allows_weights_above_one():
+    class AlwaysRng:
+        def __init__(self, value):
+            self.value = value
+
+        def random(self):
+            return self.value
+
+    def draw():
+        return Candidate("A", 3.0, {})
+
+    # Weight e^3 with bound e^5: accepted with probability e^-2 ≈ 0.135.
+    assert select_disc(draw, rng=AlwaysRng(0.1), log_bound=5.0)[1]["mode"] == "accepted"
+    with pytest.raises(DiscDecodingError):  # e^3 > bound e^2 is invalid.
+        select_disc(draw, budget=1, rng=AlwaysRng(0.1), log_bound=2.0)
+
+
 def test_invalid_passes_are_bounded():
     calls = []
 
@@ -280,3 +297,62 @@ def test_controller_wraps_all_signals_and_autocompletes_each(monkeypatch):
     assert "- python" in lm.prompts[1]  # Full completion enters next signal prompt.
     assert trace[-1]["disc"]["weight"] == pytest.approx(0.25)
     assert trace[-1]["disc"]["attempts"][0]["decision_count"] == 2
+
+
+def test_prior_alpha_divides_weight_by_phrase_prior(monkeypatch):
+    torch = pytest.importorskip("torch")
+    from krm_mask.catalog import Catalog
+    from krm_mask.graph import PhraseGraph
+    from krm_mask.pipeline import MAX_SIGNAL_CYCLES, ExtractionPipeline
+
+    class Tokenizer:
+        eos_token_id = 0
+
+        def encode(self, text, add_special_tokens=False):
+            return {"python": [1], "analytics": [2], "sql": [3], "\n": [9]}[text]
+
+        def decode(self, ids, skip_special_tokens=True):
+            return "".join({1: "p", 2: "a", 3: "s"}.get(i, "") for i in ids)
+
+    class LM:
+        tokenizer = Tokenizer()
+
+        def __init__(self):
+            self.sampled = 0
+            self.prior_calls = 0
+
+        def prompt_ids(self, messages):
+            return torch.tensor([[9]])
+
+        def score_continuations(self, prompt, continuations):
+            self.prior_calls += 1
+            return [{1: -3.0, 2: -1.0, 3: -2.0}[tokens[0]] for tokens in continuations]
+
+        def sample_decision_path(self, prompt, mask, max_new_tokens):
+            self.sampled += 1
+            token = 1 if self.sampled % 2 else 2
+            return [token, 0], [{"forced": False, "disc_log_mass": math.log(0.5)},
+                                {"forced": True, "disc_log_mass": 0.0}]
+
+    class AcceptRng:
+        def random(self):
+            return 0.0
+
+    monkeypatch.setattr("krm_mask.disc.random.Random", AcceptRng)
+    lm = LM()
+    graph = PhraseGraph({"python": {"A", "B"}, "analytics": {"A"}, "sql": {"B"}},
+                        {"A": "A", "B": "B"})
+    pipeline = ExtractionPipeline(Catalog("test", "1", "test", [], []), lm)
+    for _ in range(2):  # The prior is computed once and cached.
+        competency, phrases, trace, _ = pipeline._select_competency(
+            "Python analytics", graph, set(), [], False, 0,
+            min_complete_phrases=2, use_disc=True, disc_prior_alpha=1.0,
+        )
+        lm.sampled = 0
+    assert lm.prior_calls == 1
+    assert competency == "A" and phrases == ["python", "analytics"]
+    summary = trace[-1]["disc"]
+    assert summary["attempts"][0]["prior_log_probability"] == pytest.approx(-4.0)
+    # log w = log(.5 * .5) - 1.0 * (-3 - 1); bound = alpha * cycles * max(-prior).
+    assert summary["log_weight"] == pytest.approx(math.log(0.25) + 4.0)
+    assert summary["log_bound"] == pytest.approx(MAX_SIGNAL_CYCLES * 3.0)

@@ -102,6 +102,47 @@ class LocalCausalLM:
                 scores[option] = float(gathered.mean().item())
         return scores
 
+    def score_continuations(
+        self, prompt_ids: object, continuations: list[list[int]], batch_size: int = 16,
+    ) -> list[float]:
+        """Sum of log P(continuation tokens | prompt) for each continuation (teacher forcing)."""
+        import torch
+
+        prompt = prompt_ids[0].tolist()
+        prompt_length = len(prompt)
+        pad = self.tokenizer.pad_token_id
+        pad = self.tokenizer.eos_token_id if pad is None else pad
+        order = sorted(range(len(continuations)), key=lambda i: len(continuations[i]))
+        results = [0.0] * len(continuations)
+        with torch.inference_mode():
+            for start in range(0, len(order), batch_size):
+                indices = order[start : start + batch_size]
+                width = max(len(continuations[i]) for i in indices)
+                ids = torch.full(
+                    (len(indices), prompt_length + width), pad,
+                    dtype=torch.long, device=self.device,
+                )
+                attention = torch.zeros_like(ids)
+                for row, index in enumerate(indices):
+                    tokens = continuations[index]
+                    ids[row, :prompt_length] = torch.tensor(prompt, device=self.device)
+                    ids[row, prompt_length : prompt_length + len(tokens)] = torch.tensor(
+                        tokens, device=self.device
+                    )
+                    attention[row, : prompt_length + len(tokens)] = 1
+                # Kept rows start at position prompt_length - 1; row j predicts token prompt_length + j.
+                logits = self.model(
+                    input_ids=ids, attention_mask=attention, logits_to_keep=width + 1
+                ).logits[:, :width].float()
+                targets = ids[:, prompt_length:]
+                picked = logits.gather(-1, targets.unsqueeze(-1)).squeeze(-1)
+                log_probs = picked - torch.logsumexp(logits, dim=-1)
+                valid = attention[:, prompt_length:].bool()
+                sums = (log_probs * valid).sum(dim=1).tolist()
+                for row, index in enumerate(indices):
+                    results[index] = float(sums[row])
+        return results
+
     def sample_decision_path(
         self, input_ids: object, mask: object, max_new_tokens: int,
     ) -> tuple[list[int], list[dict[str, object]]]:

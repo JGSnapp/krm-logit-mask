@@ -102,6 +102,7 @@ def create_app(catalog_path: str, model_name: str = DEFAULT_MODEL):
         model_id: str | None = None
         use_disc: bool = False
         disc_budget: int = Field(default=4, ge=1, le=8)
+        disc_prior_alpha: float = Field(default=0.0, ge=0.0, le=1.0)
 
     class QuoteFirstRequest(BaseModel):
         text: str = Field(min_length=3, max_length=30_000)
@@ -114,6 +115,7 @@ def create_app(catalog_path: str, model_name: str = DEFAULT_MODEL):
         model_id: str | None = None
         use_disc: bool = False
         disc_budget: int = Field(default=4, ge=1, le=8)
+        disc_prior_alpha: float = Field(default=0.0, ge=0.0, le=1.0)
 
     @app.get("/api/health")
     def health() -> dict[str, object]:
@@ -202,6 +204,7 @@ def create_app(catalog_path: str, model_name: str = DEFAULT_MODEL):
                 request.matching_basis,
                 request.use_disc,
                 request.disc_budget,
+                request.disc_prior_alpha,
             )
         result["model"] = runtime.model_public(requested_model)
         result["timings"].update(
@@ -235,6 +238,7 @@ def create_app(catalog_path: str, model_name: str = DEFAULT_MODEL):
                 request.matching_basis,
                 request.use_disc,
                 request.disc_budget,
+                request.disc_prior_alpha,
             )
         result["model"] = runtime.model_public(requested_model)
         result["timings"].update(

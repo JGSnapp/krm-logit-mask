@@ -21,6 +21,54 @@ def _completion_weight(terminal: dict[str, object]) -> dict[str, object]:
     return {key: terminal[key] for key in _COMPLETION_WEIGHT_KEYS if key in terminal}
 
 
+EMPTY_HISTORY = "пока ничего не выбрано"
+EMPTY_SIGNALS = "- пока нет"
+MAX_SIGNAL_CYCLES = 8
+
+
+def _direct_messages(text: str, history: str) -> list[dict[str, str]]:
+    return [
+        {
+            "role": "system",
+            "content": (
+                "Выбери одну компетенцию, подтверждаемую текстом. Пиши только её "
+                "допустимое название. Полное название будет автоматически подставлено, "
+                "когда класс станет однозначным."
+            ),
+        },
+        {
+            "role": "user",
+            "content": (
+                f"Текст кандидата:\n{text}\n\n"
+                f"Уже обработано:\n{history}\n\n"
+                "Найди следующую, ещё не обработанную компетенцию."
+            ),
+        },
+    ]
+
+
+def _signal_messages(text: str, history: str, rendered_signals: str) -> list[dict[str, str]]:
+    return [
+        {
+            "role": "system",
+            "content": (
+                "Выбери следующий подтверждаемый текстом признак. "
+                "Пиши только начало одного допустимого признака: когда он "
+                "станет однозначным, система автоматически дополнит его."
+            ),
+        },
+        {
+            "role": "user",
+            "content": (
+                f"Текст кандидата:\n{text}\n\n"
+                f"Уже обработано:\n{history}\n\n"
+                f"Уже выбранные признаки:\n{rendered_signals}\n\n"
+                "Следующий совместимый признак:"
+            ),
+        },
+    ]
+
+
 @dataclass
 class Extraction:
     competency_id: str
@@ -38,6 +86,33 @@ class ExtractionPipeline:
         self.catalog = catalog
         self.lm = lm
         self.by_id = {item.id: item for item in catalog.competencies}
+        # (direct_mode, phrase) -> log P(phrase + delimiter | prompt without candidate text)
+        self._phrase_prior: dict[tuple[bool, str], float] = {}
+
+    def phrase_log_prior(self, graph: PhraseGraph, direct_mode: bool) -> dict[str, float]:
+        """Prior of every graph phrase under the selection prompt with an empty text.
+
+        It does not depend on the candidate, so each phrase is scored once per
+        model and cached; the cost grows with the catalog, not with requests.
+        """
+        missing = [
+            phrase for phrase in graph.phrases if (direct_mode, phrase) not in self._phrase_prior
+        ]
+        if missing:
+            messages = (
+                _direct_messages("", EMPTY_HISTORY) if direct_mode
+                else _signal_messages("", EMPTY_HISTORY, EMPTY_SIGNALS)
+            )
+            tokenizer = self.lm.tokenizer
+            delimiter = tokenizer.encode("\n", add_special_tokens=False)
+            continuations = [
+                tokenizer.encode(phrase, add_special_tokens=False) + delimiter
+                for phrase in missing
+            ]
+            scores = self.lm.score_continuations(self.lm.prompt_ids(messages), continuations)
+            for phrase, score in zip(missing, scores):
+                self._phrase_prior[(direct_mode, phrase)] = score
+        return {phrase: self._phrase_prior[(direct_mode, phrase)] for phrase in graph.phrases}
 
     def run(
         self,
@@ -50,6 +125,7 @@ class ExtractionPipeline:
         matching_basis: str = "both",
         use_disc: bool = False,
         disc_budget: int = 4,
+        disc_prior_alpha: float = 0.0,
     ) -> list[dict[str, object]]:
         return self.run_detailed(
             text,
@@ -61,6 +137,7 @@ class ExtractionPipeline:
             matching_basis,
             use_disc,
             disc_budget,
+            disc_prior_alpha,
         )["extractions"]
 
     def run_detailed(
@@ -74,6 +151,7 @@ class ExtractionPipeline:
         matching_basis: str = "both",
         use_disc: bool = False,
         disc_budget: int = 4,
+        disc_prior_alpha: float = 0.0,
     ) -> dict[str, object]:
         total_started = perf_counter()
         allowed_ids = None
@@ -123,6 +201,7 @@ class ExtractionPipeline:
                     matching_basis == "competencies",
                     use_disc=use_disc,
                     disc_budget=disc_budget,
+                    disc_prior_alpha=disc_prior_alpha,
                 )
             )
             selection_seconds = perf_counter() - selection_started
@@ -288,6 +367,7 @@ class ExtractionPipeline:
             "matching_basis": matching_basis,
             "use_disc": use_disc,
             "disc_budget": disc_budget,
+            "disc_prior_alpha": disc_prior_alpha,
             "extractions": [asdict(item) for item in results],
             "attempts": attempts,
             "final_validation": final_validation,
@@ -305,6 +385,7 @@ class ExtractionPipeline:
         matching_basis: str = "both",
         use_disc: bool = False,
         disc_budget: int = 4,
+        disc_prior_alpha: float = 0.0,
     ) -> dict[str, object]:
         total_started = perf_counter()
         allowed_ids = None
@@ -373,6 +454,7 @@ class ExtractionPipeline:
                         matching_basis == "competencies",
                         use_disc=use_disc,
                         disc_budget=disc_budget,
+                        disc_prior_alpha=disc_prior_alpha,
                     )
                 )
                 selection_seconds = perf_counter() - selection_started
@@ -454,6 +536,7 @@ class ExtractionPipeline:
             "mode": "quote_first",
             "use_disc": use_disc,
             "disc_budget": disc_budget,
+            "disc_prior_alpha": disc_prior_alpha,
             "text": text,
             "role_id": role_id,
             "matching_basis": matching_basis,
@@ -559,9 +642,21 @@ class ExtractionPipeline:
         direct_competency_mode: bool = False,
         use_disc: bool = False,
         disc_budget: int = 4,
+        disc_prior_alpha: float = 0.0,
         disc_sampling: bool = False,
     ) -> tuple[str, list[str], list[dict[str, object]], bool]:
         if use_disc:
+            # PMI target (experiment 1): divide each phrase's probability by its
+            # prior without the candidate text, P(phrase | resume) / P(phrase | ∅)^α.
+            prior = (
+                self.phrase_log_prior(graph, direct_competency_mode)
+                if disc_prior_alpha > 0 else {}
+            )
+            max_phrases = 1 if direct_competency_mode else MAX_SIGNAL_CYCLES
+            log_bound = disc_prior_alpha * max_phrases * max(
+                [-value for value in prior.values()] + [0.0]
+            )
+
             def sample():
                 value = self._select_competency(
                     text, graph, blocked, previous_attempts, allow_abort_token,
@@ -575,17 +670,21 @@ class ExtractionPipeline:
                     graph.phrases.get(phrase) == {NONE_ID} for phrase in phrases
                 ):
                     raise DiscDecodingError("Signals did not resolve a unique competency")
+                model_log_weight = sum(float(event.get("disc_log_mass", 0.0)) for event in trace)
+                prior_log = sum(prior.get(phrase, 0.0) for phrase in phrases)
                 return Candidate(
                     value=value,
-                    log_weight=sum(float(event.get("disc_log_mass", 0.0)) for event in trace),
+                    log_weight=model_log_weight - disc_prior_alpha * prior_log,
                     details={
                         "competency_id": competency_id, "selected_phrases": phrases,
                         "aborted": aborted,
                         "decision_count": sum(event.get("forced") is False for event in trace),
                         "skipped_token_count": sum(event.get("forced") is True for event in trace),
+                        "model_log_weight": model_log_weight,
+                        "prior_log_probability": prior_log,
                     },
                 )
-            value, summary = select_disc(sample, budget=disc_budget)
+            value, summary = select_disc(sample, budget=disc_budget, log_bound=log_bound)
             if value[2]:
                 value[2][-1]["disc"] = summary
             return value
@@ -602,7 +701,7 @@ class ExtractionPipeline:
                 f"- {competency}: {status}; уже выбранные цитаты: "
                 + (" | ".join(quotes) if quotes else "нет")
             )
-        history = "\n".join(history_lines) or "пока ничего не выбрано"
+        history = "\n".join(history_lines) or EMPTY_HISTORY
         if not direct_competency_mode:
             return self._select_competency_by_signals(
                 text,
@@ -614,34 +713,7 @@ class ExtractionPipeline:
                 min_complete_phrases,
                 disc_sampling,
             )
-        instruction = (
-            "Выбери одну компетенцию, подтверждаемую текстом. Пиши только её "
-            "допустимое название. Полное название будет автоматически подставлено, "
-            "когда класс станет однозначным."
-            if direct_competency_mode
-            else (
-                "Выбирай только признаки, подтверждаемые текстом. "
-                "Пиши по одному допустимому признаку на строке в любом порядке. "
-                "Продолжай, пока несколько выбранных признаков совместно не "
-                "укажут на одну компетенцию."
-            )
-        )
-        prompt = self.lm.prompt_ids(
-            [
-                {
-                    "role": "system",
-                    "content": instruction,
-                },
-                {
-                    "role": "user",
-                    "content": (
-                        f"Текст кандидата:\n{text}\n\n"
-                        f"Уже обработано:\n{history}\n\n"
-                        "Найди следующую, ещё не обработанную компетенцию."
-                    ),
-                },
-            ]
-        )
+        prompt = self.lm.prompt_ids(_direct_messages(text, history))
         mask = PhraseGraphMask(
             self.lm.tokenizer,
             graph,
@@ -737,7 +809,7 @@ class ExtractionPipeline:
         combined_trace: list[dict[str, object]] = []
         candidates = set(graph.competency_names) - blocked
 
-        for _ in range(8):
+        for _ in range(MAX_SIGNAL_CYCLES):
             cycle_phrases = {
                 phrase: (ids & candidates)
                 for phrase, ids in graph.phrases.items()
@@ -751,28 +823,8 @@ class ExtractionPipeline:
                 phrases=cycle_phrases,
                 competency_names=graph.competency_names,
             )
-            rendered_signals = "\n".join(f"- {value}" for value in selected) or "- пока нет"
-            prompt = self.lm.prompt_ids(
-                [
-                    {
-                        "role": "system",
-                        "content": (
-                            "Выбери следующий подтверждаемый текстом признак. "
-                            "Пиши только начало одного допустимого признака: когда он "
-                            "станет однозначным, система автоматически дополнит его."
-                        ),
-                    },
-                    {
-                        "role": "user",
-                        "content": (
-                            f"Текст кандидата:\n{text}\n\n"
-                            f"Уже обработано:\n{history}\n\n"
-                            f"Уже выбранные признаки:\n{rendered_signals}\n\n"
-                            "Следующий совместимый признак:"
-                        ),
-                    },
-                ]
-            )
+            rendered_signals = "\n".join(f"- {value}" for value in selected) or EMPTY_SIGNALS
+            prompt = self.lm.prompt_ids(_signal_messages(text, history, rendered_signals))
             mask = PhraseGraphMask(
                 self.lm.tokenizer,
                 cycle_graph,
