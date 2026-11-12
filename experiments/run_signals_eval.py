@@ -8,6 +8,7 @@ PMI floors are set from the distribution of word priors: the median and the
 """
 from __future__ import annotations
 
+import argparse
 import json
 import statistics
 import sys
@@ -28,8 +29,14 @@ from krm_mask.wordbag import (  # noqa: E402
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model", default=DEFAULT_MODEL)
+    parser.add_argument("--only", nargs="*", help="run only these configs")
+    parser.add_argument("--out", default="exp07_signals")
+    parser.add_argument("--cases", nargs="*", help="run only these profile ids")
+    args = parser.parse_args()
     catalog = Catalog.from_json(ROOT / "data/itmo_krm_3.json")
-    lm = LocalCausalLM.load(DEFAULT_MODEL)
+    lm = LocalCausalLM.load(args.model)
     graph = PhraseGraph.from_catalog(catalog, None, {"indicators", "keywords"})
     index = WordIndex.build(graph, pymorphy_lemmatizer())
 
@@ -50,10 +57,14 @@ def main() -> None:
         ("pmi_floor_p25", 1.0, 0.0, floors["p25"]),
         ("pmi_floor_median+idf0.3", 1.0, 0.3, floors["median"]),
     ]
+    if args.only:
+        configs = [config for config in configs if config[0] in args.only]
     cases, _ = load_cases(role_filter=False)
+    if args.cases:
+        cases = [case for case in cases if case["id"] in args.cases]
     base = WordBagConfig()
     report: dict[str, object] = {
-        "experiment": "exp07_signals", "model": DEFAULT_MODEL, "role_filter": False,
+        "experiment": args.out, "model": args.model, "role_filter": False,
         "phrases": len(index.phrase_lemmas), "word_prior_quartiles": quartiles,
         "floors": floors, "words_per_signal": base.words_per_signal,
         "min_signals": base.min_signals, "max_signals": base.max_signals,
@@ -87,7 +98,7 @@ def main() -> None:
             "summary": summary, "rows": rows,
         }
         print(name, json.dumps(summary), flush=True)
-    out = ROOT / "experiments/results/exp07_signals.json"
+    out = ROOT / "experiments/results" / f"{args.out}.json"
     out.write_text(json.dumps(report, ensure_ascii=False, indent=1) + "\n", "utf-8")
     print("saved", out)
 

@@ -1,0 +1,204 @@
+{
+ "experiment": "exp08_signals_qwen3b_sample",
+ "model": "Qwen/Qwen2.5-3B-Instruct",
+ "role_filter": false,
+ "phrases": 1973,
+ "word_prior_quartiles": [
+  -33.497803688049316,
+  -27.43144989013672,
+  -21.78449249267578
+ ],
+ "floors": {
+  "p25": -33.5,
+  "median": -27.4
+ },
+ "words_per_signal": 2,
+ "min_signals": 2,
+ "max_signals": 4,
+ "path_beam": 6,
+ "word_branches": 3,
+ "configs": {
+  "idf0.3": {
+   "alpha": 0.0,
+   "beta": 0.3,
+   "prior_floor": null,
+   "summary": {
+    "web_precision": 0.16666666666666666,
+    "web_hits": 1,
+    "web_predicted": 6,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 46.91,
+    "mean_forward_calls_web": 65.2
+   },
+   "rows": [
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "DL-1",
+      "SS3",
+      "BD-1"
+     ],
+     "picks": [
+      {
+       "competency_id": "DL-1",
+       "score": -10.01,
+       "signals": [
+        [
+         "внедрение",
+         "обнаружение"
+        ],
+        [
+         "анализ",
+         "создание"
+        ]
+       ],
+       "words": [
+        "Внедрение",
+        "Обнаружение",
+        "Анализ",
+        "Создание"
+       ]
+      },
+      {
+       "competency_id": "SS3",
+       "score": -10.76,
+       "signals": [
+        [
+         "анализ",
+         "внедрение"
+        ],
+        [
+         "проверка",
+         "система"
+        ]
+       ],
+       "words": [
+        "Внедрение",
+        "Анализ",
+        "Проверка",
+        "Системы"
+       ]
+      },
+      {
+       "competency_id": "BD-1",
+       "score": -16.06,
+       "signals": [
+        [
+         "анализ",
+         "проверка"
+        ],
+        [
+         "значимый",
+         "исследование"
+        ]
+       ],
+       "words": [
+        "проверка",
+        "анализ",
+        "исследование",
+        "значимые"
+       ]
+      }
+     ],
+     "forward_calls": 101,
+     "seconds": 30.2
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "Bld-1",
+      "T-1"
+     ],
+     "picks": [
+      {
+       "competency_id": "PL-1",
+       "score": -16.27,
+       "signals": [
+        [
+         "python",
+         "разработка"
+        ],
+        [
+         "различный",
+         "система"
+        ]
+       ],
+       "words": [
+        "разработка",
+        "Python",
+        "различные",
+        "системы"
+       ]
+      },
+      {
+       "competency_id": "Bld-1",
+       "score": -19.28,
+       "signals": [
+        [
+         "проектирование",
+         "разработка"
+        ],
+        [
+         "развитие",
+         "управление"
+        ]
+       ],
+       "words": [
+        "разработка",
+        "проектирование",
+        "развитие",
+        "управление"
+       ]
+      },
+      {
+       "competency_id": "T-1",
+       "score": -28.4,
+       "signals": [
+        [
+         "автоматизация",
+         "проектирование"
+        ],
+        [
+         "задача",
+         "разработка"
+        ],
+        [
+         "организация",
+         "система"
+        ]
+       ],
+       "words": [
+        "автоматизация",
+        "проектирование",
+        "разработка",
+        "задачи",
+        "организация",
+        "системы"
+       ]
+      }
+     ],
+     "forward_calls": 225,
+     "seconds": 63.62
+    }
+   ]
+  }
+ }
+}
