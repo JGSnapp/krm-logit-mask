@@ -14,6 +14,7 @@ per catalog, so the per-request cost does not grow with the catalog.
 from __future__ import annotations
 
 import math
+import random
 import re
 from collections import defaultdict
 from dataclasses import dataclass, field
@@ -154,6 +155,19 @@ class WordBagConfig:
     # of at least `anchor_min_pmi` (None = no threshold). None = no anchors.
     anchor_df: int | None = None
     anchor_min_pmi: float | None = None
+    # Corridor search (experiment 17): branches whose mean log-mass per word
+    # (share of the model's probability the mask left) falls more than
+    # `corridor` below the second-best branch are dropped; free places are
+    # refilled with new first words drawn in proportion to exp(score / T)
+    # from a pool of `refill_pool` first words, without repeating a tried one.
+    corridor_search: bool = False
+    corridor: float | None = None
+    refill_pool: int = 24
+    refill_temperature: float = 1.0
+    extra_steps: int = 6
+    seed: int = 0
+    # How a competency is ranked: its best path ("max") or all its paths ("sum").
+    aggregate: str = "max"
 
 
 @dataclass
@@ -165,6 +179,9 @@ class WordChoice:
     idf: float
     score: float
     candidates_after: int
+    # log of the probability mass the model put on allowed first tokens at this
+    # choice (how much the mask did NOT cut off); experiment 17.
+    log_mass: float = 0.0
 
 
 @dataclass
@@ -291,16 +308,31 @@ class WordBagSelector:
         blocked = set(blocked or ())
         found: list[tuple[str, WordPath]] = []
         calls = 0
-        search = self._signal_search if coherent else self._path_search
+        if not coherent:
+            search = self._path_search
+        elif self.config.corridor_search:
+            search = self._corridor_search
+        else:
+            search = self._signal_search
         while len(found) < count:
             finished, used = search(text, blocked)
             calls += used
             best: dict[str, WordPath] = {}
+            scores: dict[str, list[float]] = defaultdict(list)
             for path in finished:
                 (competency_id,) = path.candidates
+                scores[competency_id].append(path.score)
                 if competency_id not in best or path.score > best[competency_id].score:
                     best[competency_id] = path
-            ranked = sorted(best.items(), key=lambda item: -item[1].score)
+
+            def rank(item: tuple[str, WordPath]) -> float:
+                if self.config.aggregate == "sum":
+                    values = scores[item[0]]
+                    top = max(values)
+                    return -(top + math.log(sum(math.exp(v - top) for v in values)))
+                return -item[1].score
+
+            ranked = sorted(best.items(), key=rank)
             if not ranked:
                 break
             for competency_id, path in ranked[: count - len(found)]:
@@ -379,63 +411,152 @@ class WordBagSelector:
         for _ in range(config.max_signals * config.words_per_signal):
             children: dict[tuple, SignalPath] = {}
             for path in live:
-                phrases = path.phrases if path.current else self._open_phrases(path)
-                used = path.lemmas
-                allowed = {
-                    lemma for phrase in phrases for lemma in self._near(phrase, path.current)
-                } - used
-                if (config.anchor_df is not None and not path.current
-                        and len(path.candidates) == 1):
-                    (only,) = path.candidates
-                    if not self._anchored(path.words, only):
-                        allowed &= self._anchor_lemmas(only)  # Write a key word next.
-                last_word = len(path.current) + 1 >= config.words_per_signal
-                if config.require_evidence and last_word and not path.current & self.evidence:
-                    allowed &= self.evidence  # The signal's last chance to be evidenced.
+                phrases, allowed = self._allowed(path)
                 if not allowed:
                     continue
                 options, used_calls = self._word_options(path.context, allowed, config.word_branches)
                 calls += used_calls
                 for option in options:
-                    kept = frozenset(
-                        p for p in phrases if option.lemma in self._near(p, path.current))
-                    current = path.current | {option.lemma}
-                    left = {
-                        lemma for phrase in kept for lemma in self._near(phrase, current)
-                    } - used
-                    closes = len(current) >= config.words_per_signal or not left
-                    context = path.context + list(self.tokens[option.word])
-                    candidates, signals = path.candidates, path.signals
-                    if closes and config.require_evidence and not current & self.evidence:
-                        continue
-                    if closes:
-                        competencies = {c for p in kept for c in index.phrase_lemmas[p][0]}
-                        candidates = frozenset(path.candidates & competencies)
-                        if not candidates:
-                            continue
-                        signals = signals + (current,)
-                        context += list(self.signal_separator)
-                    word = WordChoice(**{**option.__dict__, "candidates_after": len(candidates)})
-                    child = SignalPath(
-                        path.words + [word], candidates, context, path.score + option.score,
-                        signals=signals,
-                        current=frozenset() if closes else current,
-                        phrases=frozenset() if closes else kept,
-                    )
-                    key = (frozenset(child.signals), child.current)
-                    resolved = closes and len(candidates) == 1 and len(signals) >= config.min_signals
-                    if resolved and config.anchor_df is not None:
-                        resolved = self._anchored(child.words, next(iter(candidates)))
-                    if resolved:
-                        if key not in finished or child.score > finished[key].score:
-                            finished[key] = child
-                    elif closes and len(signals) >= config.max_signals:
-                        continue
-                    elif key not in children or child.score > children[key].score:
-                        children[key] = child
+                    self._place(self._extend(path, phrases, option), children, finished)
             live = sorted(children.values(), key=lambda p: -p.score)[: config.path_beam]
             if not live:
                 break
+        return sorted(finished.values(), key=lambda p: -p.score), calls
+
+    def _allowed(self, path: "SignalPath") -> tuple[frozenset[int], set[str]]:
+        """Phrases the next word may come from and the lemmas allowed next."""
+        config = self.config
+        phrases = path.phrases if path.current else self._open_phrases(path)
+        allowed = {
+            lemma for phrase in phrases for lemma in self._near(phrase, path.current)
+        } - path.lemmas
+        if (config.anchor_df is not None and not path.current
+                and len(path.candidates) == 1):
+            (only,) = path.candidates
+            if not self._anchored(path.words, only):
+                allowed &= self._anchor_lemmas(only)  # Write a key word next.
+        last_word = len(path.current) + 1 >= config.words_per_signal
+        if config.require_evidence and last_word and not path.current & self.evidence:
+            allowed &= self.evidence  # The signal's last chance to be evidenced.
+        return phrases, allowed
+
+    def _extend(
+        self, path: "SignalPath", phrases: frozenset[int], option: WordChoice,
+    ) -> tuple["SignalPath", str] | None:
+        """The path with one more word: (child, "finished" | "live") or None (dead)."""
+        config = self.config
+        index = self.index
+        used = path.lemmas
+        kept = frozenset(p for p in phrases if option.lemma in self._near(p, path.current))
+        current = path.current | {option.lemma}
+        left = {lemma for phrase in kept for lemma in self._near(phrase, current)} - used
+        closes = len(current) >= config.words_per_signal or not left
+        context = path.context + list(self.tokens[option.word])
+        candidates, signals = path.candidates, path.signals
+        if closes and config.require_evidence and not current & self.evidence:
+            return None
+        if closes:
+            competencies = {c for p in kept for c in index.phrase_lemmas[p][0]}
+            candidates = frozenset(path.candidates & competencies)
+            if not candidates:
+                return None
+            signals = signals + (current,)
+            context += list(self.signal_separator)
+        word = WordChoice(**{**option.__dict__, "candidates_after": len(candidates)})
+        child = SignalPath(
+            path.words + [word], candidates, context, path.score + option.score,
+            signals=signals,
+            current=frozenset() if closes else current,
+            phrases=frozenset() if closes else kept,
+        )
+        resolved = closes and len(candidates) == 1 and len(signals) >= config.min_signals
+        if resolved and config.anchor_df is not None:
+            resolved = self._anchored(child.words, next(iter(candidates)))
+        if resolved:
+            return child, "finished"
+        if closes and len(signals) >= config.max_signals:
+            return None
+        return child, "live"
+
+    @staticmethod
+    def _place(result, live: dict, finished: dict) -> None:
+        if result is None:
+            return
+        child, status = result
+        key = (frozenset(child.signals), child.current)
+        bucket = finished if status == "finished" else live
+        if key not in bucket or child.score > bucket[key].score:
+            bucket[key] = child
+
+    @staticmethod
+    def _mean_mass(path: "SignalPath") -> float:
+        return sum(word.log_mass for word in path.words) / len(path.words)
+
+    def _corridor_search(self, text: str, blocked: set[str]) -> tuple[list[WordPath], int]:
+        """Signal search with a corridor on the mass the mask cuts off, and refills.
+
+        Start: a pool of the `refill_pool` best first words. The `word_branches`
+        best start paths; free places (up to `path_beam`) are refilled with first
+        words drawn from the untried rest of the pool in proportion to
+        exp(score / T), so improbable starts ("API", "риск") get a chance.
+        After every step, a branch whose mean log-mass per word is more than
+        `corridor` below the second-best branch is dropped (the mask keeps
+        forcing it away from what the model wants); live paths are ranked by
+        mean word score, since refilled paths are shorter.
+        """
+        config = self.config
+        rng = random.Random(f"{config.seed}:{text}")
+        start = SignalPath(
+            [], frozenset(set(self.index.competency_lemmas) - blocked),
+            list(self.prompt(text)), 0.0,
+        )
+        root_phrases, root_allowed = self._allowed(start)
+        if not root_allowed:
+            return [], 0
+        token_beam = config.beam
+        config.beam = max(config.beam, config.refill_pool)
+        try:
+            pool, calls = self._word_options(start.context, root_allowed, config.refill_pool)
+        finally:
+            config.beam = token_beam
+        tried: set[str] = set()
+        live: dict[tuple, SignalPath] = {}
+        finished: dict[tuple, SignalPath] = {}
+
+        def start_with(option: WordChoice) -> None:
+            tried.add(option.lemma)
+            self._place(self._extend(start, root_phrases, option), live, finished)
+
+        for option in pool[: config.word_branches]:
+            start_with(option)
+        for _ in range(config.max_signals * config.words_per_signal + config.extra_steps):
+            while len(live) < config.path_beam:
+                remaining = [o for o in pool if o.lemma not in tried]
+                if not remaining:
+                    break
+                top = remaining[0].score
+                weights = [
+                    math.exp((o.score - top) / config.refill_temperature) for o in remaining]
+                start_with(rng.choices(remaining, weights)[0])
+            if not live:
+                break
+            children: dict[tuple, SignalPath] = {}
+            for path in live.values():
+                phrases, allowed = self._allowed(path)
+                if not allowed:
+                    continue
+                options, used_calls = self._word_options(path.context, allowed, config.word_branches)
+                calls += used_calls
+                for option in options:
+                    self._place(self._extend(path, phrases, option), children, finished)
+            candidates = list(children.values())
+            if config.corridor is not None and len(candidates) >= 2:
+                masses = sorted((self._mean_mass(p) for p in candidates), reverse=True)
+                floor = masses[1] - config.corridor
+                candidates = [p for p in candidates if self._mean_mass(p) >= floor]
+            candidates.sort(key=lambda p: -p.score / len(p.words))
+            live = {
+                (frozenset(p.signals), p.current): p for p in candidates[: config.path_beam]}
         return sorted(finished.values(), key=lambda p: -p.score), calls
 
     def _open_phrases(self, path: "SignalPath") -> frozenset[int]:
@@ -513,9 +634,13 @@ class WordBagSelector:
         live: list[tuple[int, ...]] = [()]
         finished: list[tuple[int, ...]] = []
         calls = 0
+        step_mass = 0.0
         while live:
             wanted = [sorted(children[node]) for node in live]
             rows = self.lm.next_token_logprobs(context, live, wanted)
+            if calls == 0 and rows and rows[0]:
+                top_value = max(rows[0])
+                step_mass = top_value + math.log(sum(math.exp(v - top_value) for v in rows[0]))
             calls += 1
             expanded: list[tuple[int, ...]] = []
             for node, tokens, values in zip(live, wanted, rows):
@@ -541,7 +666,7 @@ class WordBagSelector:
             options.append(WordChoice(
                 word=surface, lemma=lemma, log_probability=log_prob[node],
                 log_prior=self.prior.get(node, 0.0), idf=self.index.idf.get(lemma, 0.0),
-                score=score(node), candidates_after=0,
+                score=score(node), candidates_after=0, log_mass=step_mass,
             ))
             if len(options) == top:
                 break

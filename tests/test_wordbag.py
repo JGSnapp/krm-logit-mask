@@ -293,3 +293,26 @@ def test_anchor_word_makes_generic_paths_pay_for_the_domain_word():
     assert "python" in with_anchor[0][1].lemmas
     # With a PMI threshold BLD cannot finish at all: its key word is not wanted.
     assert [c for c, _ in found(count=2, anchor_df=1, anchor_min_pmi=0.0)] == ["PY"]
+
+
+def test_corridor_search_refills_with_improbable_first_word():
+    # "api" and "rest" are not among the two likeliest first words, yet their path wins.
+    phrases = {
+        "разработка зебра": {"X"},
+        "работа жираф": {"Y"},
+        "api rest": {"INT"},
+    }
+    likes = {"разработка": -1.0, "работа": -1.2, "api": -3.0, "rest": -2.0,
+             "зебра": -9.0, "жираф": -9.0}
+    base = dict(alpha=0.0, beta=0.0, beam=8, path_beam=3, word_branches=2,
+                words_per_signal=2, min_signals=1)
+
+    def best(**extra):
+        selector = _table_selector(phrases, likes, {}, WordBagConfig(**base, **extra))
+        found, _ = selector.select_paths("text", count=1, coherent=True)
+        return found[0]
+
+    assert best()[0] in {"X", "Y"}  # Beam keeps the two likeliest first words only.
+    competency, path = best(corridor_search=True, refill_pool=4)
+    assert competency == "INT" and {"api", "rest"} <= path.lemmas
+    assert all(word.log_mass < 0 for word in path.words)
