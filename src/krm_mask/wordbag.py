@@ -134,6 +134,11 @@ class WordBagConfig:
     words_per_signal: int = 2
     min_signals: int = 2
     max_signals: int = 4
+    # Evidence (experiment 12): `WordBagSelector.evidence` holds lemmas the
+    # model named itself in a free keyword list and/or lemmas of the resume.
+    # Evidence words get a bonus; with `require_evidence` every signal needs one.
+    evidence_bonus: float = 0.0
+    require_evidence: bool = False
 
 
 @dataclass
@@ -187,6 +192,7 @@ class WordBagSelector:
         self.index = index
         self.prompt = prompt
         self.config = config or WordBagConfig()
+        self.evidence: set[str] = set()
         tokenizer = lm.tokenizer
         delimiter = tokenizer.encode(WORD_DELIMITER, add_special_tokens=False)
         # Signals are separated by an empty line (one more delimiter after the word's own).
@@ -357,6 +363,9 @@ class WordBagSelector:
                 allowed = {
                     lemma for phrase in phrases for lemma in index.phrase_lemmas[phrase][1]
                 } - used
+                last_word = len(path.current) + 1 >= config.words_per_signal
+                if config.require_evidence and last_word and not path.current & self.evidence:
+                    allowed &= self.evidence  # The signal's last chance to be evidenced.
                 if not allowed:
                     continue
                 options, used_calls = self._word_options(path.context, allowed, config.word_branches)
@@ -370,6 +379,8 @@ class WordBagSelector:
                     closes = len(current) >= config.words_per_signal or not left
                     context = path.context + list(self.tokens[option.word])
                     candidates, signals = path.candidates, path.signals
+                    if closes and config.require_evidence and not current & self.evidence:
+                        continue
                     if closes:
                         competencies = {c for p in kept for c in index.phrase_lemmas[p][0]}
                         candidates = frozenset(path.candidates & competencies)
@@ -417,23 +428,24 @@ class WordBagSelector:
         config = self.config
         children: dict[tuple[int, ...], set[int]] = defaultdict(set)
         terminal: dict[tuple[int, ...], str] = {}
-        best_idf: dict[tuple[int, ...], float] = defaultdict(float)
+        best_extra: dict[tuple[int, ...], float] = defaultdict(lambda: -math.inf)
         for surface, lemma in self.index.surfaces.items():
             if lemma not in allowed:
                 continue
             sequence = self.tokens[surface]
             idf = self.index.idf.get(lemma, 0.0)
+            extra = config.beta * idf + config.evidence_bonus * (lemma in self.evidence)
             for depth in range(len(sequence)):
                 children[sequence[:depth]].add(sequence[depth])
                 prefix = sequence[: depth + 1]
-                best_idf[prefix] = max(best_idf[prefix], idf)
+                best_extra[prefix] = max(best_extra[prefix], extra)
             terminal.setdefault(sequence, surface)
 
         def score(node: tuple[int, ...]) -> float:
             prior = self.prior.get(node, 0.0)
             if config.prior_floor is not None:
                 prior = max(prior, config.prior_floor)
-            return log_prob[node] - config.alpha * prior + config.beta * best_idf[node]
+            return log_prob[node] - config.alpha * prior + best_extra[node]
 
         log_prob: dict[tuple[int, ...], float] = {(): 0.0}
         live: list[tuple[int, ...]] = [()]

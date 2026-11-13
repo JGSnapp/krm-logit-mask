@@ -214,3 +214,27 @@ def test_prior_floor_stops_rare_word_bonus():
 
     assert first_word(None) == "onnx"  # PMI +14 for a word the model barely wants.
     assert first_word(-5.0) == "python"
+
+
+def test_evidence_requirement_and_bonus_beat_generic_pairs():
+    # "команда работа" is the model's favourite pair, but neither word is evidenced.
+    phrases = {
+        "команда работа": {"CI"},
+        "сборка тестирование": {"CI"},
+        "витрины данные": {"DATA"},
+        "схемы данные": {"DATA"},
+    }
+    likes = {"команда": -0.1, "работа": -0.2, "сборка": -0.5, "тестирование": -0.5,
+             "витрины": -2.0, "данные": -1.0, "схемы": -2.0}
+    base = dict(alpha=0.0, beta=0.0, beam=8, path_beam=6, word_branches=5,
+                words_per_signal=2, min_signals=2)
+
+    def pick(**extra):
+        selector = _table_selector(phrases, likes, {}, WordBagConfig(**base, **extra))
+        selector.evidence = {"витрины", "данные", "схемы"}
+        found, _ = selector.select_paths("text", count=1, coherent=True)
+        return found[0][0]
+
+    assert pick() == "CI"
+    assert pick(require_evidence=True) == "DATA"
+    assert pick(evidence_bonus=2.0) == "DATA"
