@@ -238,3 +238,30 @@ def test_evidence_requirement_and_bonus_beat_generic_pairs():
     assert pick() == "CI"
     assert pick(require_evidence=True) == "DATA"
     assert pick(evidence_bonus=2.0) == "DATA"
+
+
+def test_signal_window_and_phrase_veto_stop_template_matches():
+    # BLD: two generic words far apart in a long template phrase; SIAM: adjacent words.
+    phrases = {
+        "разработка методов моделей для задач в процессах архитектурного проектирования": {"BLD"},
+        "проектирования городов": {"BLD"},
+        "сравнения поиска объектов": {"SIAM"},
+        "разработка сравнения": {"SIAM"},
+    }
+    likes = {"разработка": -0.1, "проектирования": -0.2, "сравнения": -0.6, "поиска": -0.6,
+             "объектов": -3.0, "городов": -9.0}
+    base = dict(alpha=0.0, beta=0.0, beam=8, path_beam=6, word_branches=4,
+                words_per_signal=2, min_signals=1)
+
+    def pick(blocked_phrases=(), **extra):
+        selector = _table_selector(phrases, likes, {}, WordBagConfig(**base, **extra))
+        selector.blocked_phrases = set(blocked_phrases)
+        found, _ = selector.select_paths("text", count=1, coherent=True)
+        return found[0]
+
+    competency, path = pick()
+    assert competency == "BLD"  # "разработка ... проектирования" are 8 words apart.
+    assert pick(signal_window=2)[0] == "SIAM"
+    assert pick(blocked_phrases={0})[0] == "SIAM"
+    index = _table_selector(phrases, likes, {}, WordBagConfig(**base)).index
+    assert index.phrase_positions[2] == {"сравнения": [0], "поиска": [1], "объектов": [2]}

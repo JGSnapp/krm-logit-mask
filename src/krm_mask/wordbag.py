@@ -74,11 +74,14 @@ class WordIndex:
     phrase_lemmas: list[tuple[set[str], set[str]]]  # (competency ids, lemmas) per phrase
     surfaces: dict[str, str]  # writable surface form -> lemma
     idf: dict[str, float]
+    # Word positions of each lemma inside its phrase (parallel to phrase_lemmas).
+    phrase_positions: list[dict[str, list[int]]] = field(default_factory=list)
 
     @classmethod
     def build(cls, graph: PhraseGraph, lemmatize: Callable[[str], str | None]) -> "WordIndex":
         competency_lemmas: dict[str, set[str]] = defaultdict(set)
         phrase_lemmas: list[tuple[set[str], set[str]]] = []
+        phrase_positions: list[dict[str, list[int]]] = []
         surfaces: dict[str, str] = {}
         for phrase, competency_ids in graph.phrases.items():
             competency_ids = set(competency_ids) - {NONE_ID}
@@ -87,11 +90,13 @@ class WordIndex:
             # Some topic cells list several topics separated by dots.
             for sentence in SENTENCE_RE.split(phrase):
                 lemmas: set[str] = set()
-                for word in split_words(sentence):
+                positions: dict[str, list[int]] = defaultdict(list)
+                for position, word in enumerate(split_words(sentence)):
                     lemma = lemmatize(word)
                     if not lemma:
                         continue
                     lemmas.add(lemma)
+                    positions[lemma].append(position)
                     for surface in (word, word.lower(), lemma):
                         surfaces.setdefault(surface, lemma)
                 if not lemmas:
@@ -99,13 +104,14 @@ class WordIndex:
                 for competency_id in competency_ids:
                     competency_lemmas[competency_id].update(lemmas)
                 phrase_lemmas.append((competency_ids, lemmas))
+                phrase_positions.append(dict(positions))
         total = len(competency_lemmas)
         frequency: dict[str, int] = defaultdict(int)
         for lemmas in competency_lemmas.values():
             for lemma in lemmas:
                 frequency[lemma] += 1
         idf = {lemma: math.log(total / count) for lemma, count in frequency.items()}
-        return cls(dict(competency_lemmas), phrase_lemmas, surfaces, idf)
+        return cls(dict(competency_lemmas), phrase_lemmas, surfaces, idf, phrase_positions)
 
     def best_phrase_coverage(self, competency_id: str, lemmas: Iterable[str]) -> int:
         wanted = set(lemmas)
@@ -139,6 +145,9 @@ class WordBagConfig:
     # Evidence words get a bonus; with `require_evidence` every signal needs one.
     evidence_bonus: float = 0.0
     require_evidence: bool = False
+    # Proximity (experiment 13): words of one signal must stand within this
+    # many word positions of each other in the phrase. None = anywhere.
+    signal_window: int | None = None
 
 
 @dataclass
@@ -193,6 +202,8 @@ class WordBagSelector:
         self.prompt = prompt
         self.config = config or WordBagConfig()
         self.evidence: set[str] = set()
+        # Negative selection (experiment 13): phrases no signal may come from.
+        self.blocked_phrases: set[int] = set()
         tokenizer = lm.tokenizer
         delimiter = tokenizer.encode(WORD_DELIMITER, add_special_tokens=False)
         # Signals are separated by an empty line (one more delimiter after the word's own).
@@ -361,7 +372,7 @@ class WordBagSelector:
                 phrases = path.phrases if path.current else self._open_phrases(path)
                 used = path.lemmas
                 allowed = {
-                    lemma for phrase in phrases for lemma in index.phrase_lemmas[phrase][1]
+                    lemma for phrase in phrases for lemma in self._near(phrase, path.current)
                 } - used
                 last_word = len(path.current) + 1 >= config.words_per_signal
                 if config.require_evidence and last_word and not path.current & self.evidence:
@@ -371,11 +382,12 @@ class WordBagSelector:
                 options, used_calls = self._word_options(path.context, allowed, config.word_branches)
                 calls += used_calls
                 for option in options:
-                    kept = frozenset(p for p in phrases if option.lemma in index.phrase_lemmas[p][1])
+                    kept = frozenset(
+                        p for p in phrases if option.lemma in self._near(p, path.current))
                     current = path.current | {option.lemma}
                     left = {
-                        lemma for phrase in kept for lemma in index.phrase_lemmas[phrase][1]
-                    } - used - {option.lemma}
+                        lemma for phrase in kept for lemma in self._near(phrase, current)
+                    } - used
                     closes = len(current) >= config.words_per_signal or not left
                     context = path.context + list(self.tokens[option.word])
                     candidates, signals = path.candidates, path.signals
@@ -413,9 +425,25 @@ class WordBagSelector:
         except phrases that already contain an earlier signal (no repeating it)."""
         return frozenset(
             i for i, (competencies, lemmas) in enumerate(self.index.phrase_lemmas)
-            if competencies & path.candidates
+            if competencies & path.candidates and i not in self.blocked_phrases
             and not any(signal <= lemmas for signal in path.signals)
         )
+
+    def _near(self, phrase: int, current: frozenset[str] | set[str]) -> set[str]:
+        """Lemmas of the phrase that may join the signal `current`: with a window,
+        each must stand within `signal_window` positions of every current word."""
+        lemmas = self.index.phrase_lemmas[phrase][1]
+        window = self.config.signal_window
+        if window is None or not current:
+            return lemmas - set(current)
+        positions = self.index.phrase_positions[phrase]
+        return {
+            lemma for lemma in lemmas - set(current)
+            if all(
+                any(abs(a - b) <= window for a in positions[lemma] for b in positions[other])
+                for other in current
+            )
+        }
 
     def _choose_word(self, context: list[int], allowed: set[str]) -> tuple[WordChoice | None, int]:
         options, calls = self._word_options(context, allowed, 1)
