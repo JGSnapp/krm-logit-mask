@@ -39,6 +39,13 @@ CONFIGS = {
     "anchor_df1_pmi0": (1, 0.0),
     "anchor_df2_pmi0": (2, 0.0),
     "anchor_df3_pmi0": (3, 0.0),
+    # Experiment 15: PMI thresholds of the key word.
+    "anchor_df3_pmi2": (3, 2.0),
+    "anchor_df3_pmi3": (3, 3.0),
+    "anchor_df3_pmi4": (3, 4.0),
+    "anchor_df3_pmi5": (3, 5.0),
+    "anchor_df2_pmi3": (2, 3.0),
+    "anchor_df2_pmi4": (2, 4.0),
 }
 
 
