@@ -1,0 +1,1609 @@
+{
+ "experiment": "exp18_verify",
+ "model": "Qwen/Qwen2.5-1.5B-Instruct",
+ "eval_set": "experiments/eval_set.json",
+ "catalog": "data/itmo_krm_3.json",
+ "max_candidates": 10,
+ "configs": {
+  "search_only": {
+   "params": [
+    3,
+    null,
+    null
+   ],
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "LC-4",
+      "SS2",
+      "LC-5"
+     ],
+     "checks": 0,
+     "seconds": 46.62
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "MF-4",
+      "ML-5",
+      "LC-1"
+     ],
+     "checks": 0,
+     "seconds": 54.64
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "LC-5",
+      "ER-2",
+      "ER-1"
+     ],
+     "checks": 0,
+     "seconds": 47.46
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "DL-1",
+      "DL-3",
+      "S-3"
+     ],
+     "checks": 0,
+     "seconds": 56.9
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "Bld-1",
+      "LC-5",
+      "PL-1"
+     ],
+     "checks": 0,
+     "seconds": 71.72
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "S-1"
+     ],
+     "checks": 0,
+     "seconds": 18.51
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "AI-S-3"
+     ],
+     "checks": 0,
+     "seconds": 24.71
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-4"
+     ],
+     "checks": 0,
+     "seconds": 28.07
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "Tr-1"
+     ],
+     "checks": 0,
+     "seconds": 28.92
+    }
+   ],
+   "summary": {
+    "web_precision": 0.4666666666666667,
+    "web_hits": 7,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.25,
+    "mean_seconds_web": 55.467999999999996,
+    "hits_per_profile": [
+     2,
+     1,
+     0,
+     2,
+     2
+    ],
+    "predicted_per_profile": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ],
+    "synthetic_selected": [
+     [
+      "S-1"
+     ],
+     [
+      "AI-S-3"
+     ],
+     [
+      "LC-4"
+     ],
+     [
+      "Tr-1"
+     ]
+    ]
+   }
+  },
+  "k6_indicators": {
+   "params": [
+    6,
+    true,
+    0.0
+   ],
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "LC-4",
+      "SS2",
+      "LC-5"
+     ],
+     "checks": 3,
+     "seconds": 46.97
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "MF-4",
+      "ML-5",
+      "LC-1"
+     ],
+     "checks": 3,
+     "seconds": 54.97
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "LC-5",
+      "ER-2",
+      "ER-1"
+     ],
+     "checks": 3,
+     "seconds": 47.83
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "DL-1",
+      "DL-3",
+      "S-3"
+     ],
+     "checks": 3,
+     "seconds": 57.31
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "Bld-1",
+      "LC-5",
+      "PL-1"
+     ],
+     "checks": 3,
+     "seconds": 72.08
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "S-1"
+     ],
+     "checks": 1,
+     "seconds": 18.57
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "checks": 2,
+     "seconds": 24.81
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-4"
+     ],
+     "checks": 1,
+     "seconds": 28.13
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "checks": 6,
+     "seconds": 29.26
+    }
+   ],
+   "summary": {
+    "web_precision": 0.4666666666666667,
+    "web_hits": 7,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.75,
+    "mean_seconds_web": 55.831999999999994,
+    "hits_per_profile": [
+     2,
+     1,
+     0,
+     2,
+     2
+    ],
+    "predicted_per_profile": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ],
+    "synthetic_selected": [
+     [
+      "S-1"
+     ],
+     [
+      "PL-1"
+     ],
+     [
+      "LC-4"
+     ],
+     [
+      "__NONE__"
+     ]
+    ]
+   }
+  },
+  "k10_indicators": {
+   "params": [
+    10,
+    true,
+    0.0
+   ],
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "LC-4",
+      "SS2",
+      "LC-5"
+     ],
+     "checks": 3,
+     "seconds": 46.97
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "MF-4",
+      "ML-5",
+      "LC-1"
+     ],
+     "checks": 3,
+     "seconds": 54.97
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "LC-5",
+      "ER-2",
+      "ER-1"
+     ],
+     "checks": 3,
+     "seconds": 47.83
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "DL-1",
+      "DL-3",
+      "S-3"
+     ],
+     "checks": 3,
+     "seconds": 57.31
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "Bld-1",
+      "LC-5",
+      "PL-1"
+     ],
+     "checks": 3,
+     "seconds": 72.08
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "S-1"
+     ],
+     "checks": 1,
+     "seconds": 18.57
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "checks": 2,
+     "seconds": 24.81
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-4"
+     ],
+     "checks": 1,
+     "seconds": 28.13
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "checks": 10,
+     "seconds": 29.48
+    }
+   ],
+   "summary": {
+    "web_precision": 0.4666666666666667,
+    "web_hits": 7,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.75,
+    "mean_seconds_web": 55.831999999999994,
+    "hits_per_profile": [
+     2,
+     1,
+     0,
+     2,
+     2
+    ],
+    "predicted_per_profile": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ],
+    "synthetic_selected": [
+     [
+      "S-1"
+     ],
+     [
+      "PL-1"
+     ],
+     [
+      "LC-4"
+     ],
+     [
+      "__NONE__"
+     ]
+    ]
+   }
+  },
+  "k10_indicators_margin1": {
+   "params": [
+    10,
+    true,
+    1.0
+   ],
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "LC-5",
+      "S-5",
+      "LLM-5"
+     ],
+     "checks": 6,
+     "seconds": 47.33
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "MF-4",
+      "ML-5",
+      "LC-1"
+     ],
+     "checks": 3,
+     "seconds": 54.97
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "LC-5",
+      "LLM-4",
+      "PL-1"
+     ],
+     "checks": 8,
+     "seconds": 48.45
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "DL-1",
+      "DL-3",
+      "MF-3"
+     ],
+     "checks": 9,
+     "seconds": 58.13
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "LC-5",
+      "PL-1",
+      "MM-1"
+     ],
+     "checks": 9,
+     "seconds": 72.79
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-1"
+     ],
+     "checks": 4,
+     "seconds": 18.74
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "checks": 10,
+     "seconds": 25.24
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-4"
+     ],
+     "checks": 1,
+     "seconds": 28.13
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "checks": 10,
+     "seconds": 29.48
+    }
+   ],
+   "summary": {
+    "web_precision": 0.4666666666666667,
+    "web_hits": 7,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.75,
+    "mean_seconds_web": 56.334,
+    "hits_per_profile": [
+     1,
+     1,
+     1,
+     2,
+     2
+    ],
+    "predicted_per_profile": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ],
+    "synthetic_selected": [
+     [
+      "BD-1"
+     ],
+     [
+      "__NONE__"
+     ],
+     [
+      "LC-4"
+     ],
+     [
+      "__NONE__"
+     ]
+    ]
+   }
+  },
+  "k10_name_only": {
+   "params": [
+    10,
+    false,
+    0.0
+   ],
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "LC-4",
+      "SS2",
+      "LC-5"
+     ],
+     "checks": 3,
+     "seconds": 46.93
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "MF-4",
+      "ML-5",
+      "LC-1"
+     ],
+     "checks": 3,
+     "seconds": 54.93
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "LC-5",
+      "ER-2",
+      "ER-1"
+     ],
+     "checks": 3,
+     "seconds": 47.78
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "DL-1",
+      "DL-3",
+      "S-3"
+     ],
+     "checks": 3,
+     "seconds": 57.22
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "Bld-1",
+      "LC-5",
+      "PL-1"
+     ],
+     "checks": 3,
+     "seconds": 72.01
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "S-1"
+     ],
+     "checks": 1,
+     "seconds": 18.56
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "checks": 2,
+     "seconds": 24.79
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-4"
+     ],
+     "checks": 1,
+     "seconds": 28.12
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "checks": 10,
+     "seconds": 29.4
+    }
+   ],
+   "summary": {
+    "web_precision": 0.4666666666666667,
+    "web_hits": 7,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.75,
+    "mean_seconds_web": 55.774,
+    "hits_per_profile": [
+     2,
+     1,
+     0,
+     2,
+     2
+    ],
+    "predicted_per_profile": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ],
+    "synthetic_selected": [
+     [
+      "S-1"
+     ],
+     [
+      "PL-1"
+     ],
+     [
+      "LC-4"
+     ],
+     [
+      "__NONE__"
+     ]
+    ]
+   }
+  }
+ },
+ "gate": {
+  "retail-data-platform": [
+   {
+    "id": "LC-4",
+    "name": "Управление процессами жизненного цикла ИИ продукта",
+    "acceptable": false,
+    "margin_indicators": 0.97,
+    "margin_name": 1.27
+   },
+   {
+    "id": "SS2",
+    "name": "Командная работа, коммуникации и лидерство в ИИ",
+    "acceptable": true,
+    "margin_indicators": 0.93,
+    "margin_name": 1.5
+   },
+   {
+    "id": "LC-5",
+    "name": "Промышленная разработка, развертывание, эксплуатация и мониторинг систем ИИ",
+    "acceptable": true,
+    "margin_indicators": 1.1,
+    "margin_name": 1.44
+   },
+   {
+    "id": "S-5",
+    "name": "Юриспруденция",
+    "acceptable": false,
+    "margin_indicators": 1.11,
+    "margin_name": 1.73
+   },
+   {
+    "id": "MI-2",
+    "name": "Природопользование",
+    "acceptable": false,
+    "margin_indicators": 0.85,
+    "margin_name": 1.55
+   },
+   {
+    "id": "LLM-5",
+    "name": "Промпт-инженерия",
+    "acceptable": false,
+    "margin_indicators": 1.2,
+    "margin_name": 1.58
+   },
+   {
+    "id": "AI-S-1",
+    "name": "Доверенный ИИ, управление рисками и безопасностью систем ИИ",
+    "acceptable": false,
+    "margin_indicators": 0.88,
+    "margin_name": 1.21
+   },
+   {
+    "id": "LLM-4",
+    "name": "ИИ-агенты",
+    "acceptable": false,
+    "margin_indicators": 1.1,
+    "margin_name": 1.53
+   },
+   {
+    "id": "LLM-2",
+    "name": "Дообучение и адаптация генеративных моделей",
+    "acceptable": false,
+    "margin_indicators": 0.93,
+    "margin_name": 1.19
+   },
+   {
+    "id": "ER-2",
+    "name": "Образование",
+    "acceptable": false,
+    "margin_indicators": 1.08,
+    "margin_name": 1.62
+   }
+  ],
+  "industrial-ml-product": [
+   {
+    "id": "MF-4",
+    "name": "Статистические основы МО",
+    "acceptable": false,
+    "margin_indicators": 1.68,
+    "margin_name": 1.54
+   },
+   {
+    "id": "ML-5",
+    "name": "Методы повышения устойчивости, надежности, безопасности алгоритмов МО",
+    "acceptable": false,
+    "margin_indicators": 1.32,
+    "margin_name": 1.52
+   },
+   {
+    "id": "LC-1",
+    "name": "Понимание бизнес-проблемы",
+    "acceptable": true,
+    "margin_indicators": 1.51,
+    "margin_name": 1.56
+   },
+   {
+    "id": "S-5",
+    "name": "Юриспруденция",
+    "acceptable": false,
+    "margin_indicators": 1.51,
+    "margin_name": 1.64
+   },
+   {
+    "id": "ML-4",
+    "name": "Методы классического машинного обучения без учителя",
+    "acceptable": false,
+    "margin_indicators": 1.76,
+    "margin_name": 1.57
+   },
+   {
+    "id": "AI-S-3",
+    "name": "Проектирует и разрабатывает ИИ-решения с учётом принципов «конструктивной безопасности»",
+    "acceptable": false,
+    "margin_indicators": 1.45,
+    "margin_name": 1.45
+   },
+   {
+    "id": "FC-5",
+    "name": "Выравнивание целей",
+    "acceptable": false,
+    "margin_indicators": 1.71,
+    "margin_name": 1.37
+   },
+   {
+    "id": "E-1",
+    "name": "Финансовая сфера",
+    "acceptable": false,
+    "margin_indicators": 1.57,
+    "margin_name": 1.57
+   },
+   {
+    "id": "ML-6",
+    "name": "Обучение с подкреплением",
+    "acceptable": false,
+    "margin_indicators": 1.34,
+    "margin_name": 1.54
+   },
+   {
+    "id": "MF-7",
+    "name": "Топологические и геометрические структуры",
+    "acceptable": false,
+    "margin_indicators": 1.52,
+    "margin_name": 1.5
+   }
+  ],
+  "ai-security-reviewer": [
+   {
+    "id": "LC-5",
+    "name": "Промышленная разработка, развертывание, эксплуатация и мониторинг систем ИИ",
+    "acceptable": false,
+    "margin_indicators": 1.13,
+    "margin_name": 0.98
+   },
+   {
+    "id": "ER-2",
+    "name": "Образование",
+    "acceptable": false,
+    "margin_indicators": 0.98,
+    "margin_name": 0.97
+   },
+   {
+    "id": "ER-1",
+    "name": "Наука",
+    "acceptable": false,
+    "margin_indicators": 1.0,
+    "margin_name": 0.94
+   },
+   {
+    "id": "LLM-4",
+    "name": "ИИ-агенты",
+    "acceptable": false,
+    "margin_indicators": 1.02,
+    "margin_name": 0.96
+   },
+   {
+    "id": "S-4",
+    "name": "Туризм",
+    "acceptable": false,
+    "margin_indicators": 0.74,
+    "margin_name": 0.86
+   },
+   {
+    "id": "ML-8",
+    "name": "Алгоритмы обучения на нестандартных объемах данных",
+    "acceptable": false,
+    "margin_indicators": 0.8,
+    "margin_name": 0.99
+   },
+   {
+    "id": "H-3",
+    "name": "Телемедицина",
+    "acceptable": false,
+    "margin_indicators": 0.81,
+    "margin_name": 0.79
+   },
+   {
+    "id": "PL-1",
+    "name": "Python",
+    "acceptable": true,
+    "margin_indicators": 1.15,
+    "margin_name": 1.04
+   },
+   {
+    "id": "SS3",
+    "name": "Системное, критическое и креативное мышление в ИИ",
+    "acceptable": false,
+    "margin_indicators": 1.26,
+    "margin_name": 1.07
+   },
+   {
+    "id": "ML-6",
+    "name": "Обучение с подкреплением",
+    "acceptable": false,
+    "margin_indicators": 0.89,
+    "margin_name": 0.89
+   }
+  ],
+  "applied-research-engineer": [
+   {
+    "id": "DL-1",
+    "name": "Нейронные сети, глубокие нейронные сети",
+    "acceptable": true,
+    "margin_indicators": 1.11,
+    "margin_name": 0.71
+   },
+   {
+    "id": "DL-3",
+    "name": "Компьютерное зрение",
+    "acceptable": true,
+    "margin_indicators": 1.06,
+    "margin_name": 0.86
+   },
+   {
+    "id": "S-3",
+    "name": "Дизайн",
+    "acceptable": false,
+    "margin_indicators": 0.77,
+    "margin_name": 0.89
+   },
+   {
+    "id": "ML-8",
+    "name": "Алгоритмы обучения на нестандартных объемах данных",
+    "acceptable": true,
+    "margin_indicators": 0.92,
+    "margin_name": 0.78
+   },
+   {
+    "id": "DL-2",
+    "name": "Современные архитектуры генеративных глубоких сетей",
+    "acceptable": false,
+    "margin_indicators": 0.81,
+    "margin_name": 0.92
+   },
+   {
+    "id": "DL-4",
+    "name": "Обработка естесственного языка",
+    "acceptable": false,
+    "margin_indicators": 0.99,
+    "margin_name": 0.84
+   },
+   {
+    "id": "ML-6",
+    "name": "Обучение с подкреплением",
+    "acceptable": false,
+    "margin_indicators": 0.93,
+    "margin_name": 0.89
+   },
+   {
+    "id": "E-1",
+    "name": "Финансовая сфера",
+    "acceptable": false,
+    "margin_indicators": 0.85,
+    "margin_name": 0.85
+   },
+   {
+    "id": "MF-3",
+    "name": "Методы оптимизации",
+    "acceptable": false,
+    "margin_indicators": 1.1,
+    "margin_name": 0.87
+   },
+   {
+    "id": "MM-2",
+    "name": "Рекламные кампании",
+    "acceptable": false,
+    "margin_indicators": 0.71,
+    "margin_name": 0.79
+   }
+  ],
+  "backend-llm-agents": [
+   {
+    "id": "Bld-1",
+    "name": "Градостроительство",
+    "acceptable": false,
+    "margin_indicators": 0.79,
+    "margin_name": 1.18
+   },
+   {
+    "id": "LC-5",
+    "name": "Промышленная разработка, развертывание, эксплуатация и мониторинг систем ИИ",
+    "acceptable": true,
+    "margin_indicators": 1.09,
+    "margin_name": 1.36
+   },
+   {
+    "id": "PL-1",
+    "name": "Python",
+    "acceptable": true,
+    "margin_indicators": 1.45,
+    "margin_name": 1.71
+   },
+   {
+    "id": "Tr-1",
+    "name": "Транспортное планирование",
+    "acceptable": false,
+    "margin_indicators": 0.84,
+    "margin_name": 1.11
+   },
+   {
+    "id": "MM-3",
+    "name": "Производство медиаконтента",
+    "acceptable": false,
+    "margin_indicators": 0.64,
+    "margin_name": 1.33
+   },
+   {
+    "id": "S-1",
+    "name": "Экология",
+    "acceptable": false,
+    "margin_indicators": 0.84,
+    "margin_name": 1.37
+   },
+   {
+    "id": "AI-S-1",
+    "name": "Доверенный ИИ, управление рисками и безопасностью систем ИИ",
+    "acceptable": false,
+    "margin_indicators": 0.75,
+    "margin_name": 1.08
+   },
+   {
+    "id": "S-4",
+    "name": "Туризм",
+    "acceptable": false,
+    "margin_indicators": 0.75,
+    "margin_name": 1.2
+   },
+   {
+    "id": "MM-1",
+    "name": "Создание и продвижение контента",
+    "acceptable": false,
+    "margin_indicators": 1.07,
+    "margin_name": 1.32
+   },
+   {
+    "id": "DL-5",
+    "name": "Распознавание и генерация речи",
+    "acceptable": false,
+    "margin_indicators": 0.75,
+    "margin_name": 1.27
+   }
+  ],
+  "syn-001": [
+   {
+    "id": "S-1",
+    "name": "Экология",
+    "acceptable": false,
+    "margin_indicators": 0.23,
+    "margin_name": 1.34
+   },
+   {
+    "id": "ER-1",
+    "name": "Наука",
+    "acceptable": false,
+    "margin_indicators": 0.86,
+    "margin_name": 1.36
+   },
+   {
+    "id": "DL-4",
+    "name": "Обработка естесственного языка",
+    "acceptable": false,
+    "margin_indicators": -0.37,
+    "margin_name": 1.59
+   },
+   {
+    "id": "BD-1",
+    "name": "Предварительный анализ данных",
+    "acceptable": true,
+    "margin_indicators": 1.48,
+    "margin_name": 2.05
+   },
+   {
+    "id": "E-1",
+    "name": "Финансовая сфера",
+    "acceptable": false,
+    "margin_indicators": 0.63,
+    "margin_name": 1.62
+   },
+   {
+    "id": "S-3",
+    "name": "Дизайн",
+    "acceptable": false,
+    "margin_indicators": -0.65,
+    "margin_name": 1.38
+   },
+   {
+    "id": "PL-1",
+    "name": "Python",
+    "acceptable": false,
+    "margin_indicators": 0.16,
+    "margin_name": 1.45
+   },
+   {
+    "id": "SS3",
+    "name": "Системное, критическое и креативное мышление в ИИ",
+    "acceptable": false,
+    "margin_indicators": 0.39,
+    "margin_name": 1.1
+   },
+   {
+    "id": "BD-2",
+    "name": "Понимание (интерпретация) данных",
+    "acceptable": false,
+    "margin_indicators": 1.75,
+    "margin_name": 1.76
+   },
+   {
+    "id": "H-3",
+    "name": "Телемедицина",
+    "acceptable": false,
+    "margin_indicators": 0.16,
+    "margin_name": 1.38
+   }
+  ],
+  "syn-002": [
+   {
+    "id": "AI-S-3",
+    "name": "Проектирует и разрабатывает ИИ-решения с учётом принципов «конструктивной безопасности»",
+    "acceptable": false,
+    "margin_indicators": -0.45,
+    "margin_name": -0.52
+   },
+   {
+    "id": "PL-1",
+    "name": "Python",
+    "acceptable": true,
+    "margin_indicators": 0.6,
+    "margin_name": 0.46
+   },
+   {
+    "id": "AC-1",
+    "name": "Способен применять методы и технологии организации и управления данными и знаниями в агропромышленном комплексе",
+    "acceptable": false,
+    "margin_indicators": 0.19,
+    "margin_name": -0.06
+   },
+   {
+    "id": "MF-4",
+    "name": "Статистические основы МО",
+    "acceptable": false,
+    "margin_indicators": 0.24,
+    "margin_name": -0.28
+   },
+   {
+    "id": "MI-1",
+    "name": "Разведка, добыча и транспортировка полезных ископаемых",
+    "acceptable": false,
+    "margin_indicators": -0.2,
+    "margin_name": -0.56
+   },
+   {
+    "id": "PL-2",
+    "name": "Java/Scala/Kotlin",
+    "acceptable": false,
+    "margin_indicators": -0.31,
+    "margin_name": -0.61
+   },
+   {
+    "id": "EI-1",
+    "name": "Топливно-энергетический комплекс",
+    "acceptable": false,
+    "margin_indicators": 0.04,
+    "margin_name": -0.2
+   },
+   {
+    "id": "PL-3",
+    "name": "C#",
+    "acceptable": false,
+    "margin_indicators": -0.66,
+    "margin_name": -0.56
+   },
+   {
+    "id": "HPC-1",
+    "name": "Высокопроизводительные вычислительные архитектуры",
+    "acceptable": false,
+    "margin_indicators": 0.14,
+    "margin_name": -0.54
+   },
+   {
+    "id": "ML-6",
+    "name": "Обучение с подкреплением",
+    "acceptable": false,
+    "margin_indicators": 0.53,
+    "margin_name": 0.21
+   }
+  ],
+  "syn-003": [
+   {
+    "id": "LC-4",
+    "name": "Управление процессами жизненного цикла ИИ продукта",
+    "acceptable": true,
+    "margin_indicators": 1.48,
+    "margin_name": 1.83
+   },
+   {
+    "id": "S-4",
+    "name": "Туризм",
+    "acceptable": false,
+    "margin_indicators": 0.36,
+    "margin_name": 1.43
+   },
+   {
+    "id": "E-1",
+    "name": "Финансовая сфера",
+    "acceptable": false,
+    "margin_indicators": 0.9,
+    "margin_name": 1.94
+   },
+   {
+    "id": "Tr-1",
+    "name": "Транспортное планирование",
+    "acceptable": false,
+    "margin_indicators": 0.51,
+    "margin_name": 1.63
+   },
+   {
+    "id": "Bld-1",
+    "name": "Градостроительство",
+    "acceptable": false,
+    "margin_indicators": 0.66,
+    "margin_name": 1.75
+   },
+   {
+    "id": "MI-1",
+    "name": "Разведка, добыча и транспортировка полезных ископаемых",
+    "acceptable": false,
+    "margin_indicators": 0.49,
+    "margin_name": 0.64
+   },
+   {
+    "id": "EI-1",
+    "name": "Топливно-энергетический комплекс",
+    "acceptable": false,
+    "margin_indicators": 1.18,
+    "margin_name": 1.62
+   },
+   {
+    "id": "ER-1",
+    "name": "Наука",
+    "acceptable": false,
+    "margin_indicators": 1.29,
+    "margin_name": 1.83
+   },
+   {
+    "id": "SS2",
+    "name": "Командная работа, коммуникации и лидерство в ИИ",
+    "acceptable": false,
+    "margin_indicators": 0.31,
+    "margin_name": 1.35
+   },
+   {
+    "id": "MnI-1",
+    "name": "Способен осуществлять трудовые функции, обусловленные профессиональной ролью, в ОПД «Обрабатывающая промышленность»",
+    "acceptable": false,
+    "margin_indicators": 1.26,
+    "margin_name": 1.04
+   }
+  ],
+  "syn-004": [
+   {
+    "id": "Tr-1",
+    "name": "Транспортное планирование",
+    "acceptable": false,
+    "margin_indicators": -0.53,
+    "margin_name": -0.56
+   },
+   {
+    "id": "H-2",
+    "name": "Здравоохранение",
+    "acceptable": false,
+    "margin_indicators": -0.72,
+    "margin_name": -0.62
+   },
+   {
+    "id": "S-4",
+    "name": "Туризм",
+    "acceptable": false,
+    "margin_indicators": -0.51,
+    "margin_name": -0.58
+   },
+   {
+    "id": "ER-2",
+    "name": "Образование",
+    "acceptable": false,
+    "margin_indicators": -0.55,
+    "margin_name": -0.45
+   },
+   {
+    "id": "S-1",
+    "name": "Экология",
+    "acceptable": false,
+    "margin_indicators": -0.43,
+    "margin_name": -0.63
+   },
+   {
+    "id": "LC-6",
+    "name": "Стратегия ИИ, цифровая экосистема с ИИ",
+    "acceptable": false,
+    "margin_indicators": -0.58,
+    "margin_name": -0.65
+   },
+   {
+    "id": "LC-4",
+    "name": "Управление процессами жизненного цикла ИИ продукта",
+    "acceptable": false,
+    "margin_indicators": -0.68,
+    "margin_name": -0.76
+   },
+   {
+    "id": "T-2",
+    "name": "Телекоммуникационные системы",
+    "acceptable": false,
+    "margin_indicators": -0.44,
+    "margin_name": -0.46
+   },
+   {
+    "id": "E-1",
+    "name": "Финансовая сфера",
+    "acceptable": false,
+    "margin_indicators": -0.54,
+    "margin_name": -0.53
+   },
+   {
+    "id": "T-1",
+    "name": "Сети и системы связи",
+    "acceptable": false,
+    "margin_indicators": -0.5,
+    "margin_name": -0.62
+   }
+  ]
+ }
+}

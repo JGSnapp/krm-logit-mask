@@ -1,0 +1,1576 @@
+{
+ "experiment": "exp18_verify_mipt",
+ "model": "Qwen/Qwen2.5-1.5B-Instruct",
+ "eval_set": "experiments/eval_set_mipt.json",
+ "catalog": "data/mipt_krm.json",
+ "max_candidates": 10,
+ "configs": {
+  "search_only": {
+   "params": [
+    3,
+    null,
+    null
+   ],
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "ИД-3",
+      "ИД-4",
+      "АД-2",
+      "АД-5",
+      "ППК-ДА2",
+      "ППК-Р4",
+      "ППК-ОС6",
+      "УНК-02"
+     ],
+     "selected": [
+      "ДИ-2",
+      "ДИ-1",
+      "ИД-2"
+     ],
+     "checks": 0,
+     "seconds": 140.44
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "ППК-ДА1",
+      "ППК-ДА4",
+      "ППК-ДА5",
+      "ППК-ДА7",
+      "ППК-У2",
+      "МП-1",
+      "МП-2",
+      "МП-5",
+      "УНК-01"
+     ],
+     "selected": [
+      "ППК-ДА3",
+      "АД-7",
+      "ИД-3"
+     ],
+     "checks": 0,
+     "seconds": 170.52
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "КБ-1",
+      "КБ-2",
+      "КБ-4",
+      "ППК-У1",
+      "ИТ-10",
+      "ДСО-1",
+      "УНК-01"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "АР-2",
+      "КБ-1"
+     ],
+     "checks": 0,
+     "seconds": 102.72
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "МО-1",
+      "МО-2",
+      "УНК-05",
+      "ППК-ДА5",
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "АД-7",
+      "ППК-ДА2",
+      "ИД-3"
+     ],
+     "checks": 0,
+     "seconds": 118.37
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "ППК-Р1",
+      "ППК-Р2",
+      "ППК-Р3",
+      "ППК-Р4",
+      "ППК-Р5",
+      "ППК-Р6",
+      "ИП-1",
+      "АД-6",
+      "БСА-3"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "МП-3",
+      "ППК-Р6"
+     ],
+     "checks": 0,
+     "seconds": 56.69
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "ИД-3"
+     ],
+     "checks": 0,
+     "seconds": 40.26
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-Р1",
+      "УНК-04"
+     ],
+     "selected": [
+      "ППК-ДА3"
+     ],
+     "checks": 0,
+     "seconds": 31.77
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "МО-2"
+     ],
+     "selected": [
+      "ИТК-1"
+     ],
+     "checks": 0,
+     "seconds": 23.61
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "МП-3"
+     ],
+     "checks": 0,
+     "seconds": 41.0
+    }
+   ],
+   "summary": {
+    "web_precision": 0.26666666666666666,
+    "web_hits": 4,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 117.748,
+    "hits_per_profile": [
+     0,
+     0,
+     1,
+     1,
+     2
+    ],
+    "predicted_per_profile": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ],
+    "synthetic_selected": [
+     [
+      "ИД-3"
+     ],
+     [
+      "ППК-ДА3"
+     ],
+     [
+      "ИТК-1"
+     ],
+     [
+      "МП-3"
+     ]
+    ]
+   }
+  },
+  "k6_indicators": {
+   "params": [
+    6,
+    true,
+    0.0
+   ],
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "ИД-3",
+      "ИД-4",
+      "АД-2",
+      "АД-5",
+      "ППК-ДА2",
+      "ППК-Р4",
+      "ППК-ОС6",
+      "УНК-02"
+     ],
+     "selected": [
+      "ДИ-2",
+      "ДИ-1",
+      "ИД-2"
+     ],
+     "checks": 3,
+     "seconds": 140.81
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "ППК-ДА1",
+      "ППК-ДА4",
+      "ППК-ДА5",
+      "ППК-ДА7",
+      "ППК-У2",
+      "МП-1",
+      "МП-2",
+      "МП-5",
+      "УНК-01"
+     ],
+     "selected": [
+      "ППК-ДА3",
+      "АД-7",
+      "ИД-3"
+     ],
+     "checks": 3,
+     "seconds": 170.86
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "КБ-1",
+      "КБ-2",
+      "КБ-4",
+      "ППК-У1",
+      "ИТ-10",
+      "ДСО-1",
+      "УНК-01"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "АР-2",
+      "КБ-1"
+     ],
+     "checks": 3,
+     "seconds": 103.05
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "МО-1",
+      "МО-2",
+      "УНК-05",
+      "ППК-ДА5",
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "АД-7",
+      "ППК-ДА2",
+      "ИД-3"
+     ],
+     "checks": 3,
+     "seconds": 118.73
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "ППК-Р1",
+      "ППК-Р2",
+      "ППК-Р3",
+      "ППК-Р4",
+      "ППК-Р5",
+      "ППК-Р6",
+      "ИП-1",
+      "АД-6",
+      "БСА-3"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "МП-3",
+      "ППК-Р6"
+     ],
+     "checks": 3,
+     "seconds": 57.09
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "ИД-3"
+     ],
+     "checks": 1,
+     "seconds": 40.31
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-Р1",
+      "УНК-04"
+     ],
+     "selected": [
+      "ППК-ДА3"
+     ],
+     "checks": 1,
+     "seconds": 31.82
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "МО-2"
+     ],
+     "selected": [
+      "ИТК-1"
+     ],
+     "checks": 1,
+     "seconds": 23.68
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "checks": 6,
+     "seconds": 41.35
+    }
+   ],
+   "summary": {
+    "web_precision": 0.26666666666666666,
+    "web_hits": 4,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.25,
+    "mean_seconds_web": 118.10799999999999,
+    "hits_per_profile": [
+     0,
+     0,
+     1,
+     1,
+     2
+    ],
+    "predicted_per_profile": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ],
+    "synthetic_selected": [
+     [
+      "ИД-3"
+     ],
+     [
+      "ППК-ДА3"
+     ],
+     [
+      "ИТК-1"
+     ],
+     [
+      "__NONE__"
+     ]
+    ]
+   }
+  },
+  "k10_indicators": {
+   "params": [
+    10,
+    true,
+    0.0
+   ],
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "ИД-3",
+      "ИД-4",
+      "АД-2",
+      "АД-5",
+      "ППК-ДА2",
+      "ППК-Р4",
+      "ППК-ОС6",
+      "УНК-02"
+     ],
+     "selected": [
+      "ДИ-2",
+      "ДИ-1",
+      "ИД-2"
+     ],
+     "checks": 3,
+     "seconds": 140.81
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "ППК-ДА1",
+      "ППК-ДА4",
+      "ППК-ДА5",
+      "ППК-ДА7",
+      "ППК-У2",
+      "МП-1",
+      "МП-2",
+      "МП-5",
+      "УНК-01"
+     ],
+     "selected": [
+      "ППК-ДА3",
+      "АД-7",
+      "ИД-3"
+     ],
+     "checks": 3,
+     "seconds": 170.86
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "КБ-1",
+      "КБ-2",
+      "КБ-4",
+      "ППК-У1",
+      "ИТ-10",
+      "ДСО-1",
+      "УНК-01"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "АР-2",
+      "КБ-1"
+     ],
+     "checks": 3,
+     "seconds": 103.05
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "МО-1",
+      "МО-2",
+      "УНК-05",
+      "ППК-ДА5",
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "АД-7",
+      "ППК-ДА2",
+      "ИД-3"
+     ],
+     "checks": 3,
+     "seconds": 118.73
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "ППК-Р1",
+      "ППК-Р2",
+      "ППК-Р3",
+      "ППК-Р4",
+      "ППК-Р5",
+      "ППК-Р6",
+      "ИП-1",
+      "АД-6",
+      "БСА-3"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "МП-3",
+      "ППК-Р6"
+     ],
+     "checks": 3,
+     "seconds": 57.09
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "ИД-3"
+     ],
+     "checks": 1,
+     "seconds": 40.31
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-Р1",
+      "УНК-04"
+     ],
+     "selected": [
+      "ППК-ДА3"
+     ],
+     "checks": 1,
+     "seconds": 31.82
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "МО-2"
+     ],
+     "selected": [
+      "ИТК-1"
+     ],
+     "checks": 1,
+     "seconds": 23.68
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "checks": 10,
+     "seconds": 41.58
+    }
+   ],
+   "summary": {
+    "web_precision": 0.26666666666666666,
+    "web_hits": 4,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.25,
+    "mean_seconds_web": 118.10799999999999,
+    "hits_per_profile": [
+     0,
+     0,
+     1,
+     1,
+     2
+    ],
+    "predicted_per_profile": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ],
+    "synthetic_selected": [
+     [
+      "ИД-3"
+     ],
+     [
+      "ППК-ДА3"
+     ],
+     [
+      "ИТК-1"
+     ],
+     [
+      "__NONE__"
+     ]
+    ]
+   }
+  },
+  "k10_indicators_margin1": {
+   "params": [
+    10,
+    true,
+    1.0
+   ],
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "ИД-3",
+      "ИД-4",
+      "АД-2",
+      "АД-5",
+      "ППК-ДА2",
+      "ППК-Р4",
+      "ППК-ОС6",
+      "УНК-02"
+     ],
+     "selected": [
+      "ДИ-1",
+      "ИД-2",
+      "ППК-ДА5"
+     ],
+     "checks": 4,
+     "seconds": 140.93
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "ППК-ДА1",
+      "ППК-ДА4",
+      "ППК-ДА5",
+      "ППК-ДА7",
+      "ППК-У2",
+      "МП-1",
+      "МП-2",
+      "МП-5",
+      "УНК-01"
+     ],
+     "selected": [
+      "ППК-ДА3",
+      "АД-7",
+      "ИД-3"
+     ],
+     "checks": 3,
+     "seconds": 170.86
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "КБ-1",
+      "КБ-2",
+      "КБ-4",
+      "ППК-У1",
+      "ИТ-10",
+      "ДСО-1",
+      "УНК-01"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "КБ-1",
+      "ИТ-4"
+     ],
+     "checks": 4,
+     "seconds": 103.17
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "МО-1",
+      "МО-2",
+      "УНК-05",
+      "ППК-ДА5",
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "АД-7",
+      "ППК-ДА2",
+      "МО-1"
+     ],
+     "checks": 5,
+     "seconds": 118.97
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "ППК-Р1",
+      "ППК-Р2",
+      "ППК-Р3",
+      "ППК-Р4",
+      "ППК-Р5",
+      "ППК-Р6",
+      "ИП-1",
+      "АД-6",
+      "БСА-3"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "МП-3",
+      "ППК-Р6"
+     ],
+     "checks": 3,
+     "seconds": 57.09
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "ИД-3"
+     ],
+     "checks": 1,
+     "seconds": 40.31
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-Р1",
+      "УНК-04"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "checks": 10,
+     "seconds": 32.33
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "МО-2"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "checks": 1,
+     "seconds": 23.68
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "checks": 10,
+     "seconds": 41.58
+    }
+   ],
+   "summary": {
+    "web_precision": 0.3333333333333333,
+    "web_hits": 5,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.25,
+    "mean_seconds_web": 118.204,
+    "hits_per_profile": [
+     0,
+     0,
+     1,
+     2,
+     2
+    ],
+    "predicted_per_profile": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ],
+    "synthetic_selected": [
+     [
+      "ИД-3"
+     ],
+     [
+      "__NONE__"
+     ],
+     [
+      "__NONE__"
+     ],
+     [
+      "__NONE__"
+     ]
+    ]
+   }
+  },
+  "k10_name_only": {
+   "params": [
+    10,
+    false,
+    0.0
+   ],
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "ИД-3",
+      "ИД-4",
+      "АД-2",
+      "АД-5",
+      "ППК-ДА2",
+      "ППК-Р4",
+      "ППК-ОС6",
+      "УНК-02"
+     ],
+     "selected": [
+      "ДИ-2",
+      "ДИ-1",
+      "ИД-2"
+     ],
+     "checks": 3,
+     "seconds": 140.77
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "ППК-ДА1",
+      "ППК-ДА4",
+      "ППК-ДА5",
+      "ППК-ДА7",
+      "ППК-У2",
+      "МП-1",
+      "МП-2",
+      "МП-5",
+      "УНК-01"
+     ],
+     "selected": [
+      "ППК-ДА3",
+      "АД-7",
+      "ИД-3"
+     ],
+     "checks": 3,
+     "seconds": 170.86
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "КБ-1",
+      "КБ-2",
+      "КБ-4",
+      "ППК-У1",
+      "ИТ-10",
+      "ДСО-1",
+      "УНК-01"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "АР-2",
+      "КБ-1"
+     ],
+     "checks": 3,
+     "seconds": 103.05
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "МО-1",
+      "МО-2",
+      "УНК-05",
+      "ППК-ДА5",
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "АД-7",
+      "ППК-ДА2",
+      "ИД-3"
+     ],
+     "checks": 3,
+     "seconds": 118.71
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "ППК-Р1",
+      "ППК-Р2",
+      "ППК-Р3",
+      "ППК-Р4",
+      "ППК-Р5",
+      "ППК-Р6",
+      "ИП-1",
+      "АД-6",
+      "БСА-3"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "МП-3",
+      "ППК-Р6"
+     ],
+     "checks": 3,
+     "seconds": 57.01
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "ИД-3"
+     ],
+     "checks": 1,
+     "seconds": 40.31
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-Р1",
+      "УНК-04"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "checks": 10,
+     "seconds": 32.22
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "МО-2"
+     ],
+     "selected": [
+      "ИТК-1"
+     ],
+     "checks": 1,
+     "seconds": 23.66
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "checks": 10,
+     "seconds": 41.54
+    }
+   ],
+   "summary": {
+    "web_precision": 0.26666666666666666,
+    "web_hits": 4,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.25,
+    "mean_seconds_web": 118.08,
+    "hits_per_profile": [
+     0,
+     0,
+     1,
+     1,
+     2
+    ],
+    "predicted_per_profile": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ],
+    "synthetic_selected": [
+     [
+      "ИД-3"
+     ],
+     [
+      "__NONE__"
+     ],
+     [
+      "ИТК-1"
+     ],
+     [
+      "__NONE__"
+     ]
+    ]
+   }
+  }
+ },
+ "gate": {
+  "retail-data-platform": [
+   {
+    "id": "ДИ-2",
+    "name": "Способен проектировать, внедрять и оптимизировать потоки работ CI/CD",
+    "acceptable": false,
+    "margin_indicators": 0.95,
+    "margin_name": 1.48
+   },
+   {
+    "id": "ДИ-1",
+    "name": "Способен применять философию DevOps для оптимизации процессов разработки и эксплуатации",
+    "acceptable": false,
+    "margin_indicators": 1.07,
+    "margin_name": 1.33
+   },
+   {
+    "id": "ИД-2",
+    "name": "Способен планировать и организовывать аналитические работы с использованием технологий больших данных",
+    "acceptable": false,
+    "margin_indicators": 1.43,
+    "margin_name": 1.53
+   },
+   {
+    "id": "ППК-ДА5",
+    "name": "Способен применять методы статистического анализа и теорию эксперимента для планирования, проведения и интерпретации результатов экспериментов",
+    "acceptable": false,
+    "margin_indicators": 1.08,
+    "margin_name": 1.16
+   },
+   {
+    "id": "ППК-Р4",
+    "name": "Способен использовать базы данных при создании программных модулей и компонентов",
+    "acceptable": true,
+    "margin_indicators": 1.47,
+    "margin_name": 1.52
+   },
+   {
+    "id": "ИТ-4",
+    "name": "Способен использовать базы данных при подготовке и проведении ручного и автоматизированного тестирования",
+    "acceptable": false,
+    "margin_indicators": 1.27,
+    "margin_name": 1.55
+   },
+   {
+    "id": "ППК-Р1",
+    "name": "Способен разрабатывать и отлаживать программный код",
+    "acceptable": false,
+    "margin_indicators": 1.42,
+    "margin_name": 1.32
+   },
+   {
+    "id": "ИТ-6",
+    "name": "Способен проектировать, проводить и анализировать нагрузочное тестирование",
+    "acceptable": false,
+    "margin_indicators": 1.26,
+    "margin_name": 1.4
+   },
+   {
+    "id": "ППК-ДА6",
+    "name": "Способен анализировать большие данные с использованием существующей в организации методологической и технологической инфраструктуры",
+    "acceptable": false,
+    "margin_indicators": 1.04,
+    "margin_name": 1.46
+   },
+   {
+    "id": "КБ-3",
+    "name": "Способен настраивать и поддерживать различные семейства ОС, СУБД, СЗИ, диагностировать сетевые проблемы",
+    "acceptable": false,
+    "margin_indicators": 1.14,
+    "margin_name": 1.4
+   }
+  ],
+  "industrial-ml-product": [
+   {
+    "id": "ППК-ДА3",
+    "name": "Способен проводить аналитические исследования с применением технологий больших данных",
+    "acceptable": false,
+    "margin_indicators": 1.74,
+    "margin_name": 1.44
+   },
+   {
+    "id": "АД-7",
+    "name": "Способен применять модели классического машинного обучения и эконометрики",
+    "acceptable": false,
+    "margin_indicators": 1.52,
+    "margin_name": 1.43
+   },
+   {
+    "id": "ИД-3",
+    "name": "Способен разрабатывает, поддерживать и развивать ETL/ELT-процессы",
+    "acceptable": false,
+    "margin_indicators": 1.38,
+    "margin_name": 1.46
+   },
+   {
+    "id": "ДИ-4",
+    "name": "Способен применять технологии искусственного интеллекта для оптимизации DevOps-процессов",
+    "acceptable": false,
+    "margin_indicators": 1.65,
+    "margin_name": 1.53
+   },
+   {
+    "id": "МО-1",
+    "name": "Способен проектировать, разрабатывает и улучшать алгоритмы и модели машинного обучения",
+    "acceptable": false,
+    "margin_indicators": 1.66,
+    "margin_name": 1.52
+   },
+   {
+    "id": "ИТ-6",
+    "name": "Способен проектировать, проводить и анализировать нагрузочное тестирование",
+    "acceptable": false,
+    "margin_indicators": 1.47,
+    "margin_name": 1.33
+   },
+   {
+    "id": "МО-2",
+    "name": "Способен проектировать и внедрять системы автоматизации жизненного цикла машинного обучения (MLOps)",
+    "acceptable": false,
+    "margin_indicators": 1.47,
+    "margin_name": 1.54
+   },
+   {
+    "id": "КБ-2",
+    "name": "Способен анализировать, оценивать и коммуницировать риски информационной безопасности в контексте бизнес-целей",
+    "acceptable": false,
+    "margin_indicators": 1.48,
+    "margin_name": 1.53
+   },
+   {
+    "id": "УНК-02",
+    "name": "Способен применять методы коллективной работы в профессиональной деятельности",
+    "acceptable": false,
+    "margin_indicators": 1.73,
+    "margin_name": 1.49
+   },
+   {
+    "id": "УНК-05",
+    "name": "Способен проводить научно-исследовательские и опытно-конструкторские работы",
+    "acceptable": false,
+    "margin_indicators": 1.61,
+    "margin_name": 1.5
+   }
+  ],
+  "ai-security-reviewer": [
+   {
+    "id": "ППК-Р1",
+    "name": "Способен разрабатывать и отлаживать программный код",
+    "acceptable": false,
+    "margin_indicators": 1.11,
+    "margin_name": 0.92
+   },
+   {
+    "id": "АР-2",
+    "name": "Осуществляет управление архитектурой интегрированного программного обеспечения",
+    "acceptable": false,
+    "margin_indicators": 0.96,
+    "margin_name": 1.04
+   },
+   {
+    "id": "КБ-1",
+    "name": "Способен оценивать уровень безопасности компьютерных систем и сетей",
+    "acceptable": true,
+    "margin_indicators": 1.25,
+    "margin_name": 1.18
+   },
+   {
+    "id": "ИТ-4",
+    "name": "Способен использовать базы данных при подготовке и проведении ручного и автоматизированного тестирования",
+    "acceptable": false,
+    "margin_indicators": 1.1,
+    "margin_name": 0.96
+   },
+   {
+    "id": "ИП-1",
+    "name": "Способен проверять работоспособность и проводить рефакторинг кода программного обеспечения",
+    "acceptable": false,
+    "margin_indicators": 1.04,
+    "margin_name": 1.12
+   },
+   {
+    "id": "ППК-Р2",
+    "name": "Способен проверять работоспособность и проводить рефакторинг кода программного обеспечения",
+    "acceptable": false,
+    "margin_indicators": 1.03,
+    "margin_name": 1.12
+   },
+   {
+    "id": "ИТ-7",
+    "name": "Способен интегрировать процессы тестирования в CI/CD-контур",
+    "acceptable": false,
+    "margin_indicators": 0.92,
+    "margin_name": 0.92
+   },
+   {
+    "id": "ППК-ДА2",
+    "name": "Способен подготавливать и обрабатывать данные для аналитических исследований",
+    "acceptable": false,
+    "margin_indicators": 1.12,
+    "margin_name": 1.0
+   },
+   {
+    "id": "ИД-3",
+    "name": "Способен разрабатывает, поддерживать и развивать ETL/ELT-процессы",
+    "acceptable": false,
+    "margin_indicators": 1.05,
+    "margin_name": 0.92
+   },
+   {
+    "id": "ППК-Р3",
+    "name": "Способен выполнять интеграцию программных модулей и компонентов и проверять работоспособность выпусков программного продукта",
+    "acceptable": false,
+    "margin_indicators": 1.01,
+    "margin_name": 0.92
+   }
+  ],
+  "applied-research-engineer": [
+   {
+    "id": "АД-7",
+    "name": "Способен применять модели классического машинного обучения и эконометрики",
+    "acceptable": false,
+    "margin_indicators": 1.21,
+    "margin_name": 0.75
+   },
+   {
+    "id": "ППК-ДА2",
+    "name": "Способен подготавливать и обрабатывать данные для аналитических исследований",
+    "acceptable": true,
+    "margin_indicators": 1.15,
+    "margin_name": 0.98
+   },
+   {
+    "id": "ИД-3",
+    "name": "Способен разрабатывает, поддерживать и развивать ETL/ELT-процессы",
+    "acceptable": false,
+    "margin_indicators": 0.88,
+    "margin_name": 0.73
+   },
+   {
+    "id": "ИТ-8",
+    "name": "Способен оценивать качество продукта на основе метрик и процессов тестирования",
+    "acceptable": false,
+    "margin_indicators": 0.98,
+    "margin_name": 0.88
+   },
+   {
+    "id": "МО-1",
+    "name": "Способен проектировать, разрабатывает и улучшать алгоритмы и модели машинного обучения",
+    "acceptable": true,
+    "margin_indicators": 1.19,
+    "margin_name": 0.87
+   },
+   {
+    "id": "ППК-ДА3",
+    "name": "Способен проводить аналитические исследования с применением технологий больших данных",
+    "acceptable": false,
+    "margin_indicators": 1.05,
+    "margin_name": 0.79
+   },
+   {
+    "id": "МО-2",
+    "name": "Способен проектировать и внедрять системы автоматизации жизненного цикла машинного обучения (MLOps)",
+    "acceptable": true,
+    "margin_indicators": 0.84,
+    "margin_name": 0.72
+   },
+   {
+    "id": "ППК-Р1",
+    "name": "Способен разрабатывать и отлаживать программный код",
+    "acceptable": false,
+    "margin_indicators": 1.03,
+    "margin_name": 0.59
+   },
+   {
+    "id": "ИП-1",
+    "name": "Способен проверять работоспособность и проводить рефакторинг кода программного обеспечения",
+    "acceptable": false,
+    "margin_indicators": 0.7,
+    "margin_name": 0.67
+   },
+   {
+    "id": "ИТ-7",
+    "name": "Способен интегрировать процессы тестирования в CI/CD-контур",
+    "acceptable": false,
+    "margin_indicators": 0.64,
+    "margin_name": 0.69
+   }
+  ],
+  "backend-llm-agents": [
+   {
+    "id": "ППК-Р1",
+    "name": "Способен разрабатывать и отлаживать программный код",
+    "acceptable": true,
+    "margin_indicators": 1.29,
+    "margin_name": 1.17
+   },
+   {
+    "id": "МП-3",
+    "name": "Способен управлять серией ИТ-продуктов и группой их менеджеров",
+    "acceptable": false,
+    "margin_indicators": 1.21,
+    "margin_name": 1.2
+   },
+   {
+    "id": "ППК-Р6",
+    "name": "Способен участвовать в промышленной разработке программного обеспечения",
+    "acceptable": true,
+    "margin_indicators": 1.27,
+    "margin_name": 1.31
+   },
+   {
+    "id": "АР-3",
+    "name": "Осуществляет управление архитектурой единой информационной среды",
+    "acceptable": false,
+    "margin_indicators": 1.14,
+    "margin_name": 1.13
+   },
+   {
+    "id": "МП-1",
+    "name": "Способен сопровождать развитие существующего ИТ-продукта",
+    "acceptable": false,
+    "margin_indicators": 1.05,
+    "margin_name": 1.13
+   },
+   {
+    "id": "ИТ-5",
+    "name": "Способен разрабатывать, внедрять и поддерживать решения для автоматизации тестирования",
+    "acceptable": false,
+    "margin_indicators": 1.03,
+    "margin_name": 1.02
+   },
+   {
+    "id": "МП-2",
+    "name": "Способен управлять ИТ-продуктом",
+    "acceptable": false,
+    "margin_indicators": 1.05,
+    "margin_name": 1.28
+   },
+   {
+    "id": "ИТК-1",
+    "name": "Способен выполнять расчет и проектирование цифровых телекоммуникационных устройств",
+    "acceptable": false,
+    "margin_indicators": 1.01,
+    "margin_name": 1.26
+   },
+   {
+    "id": "ППК-Р7",
+    "name": "Способен применять искусственный интеллект (ИИ) для генерации и отладки программного кода",
+    "acceptable": false,
+    "margin_indicators": 1.24,
+    "margin_name": 1.2
+   },
+   {
+    "id": "ДИ-1",
+    "name": "Способен применять философию DevOps для оптимизации процессов разработки и эксплуатации",
+    "acceptable": false,
+    "margin_indicators": 0.98,
+    "margin_name": 1.0
+   }
+  ],
+  "syn-001": [
+   {
+    "id": "ИД-3",
+    "name": "Способен разрабатывает, поддерживать и развивать ETL/ELT-процессы",
+    "acceptable": false,
+    "margin_indicators": 1.16,
+    "margin_name": 0.88
+   },
+   {
+    "id": "ППК-ДА5",
+    "name": "Способен применять методы статистического анализа и теорию эксперимента для планирования, проведения и интерпретации результатов экспериментов",
+    "acceptable": false,
+    "margin_indicators": 0.27,
+    "margin_name": 0.91
+   },
+   {
+    "id": "ППК-У1",
+    "name": "Осуществляет оценку и управление рисками",
+    "acceptable": false,
+    "margin_indicators": 0.51,
+    "margin_name": 1.24
+   },
+   {
+    "id": "ППК-ДА2",
+    "name": "Способен подготавливать и обрабатывать данные для аналитических исследований",
+    "acceptable": true,
+    "margin_indicators": 1.89,
+    "margin_name": 1.79
+   },
+   {
+    "id": "ИТК-3",
+    "name": "Способен моделировать и проводить расчет электронных устройств беспроводных систем связи.",
+    "acceptable": false,
+    "margin_indicators": 0.06,
+    "margin_name": 0.45
+   },
+   {
+    "id": "ППК-ДА6",
+    "name": "Способен анализировать большие данные с использованием существующей в организации методологической и технологической инфраструктуры",
+    "acceptable": false,
+    "margin_indicators": 0.84,
+    "margin_name": 1.59
+   },
+   {
+    "id": "МП-3",
+    "name": "Способен управлять серией ИТ-продуктов и группой их менеджеров",
+    "acceptable": false,
+    "margin_indicators": -0.31,
+    "margin_name": 0.73
+   },
+   {
+    "id": "ИТ-2",
+    "name": "Способен разрабатывать тестовые случаи, проводить тестирование и исследовать результаты",
+    "acceptable": false,
+    "margin_indicators": -0.19,
+    "margin_name": 0.22
+   },
+   {
+    "id": "ИД-2",
+    "name": "Способен планировать и организовывать аналитические работы с использованием технологий больших данных",
+    "acceptable": false,
+    "margin_indicators": 1.35,
+    "margin_name": 1.41
+   },
+   {
+    "id": "КБ-4",
+    "name": "Способен планировать и организовывать процесс информационной безопасности в корпоративных и технологических сетях",
+    "acceptable": false,
+    "margin_indicators": -0.16,
+    "margin_name": 0.91
+   }
+  ],
+  "syn-002": [
+   {
+    "id": "ППК-ДА3",
+    "name": "Способен проводить аналитические исследования с применением технологий больших данных",
+    "acceptable": false,
+    "margin_indicators": 0.03,
+    "margin_name": -0.31
+   },
+   {
+    "id": "ППК-Р1",
+    "name": "Способен разрабатывать и отлаживать программный код",
+    "acceptable": true,
+    "margin_indicators": 0.55,
+    "margin_name": -0.11
+   },
+   {
+    "id": "ИТ-5",
+    "name": "Способен разрабатывать, внедрять и поддерживать решения для автоматизации тестирования",
+    "acceptable": false,
+    "margin_indicators": -0.2,
+    "margin_name": -0.61
+   },
+   {
+    "id": "ИТК-1",
+    "name": "Способен выполнять расчет и проектирование цифровых телекоммуникационных устройств",
+    "acceptable": false,
+    "margin_indicators": -0.12,
+    "margin_name": -0.5
+   },
+   {
+    "id": "СА-1",
+    "name": "Способен обслуживать сетевые устройства информационно-коммуникационной системы",
+    "acceptable": false,
+    "margin_indicators": -0.27,
+    "margin_name": -0.52
+   },
+   {
+    "id": "ППК-ОС1",
+    "name": "Способен обслуживать операционные системы информационно-коммуникационной системы",
+    "acceptable": false,
+    "margin_indicators": -0.09,
+    "margin_name": -0.38
+   },
+   {
+    "id": "ППК-ОС7",
+    "name": "Способен настраивать и обеспечивать работоспособность систем резервного копирования и восстановления данных",
+    "acceptable": false,
+    "margin_indicators": -0.33,
+    "margin_name": -0.41
+   },
+   {
+    "id": "ИТ-10",
+    "name": "Способен проектировать, проводить и анализировать тестирование на конструктивную безопасность",
+    "acceptable": false,
+    "margin_indicators": -0.25,
+    "margin_name": -0.62
+   },
+   {
+    "id": "АД-7",
+    "name": "Способен применять модели классического машинного обучения и эконометрики",
+    "acceptable": false,
+    "margin_indicators": -0.01,
+    "margin_name": -0.42
+   },
+   {
+    "id": "МП-3",
+    "name": "Способен управлять серией ИТ-продуктов и группой их менеджеров",
+    "acceptable": false,
+    "margin_indicators": 0.01,
+    "margin_name": -0.47
+   }
+  ],
+  "syn-003": [
+   {
+    "id": "ИТК-1",
+    "name": "Способен выполнять расчет и проектирование цифровых телекоммуникационных устройств",
+    "acceptable": false,
+    "margin_indicators": 0.74,
+    "margin_name": 1.41
+   }
+  ],
+  "syn-004": [
+   {
+    "id": "МП-3",
+    "name": "Способен управлять серией ИТ-продуктов и группой их менеджеров",
+    "acceptable": false,
+    "margin_indicators": -0.74,
+    "margin_name": -0.74
+   },
+   {
+    "id": "ППК-ДА3",
+    "name": "Способен проводить аналитические исследования с применением технологий больших данных",
+    "acceptable": false,
+    "margin_indicators": -0.56,
+    "margin_name": -0.69
+   },
+   {
+    "id": "МП-4",
+    "name": "Способен управлять портфелем ИТ-продуктов и подразделением управления ИТ-продуктами",
+    "acceptable": false,
+    "margin_indicators": -0.52,
+    "margin_name": -0.74
+   },
+   {
+    "id": "ППК-У1",
+    "name": "Осуществляет оценку и управление рисками",
+    "acceptable": false,
+    "margin_indicators": -0.32,
+    "margin_name": -0.76
+   },
+   {
+    "id": "МО-1",
+    "name": "Способен проектировать, разрабатывает и улучшать алгоритмы и модели машинного обучения",
+    "acceptable": false,
+    "margin_indicators": -0.38,
+    "margin_name": -0.79
+   },
+   {
+    "id": "АД-7",
+    "name": "Способен применять модели классического машинного обучения и эконометрики",
+    "acceptable": false,
+    "margin_indicators": -0.45,
+    "margin_name": -0.72
+   },
+   {
+    "id": "ИД-3",
+    "name": "Способен разрабатывает, поддерживать и развивать ETL/ELT-процессы",
+    "acceptable": false,
+    "margin_indicators": -0.71,
+    "margin_name": -0.85
+   },
+   {
+    "id": "МО-2",
+    "name": "Способен проектировать и внедрять системы автоматизации жизненного цикла машинного обучения (MLOps)",
+    "acceptable": false,
+    "margin_indicators": -0.76,
+    "margin_name": -0.83
+   },
+   {
+    "id": "ИД-1",
+    "name": "Способен формулировать и согласовывать требования к аналитическим исследованиям с применением технологий больших данных",
+    "acceptable": false,
+    "margin_indicators": -0.5,
+    "margin_name": -0.67
+   },
+   {
+    "id": "ИТК-2",
+    "name": "Способен выполнять расчет антенн и СВЧ устройств в телекоммуникационных системах и проводить моделирование отдельных частей радиоэлектронных средств",
+    "acceptable": false,
+    "margin_indicators": -0.44,
+    "margin_name": -0.79
+   }
+  ]
+ }
+}
