@@ -265,3 +265,31 @@ def test_signal_window_and_phrase_veto_stop_template_matches():
     assert pick(blocked_phrases={0})[0] == "SIAM"
     index = _table_selector(phrases, likes, {}, WordBagConfig(**base)).index
     assert index.phrase_positions[2] == {"сравнения": [0], "поиска": [1], "объектов": [2]}
+
+
+def test_anchor_word_makes_generic_paths_pay_for_the_domain_word():
+    # Generic words lead to BLD; its key words ("градостроительный", "город") are
+    # unlikely for this text. PY has a key word the model wants: "python".
+    phrases = {
+        "разработка проектирование": {"BLD"},
+        "ии модель": {"BLD", "PY"},
+        "градостроительный город": {"BLD"},
+        "python разработка код": {"PY"},
+        "проектирование код": {"PY"},
+    }
+    likes = {"разработка": -0.1, "проектирование": -0.2, "ии": -0.1, "модель": -0.2,
+             "python": -1.0, "код": -1.5, "градостроительный": -12.0, "город": -12.0}
+    priors = {"python": -6.0, "код": -6.0, "градостроительный": -10.0, "город": -10.0}
+    base = dict(alpha=0.0, beta=0.0, beam=8, path_beam=6, word_branches=4,
+                words_per_signal=2, min_signals=2)
+
+    def found(count=1, **extra):
+        selector = _table_selector(phrases, likes, priors, WordBagConfig(**base, **extra))
+        return selector.select_paths("text", count=count, coherent=True)[0]
+
+    assert found()[0][0] == "BLD"
+    with_anchor = found(anchor_df=1)
+    assert with_anchor[0][0] == "PY"
+    assert "python" in with_anchor[0][1].lemmas
+    # With a PMI threshold BLD cannot finish at all: its key word is not wanted.
+    assert [c for c, _ in found(count=2, anchor_df=1, anchor_min_pmi=0.0)] == ["PY"]

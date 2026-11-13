@@ -148,6 +148,12 @@ class WordBagConfig:
     # Proximity (experiment 13): words of one signal must stand within this
     # many word positions of each other in the phrase. None = anywhere.
     signal_window: int | None = None
+    # Anchors (experiment 14): a path may finish on a competency only after the
+    # model wrote one of its key words (lemma in at most `anchor_df`
+    # competencies), with PMI = log P(word | text) - log P(word | empty text)
+    # of at least `anchor_min_pmi` (None = no threshold). None = no anchors.
+    anchor_df: int | None = None
+    anchor_min_pmi: float | None = None
 
 
 @dataclass
@@ -204,6 +210,10 @@ class WordBagSelector:
         self.evidence: set[str] = set()
         # Negative selection (experiment 13): phrases no signal may come from.
         self.blocked_phrases: set[int] = set()
+        self.df: dict[str, int] = defaultdict(int)
+        for lemmas in index.competency_lemmas.values():
+            for lemma in lemmas:
+                self.df[lemma] += 1
         tokenizer = lm.tokenizer
         delimiter = tokenizer.encode(WORD_DELIMITER, add_special_tokens=False)
         # Signals are separated by an empty line (one more delimiter after the word's own).
@@ -374,6 +384,11 @@ class WordBagSelector:
                 allowed = {
                     lemma for phrase in phrases for lemma in self._near(phrase, path.current)
                 } - used
+                if (config.anchor_df is not None and not path.current
+                        and len(path.candidates) == 1):
+                    (only,) = path.candidates
+                    if not self._anchored(path.words, only):
+                        allowed &= self._anchor_lemmas(only)  # Write a key word next.
                 last_word = len(path.current) + 1 >= config.words_per_signal
                 if config.require_evidence and last_word and not path.current & self.evidence:
                     allowed &= self.evidence  # The signal's last chance to be evidenced.
@@ -408,7 +423,10 @@ class WordBagSelector:
                         phrases=frozenset() if closes else kept,
                     )
                     key = (frozenset(child.signals), child.current)
-                    if closes and len(candidates) == 1 and len(signals) >= config.min_signals:
+                    resolved = closes and len(candidates) == 1 and len(signals) >= config.min_signals
+                    if resolved and config.anchor_df is not None:
+                        resolved = self._anchored(child.words, next(iter(candidates)))
+                    if resolved:
                         if key not in finished or child.score > finished[key].score:
                             finished[key] = child
                     elif closes and len(signals) >= config.max_signals:
@@ -427,6 +445,22 @@ class WordBagSelector:
             i for i, (competencies, lemmas) in enumerate(self.index.phrase_lemmas)
             if competencies & path.candidates and i not in self.blocked_phrases
             and not any(signal <= lemmas for signal in path.signals)
+        )
+
+    def _anchor_lemmas(self, competency_id: str) -> set[str]:
+        return {
+            lemma for lemma in self.index.competency_lemmas[competency_id]
+            if self.df[lemma] <= self.config.anchor_df
+        }
+
+    def _anchored(self, words: list[WordChoice], competency_id: str) -> bool:
+        """The path holds a key word of the competency the model wanted enough."""
+        threshold = self.config.anchor_min_pmi
+        anchors = self._anchor_lemmas(competency_id)
+        return any(
+            word.lemma in anchors
+            and (threshold is None or word.log_probability - word.log_prior >= threshold)
+            for word in words
         )
 
     def _near(self, phrase: int, current: frozenset[str] | set[str]) -> set[str]:
