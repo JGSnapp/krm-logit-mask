@@ -7,6 +7,10 @@ from .catalog import Catalog
 from .model import DEFAULT_MODEL, LocalCausalLM
 from .pipeline import ExtractionPipeline
 from .disc import DiscDecodingError
+from .selection import CompetencySelector, SelectionConfig
+
+DATA_DIR = Path(__file__).resolve().parents[2] / "data"
+CATALOG_NAMES = {"itmo-krm": "КРМ ИТМО", "mipt-it-krm": "КРМ МФТИ (ИТ-роли)"}
 
 
 MODEL_OPTIONS = {
@@ -42,6 +46,15 @@ class Runtime:
         self.active_model_id: str | None = None
         self.pipeline: ExtractionPipeline | None = None
         self.lock = threading.RLock()
+        # Catalogs for the competency selection page: the server catalog first,
+        # plus the other known catalogs found in data/.
+        self.catalogs: dict[str, Catalog] = {catalog.framework_id: catalog}
+        for extra in ("itmo_krm_3.json", "mipt_krm.json"):
+            extra_path = DATA_DIR / extra
+            if extra_path.exists():
+                loaded = Catalog.from_json(extra_path)
+                self.catalogs.setdefault(loaded.framework_id, loaded)
+        self.selectors: dict[str, CompetencySelector] = {}
 
     def get_pipeline(self, model_id: str | None = None) -> ExtractionPipeline:
         with self.lock:
@@ -51,6 +64,7 @@ class Runtime:
             if self.pipeline is None or self.active_model_id != requested:
                 self.pipeline = None
                 self.active_model_id = None
+                self.selectors = {}
                 gc.collect()
                 try:
                     import torch
@@ -65,6 +79,26 @@ class Runtime:
                 )
                 self.active_model_id = requested
             return self.pipeline
+
+    def get_selector(self, model_id: str | None, catalog_id: str) -> CompetencySelector:
+        """Selector of the catalog on the active model (built once: word index and priors)."""
+        with self.lock:
+            pipeline = self.get_pipeline(model_id)
+            if catalog_id not in self.selectors:
+                self.selectors[catalog_id] = CompetencySelector(
+                    pipeline.lm, self.catalogs[catalog_id], SelectionConfig())
+            return self.selectors[catalog_id]
+
+    def catalog_public(self, catalog_id: str) -> dict[str, object]:
+        catalog = self.catalogs[catalog_id]
+        return {
+            "id": catalog_id,
+            "name": CATALOG_NAMES.get(catalog_id, catalog_id),
+            "version": catalog.framework_version,
+            "competencies": len(catalog.competencies),
+            "indicators": sum(len(item.indicators) for item in catalog.competencies),
+            "ready": catalog_id in self.selectors,
+        }
 
     def model_public(self, model_id: str) -> dict[str, object]:
         item = self.models[model_id]
@@ -116,6 +150,62 @@ def create_app(catalog_path: str, model_name: str = DEFAULT_MODEL):
         use_disc: bool = False
         disc_budget: int = Field(default=4, ge=1, le=8)
         disc_prior_alpha: float = Field(default=0.0, ge=0.0, le=1.0)
+
+    class SelectRequest(BaseModel):
+        text: str = Field(min_length=3, max_length=30_000)
+        catalog_id: str | None = None
+        model_id: str | None = None
+        max_competencies: int = Field(default=3, ge=1, le=6)
+        pool: int = Field(default=15, ge=3, le=30)
+
+    @app.get("/api/catalogs")
+    def catalogs() -> dict[str, object]:
+        return {
+            "default_catalog_id": catalog.framework_id,
+            "catalogs": [runtime.catalog_public(key) for key in runtime.catalogs],
+        }
+
+    @app.get("/api/catalogs/{catalog_id}")
+    def catalog_details(catalog_id: str) -> dict[str, object]:
+        if catalog_id not in runtime.catalogs:
+            raise HTTPException(status_code=404, detail="Unknown catalog_id")
+        chosen = runtime.catalogs[catalog_id]
+        return {
+            "id": catalog_id,
+            "competencies": {
+                item.id: {
+                    "name": item.name, "formulation": item.formulation,
+                    "indicators": [i.text for i in item.indicators],
+                    "keywords": item.keywords,
+                }
+                for item in chosen.competencies
+            },
+        }
+
+    @app.post("/api/select")
+    def select(request: SelectRequest) -> dict[str, object]:
+        catalog_id = request.catalog_id or catalog.framework_id
+        if catalog_id not in runtime.catalogs:
+            raise HTTPException(status_code=400, detail="Unknown catalog_id")
+        requested_model = request.model_id or runtime.default_model_id
+        if requested_model not in runtime.models:
+            raise HTTPException(status_code=400, detail="Unknown model_id")
+        request_started = perf_counter()
+        with runtime.lock:
+            was_loaded = runtime.pipeline is not None and runtime.active_model_id == requested_model
+            was_ready = was_loaded and catalog_id in runtime.selectors
+            load_started = perf_counter()
+            selector = runtime.get_selector(requested_model, catalog_id)
+            load_seconds = perf_counter() - load_started if not was_ready else 0.0
+            selector.config.pool = request.pool
+            result = selector.select(request.text, request.max_competencies)
+        result["model"] = runtime.model_public(requested_model)
+        result["catalog"] = runtime.catalog_public(catalog_id)
+        result["timings"].update({
+            "model_load_s": load_seconds,
+            "request_total_s": perf_counter() - request_started,
+        })
+        return result
 
     @app.get("/api/health")
     def health() -> dict[str, object]:
