@@ -1,0 +1,1719 @@
+{
+ "experiment": "exp20_speed",
+ "model": "Qwen/Qwen2.5-1.5B-Instruct",
+ "eval_set": "experiments/eval_set.json",
+ "catalog": "data/itmo_krm_3.json",
+ "base": {
+  "alpha": 0.0,
+  "beta": 0.3
+ },
+ "numeric_check": {
+  "rows": 48,
+  "max_abs_diff": 0.0324,
+  "mean_abs_diff": 0.00708,
+  "cached_seconds": 0.178,
+  "full_seconds": 2.121
+ },
+ "configs": {
+  "top3_old": {
+   "overrides": {},
+   "count": 3,
+   "verified": false,
+   "summary": {
+    "web_precision": 0.4666666666666667,
+    "web_hits": 7,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.25,
+    "mean_seconds_web": 16.15,
+    "hits_per_profile": [
+     2,
+     1,
+     0,
+     2,
+     2
+    ],
+    "acceptable_in_candidates_web": [
+     2,
+     1,
+     0,
+     2,
+     2
+    ],
+    "candidates_web": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ],
+    "mean_search_seconds_web": 16.15,
+    "mean_check_seconds_web": 0.0,
+    "mean_forward_calls_web": 97.2
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "LC-4",
+      "SS2",
+      "LC-5"
+     ],
+     "candidates": [
+      "LC-4",
+      "SS2",
+      "LC-5"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {},
+     "forward_calls": 97,
+     "search_seconds": 16.22,
+     "check_seconds": 0.0,
+     "seconds": 16.22
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "MF-4",
+      "ML-5",
+      "LC-1"
+     ],
+     "candidates": [
+      "MF-4",
+      "ML-5",
+      "LC-1"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {},
+     "forward_calls": 95,
+     "search_seconds": 15.76,
+     "check_seconds": 0.0,
+     "seconds": 15.76
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "LC-5",
+      "ER-2",
+      "ER-1"
+     ],
+     "candidates": [
+      "LC-5",
+      "ER-2",
+      "ER-1"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {},
+     "forward_calls": 99,
+     "search_seconds": 15.62,
+     "check_seconds": 0.0,
+     "seconds": 15.62
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "DL-1",
+      "DL-3",
+      "S-3"
+     ],
+     "candidates": [
+      "DL-1",
+      "DL-3",
+      "S-3"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {},
+     "forward_calls": 102,
+     "search_seconds": 17.69,
+     "check_seconds": 0.0,
+     "seconds": 17.69
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "Bld-1",
+      "LC-5",
+      "PL-1"
+     ],
+     "candidates": [
+      "Bld-1",
+      "LC-5",
+      "PL-1"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {},
+     "forward_calls": 93,
+     "search_seconds": 15.46,
+     "check_seconds": 0.0,
+     "seconds": 15.46
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "S-1"
+     ],
+     "candidates": [
+      "S-1",
+      "ER-1",
+      "DL-4"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {},
+     "forward_calls": 93,
+     "search_seconds": 4.57,
+     "check_seconds": 0.0,
+     "seconds": 4.57
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "AI-S-3"
+     ],
+     "candidates": [
+      "AI-S-3",
+      "PL-1",
+      "AC-1"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {},
+     "forward_calls": 337,
+     "search_seconds": 16.33,
+     "check_seconds": 0.0,
+     "seconds": 16.33
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-4"
+     ],
+     "candidates": [
+      "LC-4",
+      "S-4",
+      "E-1"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {},
+     "forward_calls": 91,
+     "search_seconds": 4.9,
+     "check_seconds": 0.0,
+     "seconds": 4.9
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "Tr-1"
+     ],
+     "candidates": [
+      "Tr-1",
+      "H-2",
+      "S-4"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {},
+     "forward_calls": 199,
+     "search_seconds": 9.28,
+     "check_seconds": 0.0,
+     "seconds": 9.28
+    }
+   ]
+  },
+  "top3_batched": {
+   "overrides": {
+    "batch_paths": true
+   },
+   "count": 3,
+   "verified": false,
+   "summary": {
+    "web_precision": 0.4666666666666667,
+    "web_hits": 7,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.25,
+    "mean_seconds_web": 1.486,
+    "hits_per_profile": [
+     2,
+     1,
+     0,
+     2,
+     2
+    ],
+    "acceptable_in_candidates_web": [
+     2,
+     1,
+     0,
+     2,
+     2
+    ],
+    "candidates_web": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ],
+    "mean_search_seconds_web": 1.49,
+    "mean_check_seconds_web": 0.0,
+    "mean_forward_calls_web": 28.2
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "LC-4",
+      "SS2",
+      "LC-5"
+     ],
+     "candidates": [
+      "LC-4",
+      "SS2",
+      "LC-5"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {},
+     "forward_calls": 28,
+     "search_seconds": 1.45,
+     "check_seconds": 0.0,
+     "seconds": 1.45
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "MF-4",
+      "ML-5",
+      "LC-1"
+     ],
+     "candidates": [
+      "MF-4",
+      "ML-5",
+      "LC-1"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {},
+     "forward_calls": 28,
+     "search_seconds": 1.52,
+     "check_seconds": 0.0,
+     "seconds": 1.52
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "LC-5",
+      "ER-2",
+      "ER-1"
+     ],
+     "candidates": [
+      "LC-5",
+      "ER-2",
+      "ER-1"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {},
+     "forward_calls": 29,
+     "search_seconds": 1.49,
+     "check_seconds": 0.0,
+     "seconds": 1.49
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "DL-1",
+      "DL-3",
+      "S-3"
+     ],
+     "candidates": [
+      "DL-1",
+      "DL-3",
+      "S-3"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {},
+     "forward_calls": 27,
+     "search_seconds": 1.49,
+     "check_seconds": 0.0,
+     "seconds": 1.49
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "Bld-1",
+      "LC-5",
+      "PL-1"
+     ],
+     "candidates": [
+      "Bld-1",
+      "LC-5",
+      "PL-1"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {},
+     "forward_calls": 29,
+     "search_seconds": 1.48,
+     "check_seconds": 0.0,
+     "seconds": 1.48
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "S-1"
+     ],
+     "candidates": [
+      "S-1",
+      "ER-1",
+      "DL-4"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {},
+     "forward_calls": 26,
+     "search_seconds": 1.22,
+     "check_seconds": 0.0,
+     "seconds": 1.22
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "AI-S-3"
+     ],
+     "candidates": [
+      "AI-S-3",
+      "PL-1",
+      "AC-1"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {},
+     "forward_calls": 84,
+     "search_seconds": 4.92,
+     "check_seconds": 0.0,
+     "seconds": 4.92
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-4"
+     ],
+     "candidates": [
+      "LC-4",
+      "S-4",
+      "E-1"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {},
+     "forward_calls": 23,
+     "search_seconds": 1.17,
+     "check_seconds": 0.0,
+     "seconds": 1.17
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "Tr-1"
+     ],
+     "candidates": [
+      "Tr-1",
+      "H-2",
+      "S-4"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {},
+     "forward_calls": 57,
+     "search_seconds": 2.49,
+     "check_seconds": 0.0,
+     "seconds": 2.49
+    }
+   ]
+  },
+  "restarts10_batched": {
+   "overrides": {
+    "batch_paths": true
+   },
+   "count": 10,
+   "verified": true,
+   "summary": {
+    "web_precision": 0.6,
+    "web_hits": 9,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.75,
+    "mean_seconds_web": 5.568,
+    "hits_per_profile": [
+     2,
+     1,
+     1,
+     3,
+     2
+    ],
+    "acceptable_in_candidates_web": [
+     2,
+     1,
+     1,
+     3,
+     2
+    ],
+    "candidates_web": [
+     10,
+     10,
+     10,
+     10,
+     10
+    ],
+    "mean_search_seconds_web": 5.05,
+    "mean_check_seconds_web": 0.52,
+    "mean_forward_calls_web": 102.4
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "SS2",
+      "LLM-5",
+      "LC-5"
+     ],
+     "candidates": [
+      "LC-4",
+      "SS2",
+      "LC-5",
+      "S-5",
+      "MI-2",
+      "LLM-5",
+      "AI-S-1",
+      "LLM-4",
+      "LLM-2",
+      "ER-2"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {
+      "LC-4": 3.57,
+      "SS2": 5.44,
+      "LC-5": 4.44,
+      "S-5": -5.98,
+      "MI-2": -5.69,
+      "LLM-5": 5.28,
+      "AI-S-1": 1.07,
+      "LLM-4": 2.39,
+      "LLM-2": -1.86,
+      "ER-2": -2.74
+     },
+     "forward_calls": 85,
+     "search_seconds": 4.19,
+     "check_seconds": 0.46,
+     "seconds": 4.65
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "MF-4",
+      "LC-1",
+      "ML-5"
+     ],
+     "candidates": [
+      "MF-4",
+      "ML-5",
+      "LC-1",
+      "S-5",
+      "ML-4",
+      "AI-S-3",
+      "FC-5",
+      "E-1",
+      "ML-6",
+      "MF-7"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "MF-4": 7.51,
+      "ML-5": 5.71,
+      "LC-1": 7.45,
+      "S-5": -4.59,
+      "ML-4": 3.34,
+      "AI-S-3": 5.24,
+      "FC-5": 4.75,
+      "E-1": -0.19,
+      "ML-6": 5.61,
+      "MF-7": 0.92
+     },
+     "forward_calls": 111,
+     "search_seconds": 4.9,
+     "check_seconds": 0.46,
+     "seconds": 5.35
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "LLM-4",
+      "PL-1",
+      "SS3"
+     ],
+     "candidates": [
+      "LC-5",
+      "ER-2",
+      "ER-1",
+      "LLM-4",
+      "S-4",
+      "ML-8",
+      "H-3",
+      "PL-1",
+      "SS3",
+      "ML-6"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "LC-5": 4.85,
+      "ER-2": -0.23,
+      "ER-1": 4.17,
+      "LLM-4": 6.11,
+      "S-4": -6.07,
+      "ML-8": 1.71,
+      "H-3": -3.34,
+      "PL-1": 6.07,
+      "SS3": 4.91,
+      "ML-6": 0.9
+     },
+     "forward_calls": 84,
+     "search_seconds": 4.17,
+     "check_seconds": 0.8,
+     "seconds": 4.97
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "DL-3",
+      "ML-8",
+      "DL-1"
+     ],
+     "candidates": [
+      "DL-1",
+      "DL-3",
+      "S-3",
+      "ML-8",
+      "DL-2",
+      "DL-4",
+      "ML-6",
+      "E-1",
+      "MF-3",
+      "MM-2"
+     ],
+     "acceptable_in_candidates": 3,
+     "margins": {
+      "DL-1": 7.14,
+      "DL-3": 8.62,
+      "S-3": -5.14,
+      "ML-8": 7.41,
+      "DL-2": 3.06,
+      "DL-4": -4.36,
+      "ML-6": 5.34,
+      "E-1": -5.29,
+      "MF-3": 5.41,
+      "MM-2": -5.4
+     },
+     "forward_calls": 99,
+     "search_seconds": 5.03,
+     "check_seconds": 0.44,
+     "seconds": 5.47
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "AI-S-1",
+      "LC-5"
+     ],
+     "candidates": [
+      "Bld-1",
+      "LC-5",
+      "PL-1",
+      "Tr-1",
+      "MM-3",
+      "S-1",
+      "AI-S-1",
+      "S-4",
+      "MM-1",
+      "DL-5"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {
+      "Bld-1": -6.7,
+      "LC-5": 3.91,
+      "PL-1": 9.76,
+      "Tr-1": -4.45,
+      "MM-3": -4.42,
+      "S-1": -2.35,
+      "AI-S-1": 4.33,
+      "S-4": -5.9,
+      "MM-1": -3.56,
+      "DL-5": -1.52
+     },
+     "forward_calls": 133,
+     "search_seconds": 6.94,
+     "check_seconds": 0.45,
+     "seconds": 7.4
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-1"
+     ],
+     "candidates": [
+      "S-1",
+      "ER-1",
+      "DL-4",
+      "BD-1",
+      "S-3",
+      "E-1",
+      "PL-1",
+      "SS3",
+      "BD-2",
+      "H-3"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "S-1": -3.57,
+      "ER-1": 3.49,
+      "DL-4": -3.74,
+      "BD-1": 8.63,
+      "S-3": -4.91,
+      "E-1": 3.89,
+      "PL-1": 5.44,
+      "SS3": 3.99,
+      "BD-2": 5.38,
+      "H-3": -1.66
+     },
+     "forward_calls": 107,
+     "search_seconds": 5.19,
+     "check_seconds": 0.26,
+     "seconds": 5.45
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "candidates": [
+      "AI-S-3",
+      "PL-1",
+      "AC-1",
+      "MF-4",
+      "MI-1",
+      "PL-2",
+      "EI-1",
+      "PL-3",
+      "HPC-1",
+      "ML-6"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "AI-S-3": 0.25,
+      "PL-1": 8.95,
+      "AC-1": 3.57,
+      "MF-4": 4.14,
+      "MI-1": -2.18,
+      "PL-2": -4.34,
+      "EI-1": -3.62,
+      "PL-3": -5.26,
+      "HPC-1": -4.58,
+      "ML-6": -0.58
+     },
+     "forward_calls": 150,
+     "search_seconds": 8.86,
+     "check_seconds": 0.47,
+     "seconds": 9.34
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-4"
+     ],
+     "candidates": [
+      "LC-4",
+      "S-4",
+      "E-1",
+      "Tr-1",
+      "Bld-1",
+      "MI-1",
+      "EI-1",
+      "ER-1",
+      "SS2",
+      "MnI-1"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "LC-4": 8.04,
+      "S-4": -5.09,
+      "E-1": -4.56,
+      "Tr-1": -5.09,
+      "Bld-1": -5.85,
+      "MI-1": -4.59,
+      "EI-1": -5.16,
+      "ER-1": 4.29,
+      "SS2": 3.28,
+      "MnI-1": 0.05
+     },
+     "forward_calls": 125,
+     "search_seconds": 12.6,
+     "check_seconds": 0.26,
+     "seconds": 12.86
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "LC-6"
+     ],
+     "candidates": [
+      "Tr-1",
+      "H-2",
+      "S-4",
+      "ER-2",
+      "S-1",
+      "LC-6",
+      "LC-4",
+      "T-2",
+      "E-1",
+      "T-1"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {
+      "Tr-1": -3.14,
+      "H-2": -3.82,
+      "S-4": -3.67,
+      "ER-2": -3.9,
+      "S-1": -4.43,
+      "LC-6": 0.89,
+      "LC-4": 0.08,
+      "T-2": -2.78,
+      "E-1": -2.75,
+      "T-1": -1.76
+     },
+     "forward_calls": 166,
+     "search_seconds": 13.98,
+     "check_seconds": 0.25,
+     "seconds": 14.23
+    }
+   ]
+  },
+  "pass16_batched": {
+   "overrides": {
+    "batch_paths": true,
+    "single_pass": true,
+    "path_beam": 16
+   },
+   "count": 20,
+   "verified": true,
+   "summary": {
+    "web_precision": 0.5714285714285714,
+    "web_hits": 8,
+    "web_predicted": 14,
+    "synthetic_hit_at_1": 0.75,
+    "mean_seconds_web": 3.4899999999999998,
+    "hits_per_profile": [
+     2,
+     1,
+     0,
+     3,
+     2
+    ],
+    "acceptable_in_candidates_web": [
+     2,
+     1,
+     0,
+     4,
+     2
+    ],
+    "candidates_web": [
+     4,
+     6,
+     7,
+     8,
+     5
+    ],
+    "mean_search_seconds_web": 3.22,
+    "mean_check_seconds_web": 0.27,
+    "mean_forward_calls_web": 35.2
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "SS2",
+      "LC-5",
+      "LC-4"
+     ],
+     "candidates": [
+      "LC-4",
+      "SS2",
+      "LC-5",
+      "S-5"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {
+      "LC-4": 3.57,
+      "SS2": 5.44,
+      "LC-5": 4.44,
+      "S-5": -5.98
+     },
+     "forward_calls": 28,
+     "search_seconds": 2.17,
+     "check_seconds": 0.18,
+     "seconds": 2.36
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "MF-4",
+      "LC-1",
+      "ML-5"
+     ],
+     "candidates": [
+      "MF-4",
+      "ML-5",
+      "ML-4",
+      "LC-1",
+      "AI-S-3",
+      "FC-5"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "MF-4": 7.51,
+      "ML-5": 5.71,
+      "ML-4": 3.34,
+      "LC-1": 7.45,
+      "AI-S-3": 5.24,
+      "FC-5": 4.75
+     },
+     "forward_calls": 29,
+     "search_seconds": 2.01,
+     "check_seconds": 0.27,
+     "seconds": 2.28
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "LLM-4",
+      "SS3",
+      "LC-5"
+     ],
+     "candidates": [
+      "LC-5",
+      "ER-2",
+      "H-3",
+      "ER-1",
+      "LLM-4",
+      "SS3",
+      "S-4"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {
+      "LC-5": 4.85,
+      "ER-2": -0.23,
+      "H-3": -3.34,
+      "ER-1": 4.17,
+      "LLM-4": 6.11,
+      "SS3": 4.91,
+      "S-4": -6.07
+     },
+     "forward_calls": 30,
+     "search_seconds": 2.1,
+     "check_seconds": 0.32,
+     "seconds": 2.41
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "DL-3",
+      "ML-8",
+      "DL-1"
+     ],
+     "candidates": [
+      "DL-1",
+      "DL-3",
+      "S-3",
+      "ML-8",
+      "ML-3",
+      "MF-4",
+      "E-1",
+      "FC-3"
+     ],
+     "acceptable_in_candidates": 4,
+     "margins": {
+      "DL-1": 7.14,
+      "DL-3": 8.62,
+      "S-3": -5.14,
+      "ML-8": 7.41,
+      "ML-3": 6.74,
+      "MF-4": 4.23,
+      "E-1": -5.29,
+      "FC-3": 2.39
+     },
+     "forward_calls": 30,
+     "search_seconds": 2.33,
+     "check_seconds": 0.36,
+     "seconds": 2.7
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "LC-5"
+     ],
+     "candidates": [
+      "Bld-1",
+      "LC-5",
+      "PL-1",
+      "T-1",
+      "T-2"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {
+      "Bld-1": -6.7,
+      "LC-5": 3.91,
+      "PL-1": 9.76,
+      "T-1": -2.44,
+      "T-2": -4.06
+     },
+     "forward_calls": 59,
+     "search_seconds": 7.48,
+     "check_seconds": 0.23,
+     "seconds": 7.7
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-1"
+     ],
+     "candidates": [
+      "S-1",
+      "ER-1",
+      "BD-1",
+      "DL-4",
+      "PL-1",
+      "SS3",
+      "Tr-1",
+      "BD-2"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "S-1": -3.57,
+      "ER-1": 3.49,
+      "BD-1": 8.63,
+      "DL-4": -3.74,
+      "PL-1": 5.44,
+      "SS3": 3.99,
+      "Tr-1": -4.32,
+      "BD-2": 5.38
+     },
+     "forward_calls": 26,
+     "search_seconds": 1.66,
+     "check_seconds": 0.19,
+     "seconds": 1.85
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "candidates": [
+      "AI-S-3",
+      "PL-1",
+      "AC-1",
+      "T-2",
+      "E-1",
+      "MI-1"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "AI-S-3": 0.25,
+      "PL-1": 8.95,
+      "AC-1": 3.57,
+      "T-2": -4.12,
+      "E-1": -0.02,
+      "MI-1": -2.18
+     },
+     "forward_calls": 55,
+     "search_seconds": 7.12,
+     "check_seconds": 0.15,
+     "seconds": 7.26
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-4"
+     ],
+     "candidates": [
+      "E-1",
+      "LC-4",
+      "S-4",
+      "Bld-1",
+      "S-2",
+      "Tr-1",
+      "T-2"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "E-1": -4.56,
+      "LC-4": 8.04,
+      "S-4": -5.09,
+      "Bld-1": -5.85,
+      "S-2": -2.22,
+      "Tr-1": -5.09,
+      "T-2": -4.01
+     },
+     "forward_calls": 53,
+     "search_seconds": 4.03,
+     "check_seconds": 0.16,
+     "seconds": 4.19
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "LC-6"
+     ],
+     "candidates": [
+      "Tr-1",
+      "ER-2",
+      "LC-6",
+      "FC-4"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {
+      "Tr-1": -3.14,
+      "ER-2": -3.9,
+      "LC-6": 0.89,
+      "FC-4": -1.06
+     },
+     "forward_calls": 28,
+     "search_seconds": 1.85,
+     "check_seconds": 0.1,
+     "seconds": 1.94
+    }
+   ]
+  },
+  "pass32_batched": {
+   "overrides": {
+    "batch_paths": true,
+    "single_pass": true,
+    "path_beam": 32
+   },
+   "count": 20,
+   "verified": true,
+   "summary": {
+    "web_precision": 0.5714285714285714,
+    "web_hits": 8,
+    "web_predicted": 14,
+    "synthetic_hit_at_1": 0.75,
+    "mean_seconds_web": 4.901999999999999,
+    "hits_per_profile": [
+     2,
+     1,
+     0,
+     3,
+     2
+    ],
+    "acceptable_in_candidates_web": [
+     2,
+     1,
+     0,
+     4,
+     2
+    ],
+    "candidates_web": [
+     4,
+     6,
+     7,
+     8,
+     5
+    ],
+    "mean_search_seconds_web": 4.63,
+    "mean_check_seconds_web": 0.27,
+    "mean_forward_calls_web": 35.4
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "SS2",
+      "LC-5",
+      "LC-4"
+     ],
+     "candidates": [
+      "LC-4",
+      "SS2",
+      "LC-5",
+      "S-5"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {
+      "LC-4": 3.57,
+      "SS2": 5.44,
+      "LC-5": 4.44,
+      "S-5": -5.98
+     },
+     "forward_calls": 29,
+     "search_seconds": 2.84,
+     "check_seconds": 0.18,
+     "seconds": 3.03
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "MF-4",
+      "LC-1",
+      "ML-5"
+     ],
+     "candidates": [
+      "MF-4",
+      "ML-5",
+      "ML-4",
+      "LC-1",
+      "AI-S-3",
+      "FC-5"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "MF-4": 7.51,
+      "ML-5": 5.71,
+      "ML-4": 3.34,
+      "LC-1": 7.45,
+      "AI-S-3": 5.24,
+      "FC-5": 4.75
+     },
+     "forward_calls": 29,
+     "search_seconds": 2.72,
+     "check_seconds": 0.27,
+     "seconds": 2.99
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "LLM-4",
+      "SS3",
+      "LC-5"
+     ],
+     "candidates": [
+      "LC-5",
+      "ER-2",
+      "H-3",
+      "ER-1",
+      "LLM-4",
+      "SS3",
+      "S-4"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {
+      "LC-5": 4.85,
+      "ER-2": -0.23,
+      "H-3": -3.34,
+      "ER-1": 4.17,
+      "LLM-4": 6.11,
+      "SS3": 4.91,
+      "S-4": -6.07
+     },
+     "forward_calls": 30,
+     "search_seconds": 2.66,
+     "check_seconds": 0.31,
+     "seconds": 2.97
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "DL-3",
+      "ML-8",
+      "DL-1"
+     ],
+     "candidates": [
+      "DL-1",
+      "DL-3",
+      "S-3",
+      "ML-8",
+      "ML-3",
+      "MF-4",
+      "E-1",
+      "FC-3"
+     ],
+     "acceptable_in_candidates": 4,
+     "margins": {
+      "DL-1": 7.14,
+      "DL-3": 8.62,
+      "S-3": -5.14,
+      "ML-8": 7.41,
+      "ML-3": 6.74,
+      "MF-4": 4.23,
+      "E-1": -5.29,
+      "FC-3": 2.39
+     },
+     "forward_calls": 30,
+     "search_seconds": 2.96,
+     "check_seconds": 0.37,
+     "seconds": 3.33
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "LC-5"
+     ],
+     "candidates": [
+      "Bld-1",
+      "LC-5",
+      "PL-1",
+      "T-1",
+      "T-2"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {
+      "Bld-1": -6.7,
+      "LC-5": 3.91,
+      "PL-1": 9.76,
+      "T-1": -2.44,
+      "T-2": -4.06
+     },
+     "forward_calls": 59,
+     "search_seconds": 11.96,
+     "check_seconds": 0.22,
+     "seconds": 12.19
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-1"
+     ],
+     "candidates": [
+      "S-1",
+      "ER-1",
+      "BD-1",
+      "DL-4",
+      "PL-1",
+      "SS3",
+      "Tr-1",
+      "BD-2",
+      "LLM-2"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "S-1": -3.57,
+      "ER-1": 3.49,
+      "BD-1": 8.63,
+      "DL-4": -3.74,
+      "PL-1": 5.44,
+      "SS3": 3.99,
+      "Tr-1": -4.32,
+      "BD-2": 5.38,
+      "LLM-2": -3.44
+     },
+     "forward_calls": 26,
+     "search_seconds": 2.18,
+     "check_seconds": 0.21,
+     "seconds": 2.39
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "candidates": [
+      "AI-S-3",
+      "PL-1",
+      "AC-1",
+      "T-2",
+      "E-1",
+      "LLM-1",
+      "MI-1"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "AI-S-3": 0.25,
+      "PL-1": 8.95,
+      "AC-1": 3.57,
+      "T-2": -4.12,
+      "E-1": -0.02,
+      "LLM-1": -1.59,
+      "MI-1": -2.18
+     },
+     "forward_calls": 55,
+     "search_seconds": 11.49,
+     "check_seconds": 0.17,
+     "seconds": 11.66
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-4"
+     ],
+     "candidates": [
+      "E-1",
+      "LC-4",
+      "S-4",
+      "Bld-1",
+      "S-2",
+      "Tr-1",
+      "T-2",
+      "FC-2"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "E-1": -4.56,
+      "LC-4": 8.04,
+      "S-4": -5.09,
+      "Bld-1": -5.85,
+      "S-2": -2.22,
+      "Tr-1": -5.09,
+      "T-2": -4.01,
+      "FC-2": 0.08
+     },
+     "forward_calls": 53,
+     "search_seconds": 4.44,
+     "check_seconds": 0.19,
+     "seconds": 4.64
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "LC-6"
+     ],
+     "candidates": [
+      "Tr-1",
+      "ER-2",
+      "LC-6",
+      "MF-6",
+      "FC-4"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {
+      "Tr-1": -3.14,
+      "ER-2": -3.9,
+      "LC-6": 0.89,
+      "MF-6": 0.07,
+      "FC-4": -1.06
+     },
+     "forward_calls": 31,
+     "search_seconds": 2.23,
+     "check_seconds": 0.12,
+     "seconds": 2.35
+    }
+   ]
+  }
+ },
+ "batched_matches_old": {
+  "retail-data-platform": true,
+  "industrial-ml-product": true,
+  "ai-security-reviewer": true,
+  "applied-research-engineer": true,
+  "backend-llm-agents": true,
+  "syn-001": true,
+  "syn-002": true,
+  "syn-003": true,
+  "syn-004": true
+ }
+}

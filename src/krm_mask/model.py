@@ -185,6 +185,68 @@ class LocalCausalLM:
                 results.append(log_probs[index].tolist())
         return results
 
+    def tail_logprobs(
+        self, prefix: list[int], tails: list[tuple[int, ...]], wanted: list[list[int]],
+        chunk: int = 32,
+    ) -> list[list[float]]:
+        """log P(token | prefix + tail) for the `wanted` tokens of each tail.
+
+        The prefix (the resume prompt) is run once and its KV cache is kept
+        until another prefix comes; every call then runs only the tails, in
+        batches of `chunk` rows that all attend to the cached prefix.
+        """
+        import torch
+        from transformers import DynamicCache
+
+        key = tuple(prefix)
+        if getattr(self, "_prefix_key", None) != key:
+            with torch.inference_mode():
+                out = self.model(
+                    input_ids=torch.tensor([prefix], device=self.device), use_cache=True)
+            self._prefix_key = key
+            self._prefix_layers = [
+                (layer.keys, layer.values) for layer in out.past_key_values.layers]
+            self._prefix_last = torch.log_softmax(out.logits[0, -1].float(), dim=-1)
+        results: list[list[float] | None] = [None] * len(tails)
+        for row, tail in enumerate(tails):
+            if not tail:
+                index = torch.tensor(wanted[row], device=self.device, dtype=torch.long)
+                results[row] = self._prefix_last[index].tolist()
+        rows = [row for row, tail in enumerate(tails) if tail]
+        pad = self.tokenizer.pad_token_id
+        pad = self.tokenizer.eos_token_id if pad is None else pad
+        length = len(prefix)
+        with torch.inference_mode():
+            for start in range(0, len(rows), chunk):
+                batch = rows[start : start + chunk]
+                size = len(batch)
+                width = max(len(tails[row]) for row in batch)
+                ids = torch.full((size, width), pad, dtype=torch.long, device=self.device)
+                attention = torch.zeros((size, length + width), dtype=torch.long, device=self.device)
+                attention[:, :length] = 1
+                for position, row in enumerate(batch):
+                    tail = tails[row]
+                    ids[position, : len(tail)] = torch.tensor(tail, device=self.device)
+                    attention[position, length : length + len(tail)] = 1
+                cache = DynamicCache(
+                    ddp_cache_data=[
+                        (keys.expand(size, -1, -1, -1), values.expand(size, -1, -1, -1))
+                        for keys, values in self._prefix_layers
+                    ],
+                    config=self.model.config,
+                )
+                positions = torch.arange(length, length + width, device=self.device)
+                logits = self.model(
+                    input_ids=ids, attention_mask=attention, past_key_values=cache,
+                    position_ids=positions.unsqueeze(0).expand(size, -1), use_cache=True,
+                ).logits
+                for position, row in enumerate(batch):
+                    log_probs = torch.log_softmax(
+                        logits[position, len(tails[row]) - 1].float(), dim=-1)
+                    index = torch.tensor(wanted[row], device=self.device, dtype=torch.long)
+                    results[row] = log_probs[index].tolist()
+        return results  # type: ignore[return-value]
+
     def sample_decision_path(
         self, input_ids: object, mask: object, max_new_tokens: int,
     ) -> tuple[list[int], list[dict[str, object]]]:

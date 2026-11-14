@@ -163,9 +163,17 @@ def _table_selector(phrases, likes, priors, config):
                     for c in continuations]
 
         def next_token_logprobs(self, context, suffixes, wanted):
+            LM.calls += 1
             return [[-0.01 if t == 1 else likes.get(word(t), -12.0) for t in row]
                     for row in wanted]
 
+        def tail_logprobs(self, prefix, tails, wanted):
+            LM.batched_calls += 1
+            return [[-0.01 if t == 1 else likes.get(word(t), -12.0) for t in row]
+                    for row in wanted]
+
+    LM.calls = 0
+    LM.batched_calls = 0
     return WordBagSelector(LM(), index, lambda text: [5], config)
 
 
@@ -316,3 +324,29 @@ def test_corridor_search_refills_with_improbable_first_word():
     competency, path = best(corridor_search=True, refill_pool=4)
     assert competency == "INT" and {"api", "rest"} <= path.lemmas
     assert all(word.log_mass < 0 for word in path.words)
+
+
+def test_batched_paths_give_the_same_paths_with_fewer_calls():
+    phrases = {
+        "python инструменты": {"PY", "SEC"},
+        "git тестирование": {"PY", "QA"},
+        "угрозы аудит": {"SEC"},
+        "тестирование качество": {"QA"},
+    }
+    likes = {"python": -0.1, "инструменты": -0.2, "git": -0.3, "тестирование": -0.3,
+             "угрозы": -2.0, "аудит": -2.5, "качество": -1.0}
+    base = dict(alpha=0.0, beta=0.3, beam=4, path_beam=4, word_branches=3,
+                words_per_signal=2, min_signals=2)
+
+    def run(**extra):
+        selector = _table_selector(phrases, likes, {}, WordBagConfig(**base, **extra))
+        found, calls = selector.select_paths("text", count=3, coherent=True)
+        return [(c, round(p.score, 6), p.signals) for c, p in found], calls, selector.lm
+
+    plain, plain_calls, plain_lm = run()
+    batched, batched_calls, batched_lm = run(batch_paths=True)
+    assert batched == plain
+    assert batched_lm.batched_calls == batched_calls and batched_lm.calls == 0
+    assert batched_calls < plain_calls
+    single, _, _ = run(batch_paths=True, single_pass=True)
+    assert single[0] == plain[0] and len(single) <= len(plain)

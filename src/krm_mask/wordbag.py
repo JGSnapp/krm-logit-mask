@@ -168,6 +168,12 @@ class WordBagConfig:
     seed: int = 0
     # How a competency is ranked: its best path ("max") or all its paths ("sum").
     aggregate: str = "max"
+    # Speed (experiment 20): all paths of a step share one model call per token
+    # step, the resume prompt being a cached prefix (`batch_paths`); one search
+    # pass returns all competencies it reached instead of restarting with the
+    # found ones blocked (`single_pass`).
+    batch_paths: bool = False
+    single_pass: bool = False
 
 
 @dataclass
@@ -225,6 +231,8 @@ class WordBagSelector:
         self.prompt = prompt
         self.config = config or WordBagConfig()
         self.evidence: set[str] = set()
+        # Shared prompt prefix of the current search (for the cached batch mode).
+        self.prefix: list[int] | None = None
         # Negative selection (experiment 13): phrases no signal may come from.
         self.blocked_phrases: set[int] = set()
         self.df: dict[str, int] = defaultdict(int)
@@ -338,6 +346,8 @@ class WordBagSelector:
             for competency_id, path in ranked[: count - len(found)]:
                 found.append((competency_id, path))
                 blocked.add(competency_id)
+            if self.config.single_pass:
+                break
         return found, calls
 
     def _path_search(self, text: str, blocked: set[str]) -> tuple[list[WordPath], int]:
@@ -405,23 +415,33 @@ class WordBagSelector:
         start = SignalPath(
             [], frozenset(set(index.competency_lemmas) - blocked), list(self.prompt(text)), 0.0,
         )
+        self.prefix = list(start.context)
         live: list[SignalPath] = [start]
         finished: dict[tuple, SignalPath] = {}
         calls = 0
         for _ in range(config.max_signals * config.words_per_signal):
             children: dict[tuple, SignalPath] = {}
-            for path in live:
-                phrases, allowed = self._allowed(path)
-                if not allowed:
-                    continue
-                options, used_calls = self._word_options(path.context, allowed, config.word_branches)
-                calls += used_calls
-                for option in options:
-                    self._place(self._extend(path, phrases, option), children, finished)
+            calls += self._expand_step(live, children, finished)
             live = sorted(children.values(), key=lambda p: -p.score)[: config.path_beam]
             if not live:
                 break
         return sorted(finished.values(), key=lambda p: -p.score), calls
+
+    def _expand_step(self, live, children: dict, finished: dict) -> int:
+        """Word options for all live paths at once; children placed in path order."""
+        requests, owners = [], []
+        for path in live:
+            phrases, allowed = self._allowed(path)
+            if allowed:
+                requests.append((path.context, allowed, self.config.word_branches))
+                owners.append((path, phrases))
+        if not requests:
+            return 0
+        results, calls = self._word_options_many(requests)
+        for (path, phrases), options in zip(owners, results):
+            for option in options:
+                self._place(self._extend(path, phrases, option), children, finished)
+        return calls
 
     def _allowed(self, path: "SignalPath") -> tuple[frozenset[int], set[str]]:
         """Phrases the next word may come from and the lemmas allowed next."""
@@ -510,6 +530,7 @@ class WordBagSelector:
             [], frozenset(set(self.index.competency_lemmas) - blocked),
             list(self.prompt(text)), 0.0,
         )
+        self.prefix = list(start.context)
         root_phrases, root_allowed = self._allowed(start)
         if not root_allowed:
             return [], 0
@@ -541,14 +562,7 @@ class WordBagSelector:
             if not live:
                 break
             children: dict[tuple, SignalPath] = {}
-            for path in live.values():
-                phrases, allowed = self._allowed(path)
-                if not allowed:
-                    continue
-                options, used_calls = self._word_options(path.context, allowed, config.word_branches)
-                calls += used_calls
-                for option in options:
-                    self._place(self._extend(path, phrases, option), children, finished)
+            calls += self._expand_step(list(live.values()), children, finished)
             candidates = list(children.values())
             if config.corridor is not None and len(candidates) >= 2:
                 masses = sorted((self._mean_mass(p) for p in candidates), reverse=True)
@@ -608,70 +622,125 @@ class WordBagSelector:
         self, context: list[int], allowed: set[str], top: int,
     ) -> tuple[list[WordChoice], int]:
         """Best `top` complete words (distinct lemmas) by token-level beam search."""
-        config = self.config
-        children: dict[tuple[int, ...], set[int]] = defaultdict(set)
-        terminal: dict[tuple[int, ...], str] = {}
-        best_extra: dict[tuple[int, ...], float] = defaultdict(lambda: -math.inf)
-        for surface, lemma in self.index.surfaces.items():
+        results, calls = self._word_options_many([(context, allowed, top)])
+        return results[0], calls
+
+    def _word_options_many(
+        self, requests: list[tuple[list[int], set[str], int]],
+    ) -> tuple[list[list[WordChoice]], int]:
+        """Token-level beams of several contexts, run in lockstep.
+
+        With `batch_paths` (and a model that caches the resume prompt) all live
+        prefixes of all requests go to the model in one call per token step;
+        otherwise every request makes its own calls (the original behaviour).
+        """
+        beams = [_WordBeam(self, context, allowed, top) for context, allowed, top in requests]
+        prefix = self.prefix if self.config.batch_paths else None
+        batched = (
+            prefix is not None and hasattr(self.lm, "tail_logprobs")
+            and all(beam.context[: len(prefix)] == prefix for beam in beams)
+        )
+        calls = 0
+        while any(beam.live for beam in beams):
+            active = [beam for beam in beams if beam.live]
+            if batched:
+                tails: list[tuple[int, ...]] = []
+                wanted: list[list[int]] = []
+                for beam in active:
+                    tail = tuple(beam.context[len(prefix):])
+                    for node in beam.live:
+                        tails.append(tail + node)
+                        wanted.append(sorted(beam.children[node]))
+                rows = self.lm.tail_logprobs(prefix, tails, wanted)
+                calls += 1
+                offset = 0
+                for beam in active:
+                    size = len(beam.live)
+                    beam.advance(wanted[offset : offset + size], rows[offset : offset + size])
+                    offset += size
+            else:
+                for beam in active:
+                    wanted = [sorted(beam.children[node]) for node in beam.live]
+                    rows = self.lm.next_token_logprobs(beam.context, beam.live, wanted)
+                    calls += 1
+                    beam.advance(wanted, rows)
+        return [beam.options() for beam in beams], calls
+
+
+class _WordBeam:
+    """Token-level beam search for one context: best complete allowed words."""
+
+    def __init__(
+        self, selector: "WordBagSelector", context: list[int], allowed: set[str], top: int,
+    ) -> None:
+        self.selector = selector
+        self.config = config = selector.config
+        self.context = context
+        self.top = top
+        self.children: dict[tuple[int, ...], set[int]] = defaultdict(set)
+        self.terminal: dict[tuple[int, ...], str] = {}
+        self.best_extra: dict[tuple[int, ...], float] = defaultdict(lambda: -math.inf)
+        for surface, lemma in selector.index.surfaces.items():
             if lemma not in allowed:
                 continue
-            sequence = self.tokens[surface]
-            idf = self.index.idf.get(lemma, 0.0)
-            extra = config.beta * idf + config.evidence_bonus * (lemma in self.evidence)
+            sequence = selector.tokens[surface]
+            idf = selector.index.idf.get(lemma, 0.0)
+            extra = config.beta * idf + config.evidence_bonus * (lemma in selector.evidence)
             for depth in range(len(sequence)):
-                children[sequence[:depth]].add(sequence[depth])
+                self.children[sequence[:depth]].add(sequence[depth])
                 prefix = sequence[: depth + 1]
-                best_extra[prefix] = max(best_extra[prefix], extra)
-            terminal.setdefault(sequence, surface)
+                self.best_extra[prefix] = max(self.best_extra[prefix], extra)
+            self.terminal.setdefault(sequence, surface)
+        self.log_prob: dict[tuple[int, ...], float] = {(): 0.0}
+        self.live: list[tuple[int, ...]] = [()] if self.children else []
+        self.finished: list[tuple[int, ...]] = []
+        self.steps = 0
+        self.step_mass = 0.0
 
-        def score(node: tuple[int, ...]) -> float:
-            prior = self.prior.get(node, 0.0)
-            if config.prior_floor is not None:
-                prior = max(prior, config.prior_floor)
-            return log_prob[node] - config.alpha * prior + best_extra[node]
+    def score(self, node: tuple[int, ...]) -> float:
+        config = self.config
+        prior = self.selector.prior.get(node, 0.0)
+        if config.prior_floor is not None:
+            prior = max(prior, config.prior_floor)
+        return self.log_prob[node] - config.alpha * prior + self.best_extra[node]
 
-        log_prob: dict[tuple[int, ...], float] = {(): 0.0}
-        live: list[tuple[int, ...]] = [()]
-        finished: list[tuple[int, ...]] = []
-        calls = 0
-        step_mass = 0.0
-        while live:
-            wanted = [sorted(children[node]) for node in live]
-            rows = self.lm.next_token_logprobs(context, live, wanted)
-            if calls == 0 and rows and rows[0]:
-                top_value = max(rows[0])
-                step_mass = top_value + math.log(sum(math.exp(v - top_value) for v in rows[0]))
-            calls += 1
-            expanded: list[tuple[int, ...]] = []
-            for node, tokens, values in zip(live, wanted, rows):
-                for token, value in zip(tokens, values):
-                    child = node + (token,)
-                    log_prob[child] = log_prob[node] + value
-                    expanded.append(child)
-            expanded.sort(key=score, reverse=True)
-            live = []
-            for node in expanded[: config.beam]:
-                if node in terminal:
-                    finished.append(node)
-                if children.get(node):
-                    live.append(node)
+    def advance(self, wanted: list[list[int]], rows: list[list[float]]) -> None:
+        if self.steps == 0 and rows and rows[0]:
+            top_value = max(rows[0])
+            self.step_mass = top_value + math.log(sum(math.exp(v - top_value) for v in rows[0]))
+        self.steps += 1
+        expanded: list[tuple[int, ...]] = []
+        for node, tokens, values in zip(self.live, wanted, rows):
+            for token, value in zip(tokens, values):
+                child = node + (token,)
+                self.log_prob[child] = self.log_prob[node] + value
+                expanded.append(child)
+        expanded.sort(key=self.score, reverse=True)
+        self.live = []
+        for node in expanded[: self.config.beam]:
+            if node in self.terminal:
+                self.finished.append(node)
+            if self.children.get(node):
+                self.live.append(node)
+
+    def options(self) -> list[WordChoice]:
+        selector = self.selector
         options: list[WordChoice] = []
         seen: set[str] = set()
-        for node in sorted(finished, key=score, reverse=True):
-            surface = terminal[node]
-            lemma = self.index.surfaces[surface]
+        for node in sorted(self.finished, key=self.score, reverse=True):
+            surface = self.terminal[node]
+            lemma = selector.index.surfaces[surface]
             if lemma in seen:
                 continue
             seen.add(lemma)
             options.append(WordChoice(
-                word=surface, lemma=lemma, log_probability=log_prob[node],
-                log_prior=self.prior.get(node, 0.0), idf=self.index.idf.get(lemma, 0.0),
-                score=score(node), candidates_after=0, log_mass=step_mass,
+                word=surface, lemma=lemma, log_probability=self.log_prob[node],
+                log_prior=selector.prior.get(node, 0.0), idf=selector.index.idf.get(lemma, 0.0),
+                score=self.score(node), candidates_after=0, log_mass=self.step_mass,
             ))
-            if len(options) == top:
+            if len(options) == self.top:
                 break
-        return options, calls
-
+        return options
 
 def lm_prompt_tensor(lm: object, ids: list[int]) -> object:
     import torch

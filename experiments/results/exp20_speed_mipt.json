@@ -1,0 +1,1683 @@
+{
+ "experiment": "exp20_speed_mipt",
+ "model": "Qwen/Qwen2.5-1.5B-Instruct",
+ "eval_set": "experiments/eval_set_mipt.json",
+ "catalog": "data/mipt_krm.json",
+ "base": {
+  "alpha": 0.0,
+  "beta": 0.3
+ },
+ "numeric_check": {
+  "rows": 48,
+  "max_abs_diff": 0.038,
+  "mean_abs_diff": 0.00584,
+  "cached_seconds": 0.175,
+  "full_seconds": 2.342
+ },
+ "configs": {
+  "top3_old": {
+   "overrides": {},
+   "count": 3,
+   "verified": false,
+   "summary": {
+    "web_precision": 0.26666666666666666,
+    "web_hits": 4,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 31.106,
+    "hits_per_profile": [
+     0,
+     0,
+     1,
+     1,
+     2
+    ],
+    "acceptable_in_candidates_web": [
+     0,
+     0,
+     1,
+     1,
+     2
+    ],
+    "candidates_web": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ],
+    "mean_search_seconds_web": 31.11,
+    "mean_check_seconds_web": 0.0,
+    "mean_forward_calls_web": 178.6
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "ИД-3",
+      "ИД-4",
+      "АД-2",
+      "АД-5",
+      "ППК-ДА2",
+      "ППК-Р4",
+      "ППК-ОС6",
+      "УНК-02"
+     ],
+     "selected": [
+      "ДИ-2",
+      "ДИ-1",
+      "ИД-2"
+     ],
+     "candidates": [
+      "ДИ-2",
+      "ДИ-1",
+      "ИД-2"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {},
+     "forward_calls": 199,
+     "search_seconds": 35.66,
+     "check_seconds": 0.0,
+     "seconds": 35.66
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "ППК-ДА1",
+      "ППК-ДА4",
+      "ППК-ДА5",
+      "ППК-ДА7",
+      "ППК-У2",
+      "МП-1",
+      "МП-2",
+      "МП-5",
+      "УНК-01"
+     ],
+     "selected": [
+      "ППК-ДА3",
+      "АД-7",
+      "ИД-3"
+     ],
+     "candidates": [
+      "ППК-ДА3",
+      "АД-7",
+      "ИД-3"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {},
+     "forward_calls": 190,
+     "search_seconds": 35.96,
+     "check_seconds": 0.0,
+     "seconds": 35.96
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "КБ-1",
+      "КБ-2",
+      "КБ-4",
+      "ППК-У1",
+      "ИТ-10",
+      "ДСО-1",
+      "УНК-01"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "АР-2",
+      "КБ-1"
+     ],
+     "candidates": [
+      "ППК-Р1",
+      "АР-2",
+      "КБ-1"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {},
+     "forward_calls": 224,
+     "search_seconds": 38.86,
+     "check_seconds": 0.0,
+     "seconds": 38.86
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "МО-1",
+      "МО-2",
+      "УНК-05",
+      "ППК-ДА5",
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "АД-7",
+      "ППК-ДА2",
+      "ИД-3"
+     ],
+     "candidates": [
+      "АД-7",
+      "ППК-ДА2",
+      "ИД-3"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {},
+     "forward_calls": 94,
+     "search_seconds": 15.52,
+     "check_seconds": 0.0,
+     "seconds": 15.52
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "ППК-Р1",
+      "ППК-Р2",
+      "ППК-Р3",
+      "ППК-Р4",
+      "ППК-Р5",
+      "ППК-Р6",
+      "ИП-1",
+      "АД-6",
+      "БСА-3"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "МП-3",
+      "ППК-Р6"
+     ],
+     "candidates": [
+      "ППК-Р1",
+      "МП-3",
+      "ППК-Р6"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {},
+     "forward_calls": 186,
+     "search_seconds": 29.53,
+     "check_seconds": 0.0,
+     "seconds": 29.53
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "ИД-3"
+     ],
+     "candidates": [
+      "ИД-3",
+      "ППК-ДА5",
+      "ППК-У1"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {},
+     "forward_calls": 197,
+     "search_seconds": 8.98,
+     "check_seconds": 0.0,
+     "seconds": 8.98
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-Р1",
+      "УНК-04"
+     ],
+     "selected": [
+      "ППК-ДА3"
+     ],
+     "candidates": [
+      "ППК-ДА3",
+      "ППК-Р1",
+      "ИТ-5"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {},
+     "forward_calls": 111,
+     "search_seconds": 4.97,
+     "check_seconds": 0.0,
+     "seconds": 4.97
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "МО-2"
+     ],
+     "selected": [
+      "ИТК-1"
+     ],
+     "candidates": [
+      "ИТК-1"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {},
+     "forward_calls": 452,
+     "search_seconds": 25.27,
+     "check_seconds": 0.0,
+     "seconds": 25.27
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "МП-3"
+     ],
+     "candidates": [
+      "МП-3",
+      "ППК-ДА3",
+      "МП-4"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {},
+     "forward_calls": 324,
+     "search_seconds": 16.41,
+     "check_seconds": 0.0,
+     "seconds": 16.41
+    }
+   ]
+  },
+  "top3_batched": {
+   "overrides": {
+    "batch_paths": true
+   },
+   "count": 3,
+   "verified": false,
+   "summary": {
+    "web_precision": 0.26666666666666666,
+    "web_hits": 4,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.0,
+    "mean_seconds_web": 2.658,
+    "hits_per_profile": [
+     0,
+     0,
+     1,
+     1,
+     2
+    ],
+    "acceptable_in_candidates_web": [
+     0,
+     0,
+     1,
+     1,
+     2
+    ],
+    "candidates_web": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ],
+    "mean_search_seconds_web": 2.66,
+    "mean_check_seconds_web": 0.0,
+    "mean_forward_calls_web": 49.0
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "ИД-3",
+      "ИД-4",
+      "АД-2",
+      "АД-5",
+      "ППК-ДА2",
+      "ППК-Р4",
+      "ППК-ОС6",
+      "УНК-02"
+     ],
+     "selected": [
+      "ДИ-2",
+      "ДИ-1",
+      "ИД-2"
+     ],
+     "candidates": [
+      "ДИ-2",
+      "ДИ-1",
+      "ИД-2"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {},
+     "forward_calls": 53,
+     "search_seconds": 2.82,
+     "check_seconds": 0.0,
+     "seconds": 2.82
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "ППК-ДА1",
+      "ППК-ДА4",
+      "ППК-ДА5",
+      "ППК-ДА7",
+      "ППК-У2",
+      "МП-1",
+      "МП-2",
+      "МП-5",
+      "УНК-01"
+     ],
+     "selected": [
+      "ППК-ДА3",
+      "АД-7",
+      "ИД-3"
+     ],
+     "candidates": [
+      "ППК-ДА3",
+      "АД-7",
+      "ИД-3"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {},
+     "forward_calls": 56,
+     "search_seconds": 2.61,
+     "check_seconds": 0.0,
+     "seconds": 2.61
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "КБ-1",
+      "КБ-2",
+      "КБ-4",
+      "ППК-У1",
+      "ИТ-10",
+      "ДСО-1",
+      "УНК-01"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "АР-2",
+      "КБ-1"
+     ],
+     "candidates": [
+      "ППК-Р1",
+      "АР-2",
+      "КБ-1"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {},
+     "forward_calls": 54,
+     "search_seconds": 3.57,
+     "check_seconds": 0.0,
+     "seconds": 3.57
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "МО-1",
+      "МО-2",
+      "УНК-05",
+      "ППК-ДА5",
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "АД-7",
+      "ППК-ДА2",
+      "ИД-3"
+     ],
+     "candidates": [
+      "АД-7",
+      "ППК-ДА2",
+      "ИД-3"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {},
+     "forward_calls": 27,
+     "search_seconds": 1.35,
+     "check_seconds": 0.0,
+     "seconds": 1.35
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "ППК-Р1",
+      "ППК-Р2",
+      "ППК-Р3",
+      "ППК-Р4",
+      "ППК-Р5",
+      "ППК-Р6",
+      "ИП-1",
+      "АД-6",
+      "БСА-3"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "МП-3",
+      "ППК-Р6"
+     ],
+     "candidates": [
+      "ППК-Р1",
+      "МП-3",
+      "ППК-Р6"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {},
+     "forward_calls": 55,
+     "search_seconds": 2.94,
+     "check_seconds": 0.0,
+     "seconds": 2.94
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "ИД-3"
+     ],
+     "candidates": [
+      "ИД-3",
+      "ППК-ДА5",
+      "ППК-У1"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {},
+     "forward_calls": 64,
+     "search_seconds": 2.59,
+     "check_seconds": 0.0,
+     "seconds": 2.59
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-Р1",
+      "УНК-04"
+     ],
+     "selected": [
+      "ППК-ДА3"
+     ],
+     "candidates": [
+      "ППК-ДА3",
+      "ППК-Р1",
+      "ИТ-5"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {},
+     "forward_calls": 30,
+     "search_seconds": 1.27,
+     "check_seconds": 0.0,
+     "seconds": 1.27
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "МО-2"
+     ],
+     "selected": [
+      "ИТК-1"
+     ],
+     "candidates": [
+      "ИТК-1"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {},
+     "forward_calls": 110,
+     "search_seconds": 6.91,
+     "check_seconds": 0.0,
+     "seconds": 6.91
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "МП-3"
+     ],
+     "candidates": [
+      "МП-3",
+      "ППК-ДА3",
+      "МП-4"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {},
+     "forward_calls": 87,
+     "search_seconds": 4.64,
+     "check_seconds": 0.0,
+     "seconds": 4.64
+    }
+   ]
+  },
+  "restarts10_batched": {
+   "overrides": {
+    "batch_paths": true
+   },
+   "count": 10,
+   "verified": true,
+   "summary": {
+    "web_precision": 0.4,
+    "web_hits": 6,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.5,
+    "mean_seconds_web": 11.486,
+    "hits_per_profile": [
+     1,
+     0,
+     1,
+     2,
+     2
+    ],
+    "acceptable_in_candidates_web": [
+     1,
+     0,
+     1,
+     3,
+     2
+    ],
+    "candidates_web": [
+     10,
+     10,
+     10,
+     10,
+     10
+    ],
+    "mean_search_seconds_web": 11.02,
+    "mean_check_seconds_web": 0.47,
+    "mean_forward_calls_web": 195.4
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "ИД-3",
+      "ИД-4",
+      "АД-2",
+      "АД-5",
+      "ППК-ДА2",
+      "ППК-Р4",
+      "ППК-ОС6",
+      "УНК-02"
+     ],
+     "selected": [
+      "ППК-ДА6",
+      "ИД-2",
+      "ППК-Р4"
+     ],
+     "candidates": [
+      "ДИ-2",
+      "ДИ-1",
+      "ИД-2",
+      "ППК-ДА5",
+      "ППК-Р4",
+      "ИТ-4",
+      "ППК-Р1",
+      "ИТ-6",
+      "ППК-ДА6",
+      "КБ-3"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "ДИ-2": -0.98,
+      "ДИ-1": 4.45,
+      "ИД-2": 5.81,
+      "ППК-ДА5": 1.28,
+      "ППК-Р4": 4.95,
+      "ИТ-4": 0.08,
+      "ППК-Р1": 1.79,
+      "ИТ-6": -2.69,
+      "ППК-ДА6": 7.02,
+      "КБ-3": -3.81
+     },
+     "forward_calls": 220,
+     "search_seconds": 13.05,
+     "check_seconds": 0.48,
+     "seconds": 13.52
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "ППК-ДА1",
+      "ППК-ДА4",
+      "ППК-ДА5",
+      "ППК-ДА7",
+      "ППК-У2",
+      "МП-1",
+      "МП-2",
+      "МП-5",
+      "УНК-01"
+     ],
+     "selected": [
+      "ДИ-4",
+      "УНК-02",
+      "ППК-ДА3"
+     ],
+     "candidates": [
+      "ППК-ДА3",
+      "АД-7",
+      "ИД-3",
+      "ДИ-4",
+      "МО-1",
+      "ИТ-6",
+      "МО-2",
+      "КБ-2",
+      "УНК-02",
+      "УНК-05"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {
+      "ППК-ДА3": 6.4,
+      "АД-7": 5.31,
+      "ИД-3": 4.57,
+      "ДИ-4": 6.89,
+      "МО-1": 6.11,
+      "ИТ-6": -0.07,
+      "МО-2": 3.53,
+      "КБ-2": 4.61,
+      "УНК-02": 6.7,
+      "УНК-05": 2.91
+     },
+     "forward_calls": 283,
+     "search_seconds": 16.38,
+     "check_seconds": 0.47,
+     "seconds": 16.85
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "КБ-1",
+      "КБ-2",
+      "КБ-4",
+      "ППК-У1",
+      "ИТ-10",
+      "ДСО-1",
+      "УНК-01"
+     ],
+     "selected": [
+      "КБ-1",
+      "ИТ-7",
+      "ИТ-4"
+     ],
+     "candidates": [
+      "ППК-Р1",
+      "АР-2",
+      "КБ-1",
+      "ИТ-4",
+      "ИП-1",
+      "ППК-Р2",
+      "ППК-ДА2",
+      "ИТ-7",
+      "ИД-3",
+      "ППК-Р3"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "ППК-Р1": 0.29,
+      "АР-2": -2.35,
+      "КБ-1": 4.62,
+      "ИТ-4": 2.26,
+      "ИП-1": 1.19,
+      "ППК-Р2": 1.19,
+      "ППК-ДА2": -0.09,
+      "ИТ-7": 2.88,
+      "ИД-3": -0.57,
+      "ППК-Р3": 0.78
+     },
+     "forward_calls": 157,
+     "search_seconds": 9.13,
+     "check_seconds": 0.47,
+     "seconds": 9.59
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "МО-1",
+      "МО-2",
+      "УНК-05",
+      "ППК-ДА5",
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "МО-1",
+      "ППК-ДА2",
+      "ИТ-8"
+     ],
+     "candidates": [
+      "АД-7",
+      "ППК-ДА2",
+      "ИД-3",
+      "ИТ-8",
+      "МО-1",
+      "ППК-ДА3",
+      "МО-2",
+      "ППК-Р1",
+      "ИП-1",
+      "ИТ-7"
+     ],
+     "acceptable_in_candidates": 3,
+     "margins": {
+      "АД-7": 2.56,
+      "ППК-ДА2": 4.76,
+      "ИД-3": -2.74,
+      "ИТ-8": 4.74,
+      "МО-1": 5.66,
+      "ППК-ДА3": 4.61,
+      "МО-2": 2.05,
+      "ППК-Р1": -0.25,
+      "ИП-1": -1.16,
+      "ИТ-7": -0.47
+     },
+     "forward_calls": 191,
+     "search_seconds": 10.92,
+     "check_seconds": 0.47,
+     "seconds": 11.39
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "ППК-Р1",
+      "ППК-Р2",
+      "ППК-Р3",
+      "ППК-Р4",
+      "ППК-Р5",
+      "ППК-Р6",
+      "ИП-1",
+      "АД-6",
+      "БСА-3"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "ДИ-1",
+      "ППК-Р6"
+     ],
+     "candidates": [
+      "ППК-Р1",
+      "МП-3",
+      "ППК-Р6",
+      "АР-3",
+      "МП-1",
+      "ИТ-5",
+      "МП-2",
+      "ИТК-1",
+      "ППК-Р7",
+      "ДИ-1"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {
+      "ППК-Р1": 7.11,
+      "МП-3": -1.26,
+      "ППК-Р6": 5.72,
+      "АР-3": 1.49,
+      "МП-1": 3.32,
+      "ИТ-5": 0.12,
+      "МП-2": 4.25,
+      "ИТК-1": -5.37,
+      "ППК-Р7": -0.11,
+      "ДИ-1": 6.33
+     },
+     "forward_calls": 126,
+     "search_seconds": 5.61,
+     "check_seconds": 0.48,
+     "seconds": 6.08
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "ППК-ДА2"
+     ],
+     "candidates": [
+      "ИД-3",
+      "ППК-ДА5",
+      "ППК-У1",
+      "ППК-ДА2",
+      "ИТК-3",
+      "ППК-ДА6",
+      "МП-3",
+      "ИТ-2",
+      "ИД-2",
+      "КБ-4"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "ИД-3": 1.79,
+      "ППК-ДА5": 1.44,
+      "ППК-У1": -1.13,
+      "ППК-ДА2": 6.45,
+      "ИТК-3": -4.09,
+      "ППК-ДА6": 4.9,
+      "МП-3": -2.13,
+      "ИТ-2": -3.04,
+      "ИД-2": 3.14,
+      "КБ-4": -3.03
+     },
+     "forward_calls": 230,
+     "search_seconds": 11.5,
+     "check_seconds": 0.25,
+     "seconds": 11.75
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-Р1",
+      "УНК-04"
+     ],
+     "selected": [
+      "ППК-Р1"
+     ],
+     "candidates": [
+      "ППК-ДА3",
+      "ППК-Р1",
+      "ИТ-5",
+      "ИТК-1",
+      "СА-1",
+      "ППК-ОС1",
+      "ППК-ОС7",
+      "ИТ-10",
+      "АД-7",
+      "МП-3"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "ППК-ДА3": 4.36,
+      "ППК-Р1": 4.82,
+      "ИТ-5": 0.36,
+      "ИТК-1": -3.21,
+      "СА-1": -2.5,
+      "ППК-ОС1": -1.03,
+      "ППК-ОС7": 0.2,
+      "ИТ-10": -1.45,
+      "АД-7": 2.53,
+      "МП-3": -0.92
+     },
+     "forward_calls": 180,
+     "search_seconds": 9.6,
+     "check_seconds": 0.26,
+     "seconds": 9.85
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "МО-2"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "candidates": [
+      "ИТК-1"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {
+      "ИТК-1": -4.42
+     },
+     "forward_calls": 110,
+     "search_seconds": 6.52,
+     "check_seconds": 0.02,
+     "seconds": 6.54
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "МО-1"
+     ],
+     "candidates": [
+      "МП-3",
+      "ППК-ДА3",
+      "МП-4",
+      "ППК-У1",
+      "МО-1",
+      "АД-7",
+      "ИД-3",
+      "МО-2",
+      "ИД-1",
+      "ИТК-2"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {
+      "МП-3": -0.09,
+      "ППК-ДА3": 0.46,
+      "МП-4": -0.97,
+      "ППК-У1": -0.07,
+      "МО-1": 1.77,
+      "АД-7": 1.59,
+      "ИД-3": 0.85,
+      "МО-2": 1.18,
+      "ИД-1": 0.01,
+      "ИТК-2": -0.69
+     },
+     "forward_calls": 235,
+     "search_seconds": 12.47,
+     "check_seconds": 0.25,
+     "seconds": 12.72
+    }
+   ]
+  },
+  "pass16_batched": {
+   "overrides": {
+    "batch_paths": true,
+    "single_pass": true,
+    "path_beam": 16
+   },
+   "count": 20,
+   "verified": true,
+   "summary": {
+    "web_precision": 0.4,
+    "web_hits": 6,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.25,
+    "mean_seconds_web": 4.904,
+    "hits_per_profile": [
+     1,
+     0,
+     1,
+     2,
+     2
+    ],
+    "acceptable_in_candidates_web": [
+     1,
+     0,
+     1,
+     2,
+     2
+    ],
+    "candidates_web": [
+     4,
+     5,
+     8,
+     5,
+     6
+    ],
+    "mean_search_seconds_web": 4.64,
+    "mean_check_seconds_web": 0.27,
+    "mean_forward_calls_web": 45.0
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "ИД-3",
+      "ИД-4",
+      "АД-2",
+      "АД-5",
+      "ППК-ДА2",
+      "ППК-Р4",
+      "ППК-ОС6",
+      "УНК-02"
+     ],
+     "selected": [
+      "ДИ-1",
+      "ППК-ОС6",
+      "АР-1"
+     ],
+     "candidates": [
+      "ДИ-2",
+      "ДИ-1",
+      "АР-1",
+      "ППК-ОС6"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "ДИ-2": -0.98,
+      "ДИ-1": 4.45,
+      "АР-1": 1.27,
+      "ППК-ОС6": 1.28
+     },
+     "forward_calls": 61,
+     "search_seconds": 7.92,
+     "check_seconds": 0.19,
+     "seconds": 8.12
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "ППК-ДА1",
+      "ППК-ДА4",
+      "ППК-ДА5",
+      "ППК-ДА7",
+      "ППК-У2",
+      "МП-1",
+      "МП-2",
+      "МП-5",
+      "УНК-01"
+     ],
+     "selected": [
+      "ДИ-4",
+      "УНК-02",
+      "ППК-ДА3"
+     ],
+     "candidates": [
+      "ППК-ДА3",
+      "АД-7",
+      "ДИ-4",
+      "МО-1",
+      "УНК-02"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {
+      "ППК-ДА3": 6.4,
+      "АД-7": 5.31,
+      "ДИ-4": 6.89,
+      "МО-1": 6.11,
+      "УНК-02": 6.7
+     },
+     "forward_calls": 28,
+     "search_seconds": 2.03,
+     "check_seconds": 0.23,
+     "seconds": 2.26
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "КБ-1",
+      "КБ-2",
+      "КБ-4",
+      "ППК-У1",
+      "ИТ-10",
+      "ДСО-1",
+      "УНК-01"
+     ],
+     "selected": [
+      "КБ-1",
+      "ИТ-7",
+      "ИТ-4"
+     ],
+     "candidates": [
+      "ППК-Р1",
+      "АР-2",
+      "ИТ-7",
+      "ИД-3",
+      "ИТ-4",
+      "КБ-1",
+      "ИП-1",
+      "ППК-Р3"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "ППК-Р1": 0.29,
+      "АР-2": -2.35,
+      "ИТ-7": 2.88,
+      "ИД-3": -0.57,
+      "ИТ-4": 2.26,
+      "КБ-1": 4.62,
+      "ИП-1": 1.19,
+      "ППК-Р3": 0.78
+     },
+     "forward_calls": 54,
+     "search_seconds": 6.8,
+     "check_seconds": 0.39,
+     "seconds": 7.18
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "МО-1",
+      "МО-2",
+      "УНК-05",
+      "ППК-ДА5",
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "МО-1",
+      "ППК-ДА2",
+      "ИТ-8"
+     ],
+     "candidates": [
+      "АД-7",
+      "ППК-ДА2",
+      "ИД-3",
+      "ИТ-8",
+      "МО-1"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {
+      "АД-7": 2.56,
+      "ППК-ДА2": 4.76,
+      "ИД-3": -2.74,
+      "ИТ-8": 4.74,
+      "МО-1": 5.66
+     },
+     "forward_calls": 27,
+     "search_seconds": 1.88,
+     "check_seconds": 0.24,
+     "seconds": 2.12
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "ППК-Р1",
+      "ППК-Р2",
+      "ППК-Р3",
+      "ППК-Р4",
+      "ППК-Р5",
+      "ППК-Р6",
+      "ИП-1",
+      "АД-6",
+      "БСА-3"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "ППК-Р6",
+      "МП-1"
+     ],
+     "candidates": [
+      "ППК-Р1",
+      "МП-3",
+      "ППК-Р6",
+      "ИТ-5",
+      "АР-3",
+      "МП-1"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {
+      "ППК-Р1": 7.11,
+      "МП-3": -1.26,
+      "ППК-Р6": 5.72,
+      "ИТ-5": 0.12,
+      "АР-3": 1.49,
+      "МП-1": 3.32
+     },
+     "forward_calls": 55,
+     "search_seconds": 4.56,
+     "check_seconds": 0.28,
+     "seconds": 4.84
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "ИД-3"
+     ],
+     "candidates": [
+      "ППК-ДА5",
+      "ИД-3",
+      "ИП-1"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {
+      "ППК-ДА5": 1.44,
+      "ИД-3": 1.79,
+      "ИП-1": -3.05
+     },
+     "forward_calls": 61,
+     "search_seconds": 5.16,
+     "check_seconds": 0.08,
+     "seconds": 5.24
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-Р1",
+      "УНК-04"
+     ],
+     "selected": [
+      "ППК-Р1"
+     ],
+     "candidates": [
+      "ППК-ДА3",
+      "ИТК-1",
+      "ППК-Р1",
+      "ИТ-5"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "ППК-ДА3": 4.36,
+      "ИТК-1": -3.21,
+      "ППК-Р1": 4.82,
+      "ИТ-5": 0.36
+     },
+     "forward_calls": 61,
+     "search_seconds": 5.84,
+     "check_seconds": 0.1,
+     "seconds": 5.93
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "МО-2"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "candidates": [
+      "УНК-03",
+      "ИТ-2",
+      "ИТК-1",
+      "АР-3"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {
+      "УНК-03": -1.48,
+      "ИТ-2": -1.28,
+      "ИТК-1": -4.42,
+      "АР-3": -1.12
+     },
+     "forward_calls": 60,
+     "search_seconds": 6.66,
+     "check_seconds": 0.11,
+     "seconds": 6.77
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "АД-7"
+     ],
+     "candidates": [
+      "МП-3",
+      "ППК-ДА3",
+      "АД-7",
+      "МП-4"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {
+      "МП-3": -0.09,
+      "ППК-ДА3": 0.46,
+      "АД-7": 1.59,
+      "МП-4": -0.97
+     },
+     "forward_calls": 28,
+     "search_seconds": 1.76,
+     "check_seconds": 0.11,
+     "seconds": 1.87
+    }
+   ]
+  },
+  "pass32_batched": {
+   "overrides": {
+    "batch_paths": true,
+    "single_pass": true,
+    "path_beam": 32
+   },
+   "count": 20,
+   "verified": true,
+   "summary": {
+    "web_precision": 0.4,
+    "web_hits": 6,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.25,
+    "mean_seconds_web": 9.552000000000001,
+    "hits_per_profile": [
+     1,
+     0,
+     1,
+     2,
+     2
+    ],
+    "acceptable_in_candidates_web": [
+     1,
+     0,
+     1,
+     2,
+     2
+    ],
+    "candidates_web": [
+     4,
+     5,
+     9,
+     7,
+     7
+    ],
+    "mean_search_seconds_web": 9.25,
+    "mean_check_seconds_web": 0.3,
+    "mean_forward_calls_web": 51.4
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "ИД-3",
+      "ИД-4",
+      "АД-2",
+      "АД-5",
+      "ППК-ДА2",
+      "ППК-Р4",
+      "ППК-ОС6",
+      "УНК-02"
+     ],
+     "selected": [
+      "ДИ-1",
+      "ППК-ОС6",
+      "АР-1"
+     ],
+     "candidates": [
+      "ДИ-2",
+      "ДИ-1",
+      "АР-1",
+      "ППК-ОС6"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "ДИ-2": -0.98,
+      "ДИ-1": 4.45,
+      "АР-1": 1.27,
+      "ППК-ОС6": 1.28
+     },
+     "forward_calls": 61,
+     "search_seconds": 14.26,
+     "check_seconds": 0.2,
+     "seconds": 14.46
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "ППК-ДА1",
+      "ППК-ДА4",
+      "ППК-ДА5",
+      "ППК-ДА7",
+      "ППК-У2",
+      "МП-1",
+      "МП-2",
+      "МП-5",
+      "УНК-01"
+     ],
+     "selected": [
+      "ДИ-4",
+      "УНК-02",
+      "ППК-ДА3"
+     ],
+     "candidates": [
+      "ППК-ДА3",
+      "АД-7",
+      "ДИ-4",
+      "МО-1",
+      "УНК-02"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {
+      "ППК-ДА3": 6.4,
+      "АД-7": 5.31,
+      "ДИ-4": 6.89,
+      "МО-1": 6.11,
+      "УНК-02": 6.7
+     },
+     "forward_calls": 28,
+     "search_seconds": 2.74,
+     "check_seconds": 0.24,
+     "seconds": 2.99
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "КБ-1",
+      "КБ-2",
+      "КБ-4",
+      "ППК-У1",
+      "ИТ-10",
+      "ДСО-1",
+      "УНК-01"
+     ],
+     "selected": [
+      "КБ-1",
+      "ИТ-7",
+      "ИТ-4"
+     ],
+     "candidates": [
+      "ППК-Р1",
+      "АР-2",
+      "ИТ-7",
+      "КБ-1",
+      "ИД-3",
+      "ИТ-4",
+      "АР-3",
+      "ИП-1",
+      "ППК-Р3"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "ППК-Р1": 0.29,
+      "АР-2": -2.35,
+      "ИТ-7": 2.88,
+      "КБ-1": 4.62,
+      "ИД-3": -0.57,
+      "ИТ-4": 2.26,
+      "АР-3": -0.49,
+      "ИП-1": 1.19,
+      "ППК-Р3": 0.78
+     },
+     "forward_calls": 54,
+     "search_seconds": 11.17,
+     "check_seconds": 0.41,
+     "seconds": 11.58
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "МО-1",
+      "МО-2",
+      "УНК-05",
+      "ППК-ДА5",
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "МО-1",
+      "ППК-ДА2",
+      "ИТ-8"
+     ],
+     "candidates": [
+      "АД-7",
+      "ППК-ДА2",
+      "ИД-3",
+      "ИТ-8",
+      "МО-1",
+      "ИТК-3",
+      "АР-3"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {
+      "АД-7": 2.56,
+      "ППК-ДА2": 4.76,
+      "ИД-3": -2.74,
+      "ИТ-8": 4.74,
+      "МО-1": 5.66,
+      "ИТК-3": -4.62,
+      "АР-3": -4.1
+     },
+     "forward_calls": 59,
+     "search_seconds": 13.18,
+     "check_seconds": 0.32,
+     "seconds": 13.5
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "ППК-Р1",
+      "ППК-Р2",
+      "ППК-Р3",
+      "ППК-Р4",
+      "ППК-Р5",
+      "ППК-Р6",
+      "ИП-1",
+      "АД-6",
+      "БСА-3"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "ППК-Р6",
+      "МП-1"
+     ],
+     "candidates": [
+      "ППК-Р1",
+      "МП-3",
+      "ППК-Р6",
+      "ИТ-5",
+      "АР-3",
+      "МП-1",
+      "ППК-ДА3"
+     ],
+     "acceptable_in_candidates": 2,
+     "margins": {
+      "ППК-Р1": 7.11,
+      "МП-3": -1.26,
+      "ППК-Р6": 5.72,
+      "ИТ-5": 0.12,
+      "АР-3": 1.49,
+      "МП-1": 3.32,
+      "ППК-ДА3": -2.77
+     },
+     "forward_calls": 55,
+     "search_seconds": 4.91,
+     "check_seconds": 0.31,
+     "seconds": 5.23
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "ИД-3"
+     ],
+     "candidates": [
+      "ППК-ДА5",
+      "ИД-3"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {
+      "ППК-ДА5": 1.44,
+      "ИД-3": 1.79
+     },
+     "forward_calls": 61,
+     "search_seconds": 8.84,
+     "check_seconds": 0.05,
+     "seconds": 8.89
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-Р1",
+      "УНК-04"
+     ],
+     "selected": [
+      "ППК-Р1"
+     ],
+     "candidates": [
+      "ППК-ДА3",
+      "ИТК-1",
+      "ППК-Р1",
+      "ИТ-5"
+     ],
+     "acceptable_in_candidates": 1,
+     "margins": {
+      "ППК-ДА3": 4.36,
+      "ИТК-1": -3.21,
+      "ППК-Р1": 4.82,
+      "ИТ-5": 0.36
+     },
+     "forward_calls": 62,
+     "search_seconds": 9.91,
+     "check_seconds": 0.1,
+     "seconds": 10.01
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "МО-2"
+     ],
+     "selected": [
+      "БСА-5"
+     ],
+     "candidates": [
+      "УНК-03",
+      "ИТ-2",
+      "БСА-5",
+      "ИТК-1",
+      "АР-3",
+      "УНК-05"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {
+      "УНК-03": -1.48,
+      "ИТ-2": -1.28,
+      "БСА-5": 0.67,
+      "ИТК-1": -4.42,
+      "АР-3": -1.12,
+      "УНК-05": -2.17
+     },
+     "forward_calls": 66,
+     "search_seconds": 11.19,
+     "check_seconds": 0.15,
+     "seconds": 11.33
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "АД-7"
+     ],
+     "candidates": [
+      "МП-3",
+      "ППК-ДА3",
+      "МП-4",
+      "АД-7"
+     ],
+     "acceptable_in_candidates": 0,
+     "margins": {
+      "МП-3": -0.09,
+      "ППК-ДА3": 0.46,
+      "МП-4": -0.97,
+      "АД-7": 1.59
+     },
+     "forward_calls": 28,
+     "search_seconds": 2.1,
+     "check_seconds": 0.12,
+     "seconds": 2.22
+    }
+   ]
+  }
+ },
+ "batched_matches_old": {
+  "retail-data-platform": true,
+  "industrial-ml-product": true,
+  "ai-security-reviewer": true,
+  "applied-research-engineer": true,
+  "backend-llm-agents": true,
+  "syn-001": true,
+  "syn-002": true,
+  "syn-003": true,
+  "syn-004": true
+ }
+}
