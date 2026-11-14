@@ -32,6 +32,11 @@ QUOTE_REQUEST = (
     "Выведи из текста цитату, подтверждающую её больше всего. "
     "Пиши сразу дословно, как в тексте."
 )
+# Reference for the contrastive quote score: the same request without a competency.
+NEUTRAL_QUOTE_REQUEST = (
+    "Выведи из текста цитату, которая лучше всего описывает опыт кандидата. "
+    "Пиши сразу дословно, как в тексте."
+)
 YES = ["ДА", "Да", "да"]
 NO = ["НЕТ", "Нет", "нет"]
 
@@ -43,6 +48,11 @@ class SelectionConfig:
     min_margin: float = 0.0  # log P(ДА) - log P(НЕТ) needed to confirm
     quotes: bool = True
     max_quote_tokens: int = 96
+    # Quote score per sentence: mean + w * (mean - neutral mean), where the
+    # neutral mean is the same sentence under the request without a competency
+    # (experiment 23). w = 0: the most likely sentence; large w: the sentence
+    # whose probability grows most from the competency name.
+    quote_contrast: float = 1.0
 
 
 SENTENCE_END = re.compile(r"(?<=[.!?…])\s+|\n+")
@@ -85,6 +95,12 @@ def check_messages(text: str, competency_name: str) -> list[dict[str, str]]:
     )}]
 
 
+def neutral_quote_messages(text: str) -> list[dict[str, str]]:
+    return [{"role": "user", "content": (
+        f"Профиль кандидата: {text}\n{NEUTRAL_QUOTE_REQUEST}"
+    )}]
+
+
 def quote_messages(text: str, competency_name: str) -> list[dict[str, str]]:
     return [
         {"role": "user", "content": (
@@ -110,6 +126,7 @@ class CompetencySelector:
         tokenizer = lm.tokenizer
         self.yes_ids = sorted({tokenizer.encode(w, add_special_tokens=False)[0] for w in YES})
         self.no_ids = sorted({tokenizer.encode(w, add_special_tokens=False)[0] for w in NO})
+        self._neutral: tuple[str, list[tuple[int, int]], list[list[int]], list[float]] | None = None
 
     def _word_prompt(self, text: str) -> list[int]:
         return self.lm.prompt_ids(word_messages(text))[0].tolist()
@@ -127,40 +144,61 @@ class CompetencySelector:
         margin = float(yes - no)
         return margin, float(torch.sigmoid(yes - no))
 
+    def _sentence_means(self, messages, continuations) -> list[float]:
+        totals = self.lm.score_continuations(self.lm.prompt_ids(messages), continuations)
+        return [total / len(tokens) for total, tokens in zip(totals, continuations)]
+
+    def _neutral_scores(self, text: str):
+        """Sentences of the resume and their mean log-probabilities under the
+        neutral request; computed once per resume."""
+        if self._neutral is None or self._neutral[0] != text:
+            sentences = split_sentences(text)
+            eos = self.lm.tokenizer.eos_token_id
+            continuations = [
+                self.lm.tokenizer.encode(text[start:end], add_special_tokens=False) + [eos]
+                for start, end in sentences
+            ]
+            means = self._sentence_means(neutral_quote_messages(text), continuations) if sentences else []
+            self._neutral = (text, sentences, continuations, means)
+        return self._neutral[1:]
+
+    def quote_scores(self, text: str, competency: Competency) -> dict[str, object]:
+        """Per-sentence mean log-probabilities with the competency and neutral."""
+        sentences, continuations, neutral = self._neutral_scores(text)
+        means = self._sentence_means(quote_messages(text, competency.name), continuations) if sentences else []
+        return {"sentences": sentences, "means": means, "neutral": neutral}
+
     def quote(self, text: str, competency: Competency) -> dict[str, object]:
-        """The sentence of `text` the model would answer with, verbatim.
+        """The sentence of `text` that confirms the competency, verbatim.
 
         Every sentence of the resume is a possible answer to the quote request;
-        its log P(sentence + end of turn | dialogue) is computed exactly for
-        all sentences in one batch (teacher forcing) instead of greedy
-        token-by-token copying. The answer is the sentence with the best mean
-        log-probability per token; the plain sum prefers short generic
-        sentences ("Знаю Python.") and is kept as `by_sum` (experiment 22).
+        its log P(sentence + end of turn | dialogue) per token is computed
+        exactly for all sentences in one batch (teacher forcing). The plain
+        most likely sentence tends to be the same for every competency of a
+        resume (experiment 22), so the score adds how much the competency name
+        raises the sentence over the same request without a competency:
+            mean + w * (mean - neutral mean),  w = `quote_contrast`.
         """
-        sentences = split_sentences(text)
+        scores = self.quote_scores(text, competency)
+        sentences, means, neutral = scores["sentences"], scores["means"], scores["neutral"]
         if not sentences:
             return {"text": None, "start": None, "end": None}
-        prompt = self.lm.prompt_ids(quote_messages(text, competency.name))
-        tokenizer = self.lm.tokenizer
-        eos = tokenizer.eos_token_id
-        continuations = [
-            tokenizer.encode(text[start:end], add_special_tokens=False) + [eos]
-            for start, end in sentences
-        ]
-        totals = self.lm.score_continuations(prompt, continuations)
-        means = [total / len(tokens) for total, tokens in zip(totals, continuations)]
-        top = max(means)
-        weights = [math.exp(mean - top) for mean in means]
-        best = max(range(len(sentences)), key=lambda i: means[i])
-        best_sum = max(range(len(sentences)), key=lambda i: totals[i])
+        weight = self.config.quote_contrast
+        combined = [m + weight * (m - n) for m, n in zip(means, neutral)]
+        top = max(combined)
+        weights = [math.exp(value - top) for value in combined]
+        best = max(range(len(sentences)), key=lambda i: combined[i])
+        plain = max(range(len(sentences)), key=lambda i: means[i])
         start, end = sentences[best]
         return {
             "text": text[start:end], "start": start, "end": end,
             "share": weights[best] / sum(weights),
             "mean_log_probability": means[best],
+            "lift": means[best] - neutral[best],
+            "contrast_weight": weight,
             "sentences": len(sentences),
-            "by_sum": {"text": text[sentences[best_sum][0]:sentences[best_sum][1]],
-                       "start": sentences[best_sum][0], "end": sentences[best_sum][1]},
+            "plain": {"text": text[sentences[plain][0]:sentences[plain][1]],
+                      "start": sentences[plain][0], "end": sentences[plain][1]},
         }
 
     def quote_span(self, text: str, competency: Competency) -> dict[str, object]:
