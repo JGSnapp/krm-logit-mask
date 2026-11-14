@@ -350,3 +350,24 @@ def test_batched_paths_give_the_same_paths_with_fewer_calls():
     assert batched_calls < plain_calls
     single, _, _ = run(batch_paths=True, single_pass=True)
     assert single[0] == plain[0] and len(single) <= len(plain)
+
+
+def test_group_narrowing_keeps_indistinguishable_competencies():
+    # PY and LANG share every phrase: words can never tell them apart.
+    phrases = {
+        "python разработка": {"PY", "LANG"},
+        "библиотека код": {"PY", "LANG"},
+        "угрозы аудит": {"SEC"},
+    }
+    likes = {"python": -0.1, "разработка": -0.2, "библиотека": -0.5, "код": -0.5,
+             "угрозы": -6.0, "аудит": -6.0}
+    base = dict(alpha=0.0, beta=0.0, beam=4, path_beam=4, word_branches=3,
+                words_per_signal=2, min_signals=1, max_signals=2)
+
+    def found(**extra):
+        selector = _table_selector(phrases, likes, {}, WordBagConfig(**base, **extra))
+        return [c for c, _ in selector.select_paths("text", count=3, coherent=True)[0]]
+
+    assert "PY" not in found()  # The well-supported pair is dropped at the cap.
+    assert set(found(group_at_cap=3)[:2]) == {"PY", "LANG"}
+    assert set(found(group_size=2)[:2]) == {"PY", "LANG"}

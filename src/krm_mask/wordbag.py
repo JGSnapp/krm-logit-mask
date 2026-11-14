@@ -174,6 +174,12 @@ class WordBagConfig:
     # found ones blocked (`single_pass`).
     batch_paths: bool = False
     single_pass: bool = False
+    # Groups (experiment 24): a path may finish once at most `group_size`
+    # competencies remain (all of them become candidates; the yes/no check
+    # chooses); with `group_at_cap`, a path that runs out of signals keeps its
+    # group of at most that many competencies instead of being dropped.
+    group_size: int | None = None
+    group_at_cap: int | None = None
 
 
 @dataclass
@@ -328,10 +334,14 @@ class WordBagSelector:
             best: dict[str, WordPath] = {}
             scores: dict[str, list[float]] = defaultdict(list)
             for path in finished:
-                (competency_id,) = path.candidates
-                scores[competency_id].append(path.score)
-                if competency_id not in best or path.score > best[competency_id].score:
-                    best[competency_id] = path
+                # A path may end on a group of competencies (`group_size`):
+                # every member gets the path.
+                for competency_id in path.candidates:
+                    if competency_id in blocked:
+                        continue
+                    scores[competency_id].append(path.score)
+                    if competency_id not in best or path.score > best[competency_id].score:
+                        best[competency_id] = path
 
             def rank(item: tuple[str, WordPath]) -> float:
                 if self.config.aggregate == "sum":
@@ -489,12 +499,17 @@ class WordBagSelector:
             current=frozenset() if closes else current,
             phrases=frozenset() if closes else kept,
         )
-        resolved = closes and len(candidates) == 1 and len(signals) >= config.min_signals
+        group = config.group_size or 1
+        resolved = closes and len(candidates) <= group and len(signals) >= config.min_signals
         if resolved and config.anchor_df is not None:
             resolved = self._anchored(child.words, next(iter(candidates)))
         if resolved:
             return child, "finished"
         if closes and len(signals) >= config.max_signals:
+            # Out of signals: similar competencies may be impossible to tell
+            # apart by words; keep the path for its group instead of dropping it.
+            if config.group_at_cap and len(candidates) <= config.group_at_cap:
+                return child, "finished"
             return None
         return child, "live"
 
