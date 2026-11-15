@@ -1,0 +1,1856 @@
+{
+ "experiment": "exp27_baselines",
+ "eval_set": "experiments/eval_set.json",
+ "embedder": "intfloat/multilingual-e5-base",
+ "pool": 15,
+ "methods": {
+  "bm25": {
+   "summary": {
+    "web_precision": 0.6,
+    "web_hits": 9,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.25,
+    "seconds_web": 0.0,
+    "acceptable_in_pool_web": [
+     2,
+     2,
+     4,
+     6,
+     3
+    ]
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "SS2",
+      "BD-2",
+      "AI-S-3"
+     ],
+     "seconds": 0.005,
+     "pool": [
+      "SS2",
+      "BD-2",
+      "AI-S-3",
+      "S-1",
+      "DL-1",
+      "FC-5",
+      "LC-8",
+      "S-4",
+      "LC-4",
+      "FC-3",
+      "E-1",
+      "EI-1",
+      "S-3",
+      "T-1",
+      "MI-1"
+     ]
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "LC-4",
+      "SS2",
+      "SS-1"
+     ],
+     "seconds": 0.005,
+     "pool": [
+      "LC-4",
+      "SS2",
+      "SS-1",
+      "LLM-5",
+      "MF-4",
+      "FC-3",
+      "DL-1",
+      "AI-S-3",
+      "AI-S-2",
+      "LLM-2",
+      "S-1",
+      "MI-1",
+      "Tr-1",
+      "E-1",
+      "Bld-1"
+     ]
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "SS2",
+      "AI-S-3",
+      "LLM-4"
+     ],
+     "seconds": 0.004,
+     "pool": [
+      "SS2",
+      "AI-S-3",
+      "LLM-4",
+      "S-5",
+      "LLM-5",
+      "LC-4",
+      "LC-5",
+      "SS-1",
+      "AI-S-2",
+      "S-1",
+      "FC-3",
+      "AI-S-1",
+      "S-3",
+      "Tr-1",
+      "DL-4"
+     ]
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "DL-1",
+      "S-3",
+      "LLM-5"
+     ],
+     "seconds": 0.004,
+     "pool": [
+      "DL-1",
+      "S-3",
+      "LLM-5",
+      "DL-3",
+      "AI-S-3",
+      "MF-4",
+      "SS2",
+      "MF-3",
+      "DL-2",
+      "ML-8",
+      "LLM-2",
+      "ML-2",
+      "ER-1",
+      "LLM-4",
+      "DL-4"
+     ]
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "LLM-4",
+      "PL-1",
+      "AI-S-3"
+     ],
+     "seconds": 0.003,
+     "pool": [
+      "LLM-4",
+      "PL-1",
+      "AI-S-3",
+      "LC-5",
+      "SS2",
+      "S-4",
+      "LLM-5",
+      "DL-1",
+      "T-1",
+      "S-5",
+      "T-2",
+      "PL-2",
+      "S-2",
+      "MM-3",
+      "S-1"
+     ]
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-5"
+     ],
+     "seconds": 0.0,
+     "pool": [
+      "BD-5",
+      "ML-4",
+      "DL-3",
+      "BD-1",
+      "AI-S-2",
+      "LLM-2",
+      "AC-1",
+      "MnI-1",
+      "T-1",
+      "T-2",
+      "BD-2",
+      "DL-4",
+      "MF-4",
+      "LC-4",
+      "MM-2"
+     ]
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "seconds": 0.001,
+     "pool": [
+      "PL-1",
+      "ER-2",
+      "LLM-1",
+      "AI-S-3",
+      "MF-4",
+      "MF-1",
+      "MF-2",
+      "MF-3",
+      "MF-5",
+      "MF-6",
+      "MF-7",
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4"
+     ]
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-5"
+     ],
+     "seconds": 0.0,
+     "pool": [
+      "LC-5",
+      "LC-4",
+      "LLM-5",
+      "LC-3",
+      "S-1",
+      "LLM-2",
+      "AI-S-3",
+      "MM-2",
+      "MI-2",
+      "Tr-1",
+      "Bld-1",
+      "EI-1",
+      "LC-7",
+      "MI-1",
+      "SS-1"
+     ]
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "LC-1"
+     ],
+     "seconds": 0.0,
+     "pool": [
+      "LC-1",
+      "LC-4",
+      "SS2",
+      "S-2",
+      "SS3",
+      "BD-5",
+      "FC-5",
+      "AI-S-1",
+      "ER-1",
+      "AI-S-3",
+      "S-3",
+      "Tr-1",
+      "EI-1",
+      "ML-2",
+      "MI-1"
+     ]
+    }
+   ]
+  },
+  "embeddings": {
+   "summary": {
+    "web_precision": 0.133,
+    "web_hits": 2,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.25,
+    "seconds_web": 0.04,
+    "acceptable_in_pool_web": [
+     0,
+     0,
+     3,
+     3,
+     3
+    ]
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "LLM-5",
+      "E-1",
+      "S-5"
+     ],
+     "seconds": 0.171,
+     "pool": [
+      "LLM-5",
+      "E-1",
+      "S-5",
+      "FC-1",
+      "T-1",
+      "S-2",
+      "ER-1",
+      "DL-1",
+      "AI-S-1",
+      "LLM-4",
+      "Bld-1",
+      "MM-2",
+      "LC-2",
+      "LC-4",
+      "LLM-2"
+     ]
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "S-1",
+      "ML-5",
+      "ML-3"
+     ],
+     "seconds": 0.009,
+     "pool": [
+      "S-1",
+      "ML-5",
+      "ML-3",
+      "MM-1",
+      "LLM-2",
+      "Bld-1",
+      "FC-1",
+      "LLM-1",
+      "Tr-1",
+      "LLM-5",
+      "MM-2",
+      "E-1",
+      "ML-8",
+      "ER-2",
+      "ER-1"
+     ]
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "S-2",
+      "ER-2",
+      "MF-4"
+     ],
+     "seconds": 0.008,
+     "pool": [
+      "S-2",
+      "ER-2",
+      "MF-4",
+      "ML-5",
+      "LC-4",
+      "AI-S-3",
+      "LLM-1",
+      "LLM-5",
+      "S-1",
+      "AI-S-1",
+      "ML-8",
+      "ER-1",
+      "MM-1",
+      "DL-5",
+      "LLM-2"
+     ]
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "ER-2",
+      "ML-5",
+      "MM-1"
+     ],
+     "seconds": 0.009,
+     "pool": [
+      "ER-2",
+      "ML-5",
+      "MM-1",
+      "MF-6",
+      "E-1",
+      "MF-5",
+      "DL-3",
+      "ER-1",
+      "LLM-1",
+      "FC-1",
+      "ML-7",
+      "T-1",
+      "T-2",
+      "ML-8",
+      "S-2"
+     ]
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "LLM-4",
+      "PL-1",
+      "FC-3"
+     ],
+     "seconds": 0.008,
+     "pool": [
+      "LLM-4",
+      "PL-1",
+      "FC-3",
+      "S-5",
+      "LC-5",
+      "LLM-5",
+      "FC-1",
+      "BD-4",
+      "Tr-1",
+      "E-1",
+      "MM-1",
+      "LLM-3",
+      "ML-5",
+      "S-4",
+      "ER-1"
+     ]
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "LLM-5"
+     ],
+     "seconds": 0.058,
+     "pool": [
+      "LLM-5",
+      "LC-5",
+      "BD-2",
+      "AC-1",
+      "MF-4",
+      "MM-1",
+      "MM-2",
+      "MM-3",
+      "ML-2",
+      "AI-S-2",
+      "ML-7",
+      "Tr-1",
+      "MnI-1",
+      "MI-1",
+      "CS-2"
+     ]
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "seconds": 0.016,
+     "pool": [
+      "PL-1",
+      "MI-1",
+      "EI-1",
+      "S-2",
+      "LLM-3",
+      "FC-3",
+      "S-3",
+      "MF-5",
+      "MF-4",
+      "ML-3",
+      "S-5",
+      "H-4",
+      "FC-1",
+      "AC-1",
+      "LLM-5"
+     ]
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-5"
+     ],
+     "seconds": 0.006,
+     "pool": [
+      "LC-5",
+      "LC-4",
+      "LC-6",
+      "AI-S-1",
+      "S-1",
+      "Bld-1",
+      "LC-3",
+      "AI-S-2",
+      "AI-S-3",
+      "Tr-1",
+      "MI-2",
+      "S-4",
+      "S-2",
+      "LC-2",
+      "MM-1"
+     ]
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "LC-1"
+     ],
+     "seconds": 0.007,
+     "pool": [
+      "LC-1",
+      "Bld-1",
+      "EI-1",
+      "LC-6",
+      "MnI-1",
+      "LC-5",
+      "MM-2",
+      "LC-7",
+      "Tr-1",
+      "AC-1",
+      "BD-2",
+      "DL-1",
+      "FC-1",
+      "LC-3",
+      "S-2"
+     ]
+    }
+   ]
+  },
+  "bm25+check": {
+   "summary": {
+    "web_precision": 0.6,
+    "web_hits": 9,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.75,
+    "seconds_web": 0.72,
+    "acceptable_in_pool_web": [
+     2,
+     2,
+     4,
+     6,
+     3
+    ]
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "E-1",
+      "BD-2",
+      "SS2"
+     ],
+     "seconds": 0.931,
+     "pool": [
+      "SS2",
+      "BD-2",
+      "AI-S-3",
+      "S-1",
+      "DL-1",
+      "FC-5",
+      "LC-8",
+      "S-4",
+      "LC-4",
+      "FC-3",
+      "E-1",
+      "EI-1",
+      "S-3",
+      "T-1",
+      "MI-1"
+     ],
+     "margins": {
+      "SS2": 5.44,
+      "BD-2": 7.09,
+      "AI-S-3": 2.02,
+      "S-1": -1.96,
+      "DL-1": -1.59,
+      "FC-5": -1.61,
+      "LC-8": -0.79,
+      "S-4": -5.1,
+      "LC-4": 3.57,
+      "FC-3": 0.54,
+      "E-1": 7.99,
+      "EI-1": -4.15,
+      "S-3": -4.52,
+      "T-1": -2.07,
+      "MI-1": -4.81
+     }
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "MF-4",
+      "LLM-5",
+      "LC-4"
+     ],
+     "seconds": 0.668,
+     "pool": [
+      "LC-4",
+      "SS2",
+      "SS-1",
+      "LLM-5",
+      "MF-4",
+      "FC-3",
+      "DL-1",
+      "AI-S-3",
+      "AI-S-2",
+      "LLM-2",
+      "S-1",
+      "MI-1",
+      "Tr-1",
+      "E-1",
+      "Bld-1"
+     ],
+     "margins": {
+      "LC-4": 7.19,
+      "SS2": 7.09,
+      "SS-1": 5.09,
+      "LLM-5": 7.42,
+      "MF-4": 7.51,
+      "FC-3": 4.46,
+      "DL-1": 6.17,
+      "AI-S-3": 5.24,
+      "AI-S-2": 0.52,
+      "LLM-2": 5.66,
+      "S-1": 0.15,
+      "MI-1": -3.03,
+      "Tr-1": -3.36,
+      "E-1": -0.19,
+      "Bld-1": -5.21
+     }
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "DL-4",
+      "LLM-4",
+      "AI-S-1"
+     ],
+     "seconds": 0.668,
+     "pool": [
+      "SS2",
+      "AI-S-3",
+      "LLM-4",
+      "S-5",
+      "LLM-5",
+      "LC-4",
+      "LC-5",
+      "SS-1",
+      "AI-S-2",
+      "S-1",
+      "FC-3",
+      "AI-S-1",
+      "S-3",
+      "Tr-1",
+      "DL-4"
+     ],
+     "margins": {
+      "SS2": 4.68,
+      "AI-S-3": 3.89,
+      "LLM-4": 6.11,
+      "S-5": -3.6,
+      "LLM-5": 4.41,
+      "LC-4": 3.48,
+      "LC-5": 4.85,
+      "SS-1": 0.62,
+      "AI-S-2": 5.72,
+      "S-1": -3.89,
+      "FC-3": -0.91,
+      "AI-S-1": 6.09,
+      "S-3": -3.97,
+      "Tr-1": -5.66,
+      "DL-4": 6.76
+     }
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "DL-3",
+      "ML-2",
+      "ML-8"
+     ],
+     "seconds": 0.646,
+     "pool": [
+      "DL-1",
+      "S-3",
+      "LLM-5",
+      "DL-3",
+      "AI-S-3",
+      "MF-4",
+      "SS2",
+      "MF-3",
+      "DL-2",
+      "ML-8",
+      "LLM-2",
+      "ML-2",
+      "ER-1",
+      "LLM-4",
+      "DL-4"
+     ],
+     "margins": {
+      "DL-1": 7.14,
+      "S-3": -5.14,
+      "LLM-5": 4.2,
+      "DL-3": 8.62,
+      "AI-S-3": 1.34,
+      "MF-4": 4.23,
+      "SS2": 2.36,
+      "MF-3": 5.41,
+      "DL-2": 3.06,
+      "ML-8": 7.41,
+      "LLM-2": 6.66,
+      "ML-2": 7.76,
+      "ER-1": 6.92,
+      "LLM-4": 6.4,
+      "DL-4": -4.36
+     }
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "LLM-4",
+      "AI-S-3"
+     ],
+     "seconds": 0.662,
+     "pool": [
+      "LLM-4",
+      "PL-1",
+      "AI-S-3",
+      "LC-5",
+      "SS2",
+      "S-4",
+      "LLM-5",
+      "DL-1",
+      "T-1",
+      "S-5",
+      "T-2",
+      "PL-2",
+      "S-2",
+      "MM-3",
+      "S-1"
+     ],
+     "margins": {
+      "LLM-4": 7.99,
+      "PL-1": 9.76,
+      "AI-S-3": 4.61,
+      "LC-5": 3.91,
+      "SS2": 4.17,
+      "S-4": -5.9,
+      "LLM-5": 2.89,
+      "DL-1": 3.53,
+      "T-1": -2.44,
+      "S-5": -6.25,
+      "T-2": -4.06,
+      "PL-2": -5.29,
+      "S-2": -4.87,
+      "MM-3": -4.42,
+      "S-1": -2.35
+     }
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-1"
+     ],
+     "seconds": 0.389,
+     "pool": [
+      "BD-5",
+      "ML-4",
+      "DL-3",
+      "BD-1",
+      "AI-S-2",
+      "LLM-2",
+      "AC-1",
+      "MnI-1",
+      "T-1",
+      "T-2",
+      "BD-2",
+      "DL-4",
+      "MF-4",
+      "LC-4",
+      "MM-2"
+     ],
+     "margins": {
+      "BD-5": 0.43,
+      "ML-4": -0.24,
+      "DL-3": -1.86,
+      "BD-1": 8.63,
+      "AI-S-2": -1.86,
+      "LLM-2": -3.44,
+      "AC-1": 2.98,
+      "MnI-1": 4.07,
+      "T-1": -3.87,
+      "T-2": -3.22,
+      "BD-2": 5.38,
+      "DL-4": -3.74,
+      "MF-4": 5.65,
+      "LC-4": -1.4,
+      "MM-2": -4.33
+     }
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "seconds": 0.392,
+     "pool": [
+      "PL-1",
+      "ER-2",
+      "LLM-1",
+      "AI-S-3",
+      "MF-4",
+      "MF-1",
+      "MF-2",
+      "MF-3",
+      "MF-5",
+      "MF-6",
+      "MF-7",
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4"
+     ],
+     "margins": {
+      "PL-1": 8.95,
+      "ER-2": -0.91,
+      "LLM-1": -1.59,
+      "AI-S-3": 0.25,
+      "MF-4": 4.14,
+      "MF-1": -1.92,
+      "MF-2": -2.13,
+      "MF-3": -2.29,
+      "MF-5": -0.8,
+      "MF-6": -4.08,
+      "MF-7": -3.98,
+      "BD-1": 6.0,
+      "BD-2": 6.07,
+      "BD-3": 4.54,
+      "BD-4": 5.08
+     }
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-4"
+     ],
+     "seconds": 0.375,
+     "pool": [
+      "LC-5",
+      "LC-4",
+      "LLM-5",
+      "LC-3",
+      "S-1",
+      "LLM-2",
+      "AI-S-3",
+      "MM-2",
+      "MI-2",
+      "Tr-1",
+      "Bld-1",
+      "EI-1",
+      "LC-7",
+      "MI-1",
+      "SS-1"
+     ],
+     "margins": {
+      "LC-5": 4.19,
+      "LC-4": 8.04,
+      "LLM-5": 0.36,
+      "LC-3": 3.92,
+      "S-1": -3.7,
+      "LLM-2": -2.45,
+      "AI-S-3": 3.39,
+      "MM-2": -4.87,
+      "MI-2": -5.16,
+      "Tr-1": -5.09,
+      "Bld-1": -5.85,
+      "EI-1": -5.16,
+      "LC-7": 1.4,
+      "MI-1": -4.59,
+      "SS-1": -0.67
+     }
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "seconds": 0.367,
+     "pool": [
+      "LC-1",
+      "LC-4",
+      "SS2",
+      "S-2",
+      "SS3",
+      "BD-5",
+      "FC-5",
+      "AI-S-1",
+      "ER-1",
+      "AI-S-3",
+      "S-3",
+      "Tr-1",
+      "EI-1",
+      "ML-2",
+      "MI-1"
+     ],
+     "margins": {
+      "LC-1": 1.81,
+      "LC-4": 0.08,
+      "SS2": 2.2,
+      "S-2": -3.3,
+      "SS3": 1.87,
+      "BD-5": -0.32,
+      "FC-5": -1.63,
+      "AI-S-1": -0.42,
+      "ER-1": -1.25,
+      "AI-S-3": 1.53,
+      "S-3": -3.71,
+      "Tr-1": -3.14,
+      "EI-1": -3.67,
+      "ML-2": 2.05,
+      "MI-1": -3.33
+     }
+    }
+   ]
+  },
+  "embeddings+check": {
+   "summary": {
+    "web_precision": 0.333,
+    "web_hits": 5,
+    "web_predicted": 15,
+    "synthetic_hit_at_1": 0.5,
+    "seconds_web": 0.43,
+    "acceptable_in_pool_web": [
+     0,
+     0,
+     3,
+     3,
+     3
+    ]
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "E-1",
+      "LLM-5",
+      "ER-1"
+     ],
+     "seconds": 0.459,
+     "pool": [
+      "LLM-5",
+      "E-1",
+      "S-5",
+      "FC-1",
+      "T-1",
+      "S-2",
+      "ER-1",
+      "DL-1",
+      "AI-S-1",
+      "LLM-4",
+      "Bld-1",
+      "MM-2",
+      "LC-2",
+      "LC-4",
+      "LLM-2"
+     ],
+     "margins": {
+      "LLM-5": 5.28,
+      "E-1": 7.99,
+      "S-5": -5.98,
+      "FC-1": -1.55,
+      "T-1": -2.07,
+      "S-2": -1.3,
+      "ER-1": 3.74,
+      "DL-1": -1.59,
+      "AI-S-1": 1.07,
+      "LLM-4": 2.39,
+      "Bld-1": -6.68,
+      "MM-2": -4.85,
+      "LC-2": -0.28,
+      "LC-4": 3.57,
+      "LLM-2": -1.86
+     }
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "ER-1",
+      "LLM-5",
+      "ML-5"
+     ],
+     "seconds": 0.377,
+     "pool": [
+      "S-1",
+      "ML-5",
+      "ML-3",
+      "MM-1",
+      "LLM-2",
+      "Bld-1",
+      "FC-1",
+      "LLM-1",
+      "Tr-1",
+      "LLM-5",
+      "MM-2",
+      "E-1",
+      "ML-8",
+      "ER-2",
+      "ER-1"
+     ],
+     "margins": {
+      "S-1": 0.15,
+      "ML-5": 5.71,
+      "ML-3": 5.45,
+      "MM-1": -1.52,
+      "LLM-2": 5.66,
+      "Bld-1": -5.21,
+      "FC-1": 2.96,
+      "LLM-1": 5.68,
+      "Tr-1": -3.36,
+      "LLM-5": 7.42,
+      "MM-2": -3.19,
+      "E-1": -0.19,
+      "ML-8": 5.29,
+      "ER-2": 4.21,
+      "ER-1": 7.73
+     }
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "AI-S-1",
+      "LLM-5",
+      "LLM-1"
+     ],
+     "seconds": 0.426,
+     "pool": [
+      "S-2",
+      "ER-2",
+      "MF-4",
+      "ML-5",
+      "LC-4",
+      "AI-S-3",
+      "LLM-1",
+      "LLM-5",
+      "S-1",
+      "AI-S-1",
+      "ML-8",
+      "ER-1",
+      "MM-1",
+      "DL-5",
+      "LLM-2"
+     ],
+     "margins": {
+      "S-2": -1.78,
+      "ER-2": -0.23,
+      "MF-4": 1.23,
+      "ML-5": 1.49,
+      "LC-4": 3.48,
+      "AI-S-3": 3.89,
+      "LLM-1": 4.34,
+      "LLM-5": 4.41,
+      "S-1": -3.89,
+      "AI-S-1": 6.09,
+      "ML-8": 1.71,
+      "ER-1": 4.17,
+      "MM-1": -3.53,
+      "DL-5": -2.17,
+      "LLM-2": 2.56
+     }
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "DL-3",
+      "ML-7",
+      "ML-8"
+     ],
+     "seconds": 0.509,
+     "pool": [
+      "ER-2",
+      "ML-5",
+      "MM-1",
+      "MF-6",
+      "E-1",
+      "MF-5",
+      "DL-3",
+      "ER-1",
+      "LLM-1",
+      "FC-1",
+      "ML-7",
+      "T-1",
+      "T-2",
+      "ML-8",
+      "S-2"
+     ],
+     "margins": {
+      "ER-2": 1.22,
+      "ML-5": 5.95,
+      "MM-1": -2.74,
+      "MF-6": 0.31,
+      "E-1": -5.29,
+      "MF-5": 2.64,
+      "DL-3": 8.62,
+      "ER-1": 6.92,
+      "LLM-1": 5.88,
+      "FC-1": 4.47,
+      "ML-7": 8.5,
+      "T-1": -2.23,
+      "T-2": -1.92,
+      "ML-8": 7.41,
+      "S-2": -2.5
+     }
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "LLM-4",
+      "LLM-3"
+     ],
+     "seconds": 0.375,
+     "pool": [
+      "LLM-4",
+      "PL-1",
+      "FC-3",
+      "S-5",
+      "LC-5",
+      "LLM-5",
+      "FC-1",
+      "BD-4",
+      "Tr-1",
+      "E-1",
+      "MM-1",
+      "LLM-3",
+      "ML-5",
+      "S-4",
+      "ER-1"
+     ],
+     "margins": {
+      "LLM-4": 7.99,
+      "PL-1": 9.76,
+      "FC-3": 3.17,
+      "S-5": -6.25,
+      "LC-5": 3.91,
+      "LLM-5": 2.89,
+      "FC-1": 0.47,
+      "BD-4": 1.7,
+      "Tr-1": -4.45,
+      "E-1": -3.15,
+      "MM-1": -3.56,
+      "LLM-3": 5.39,
+      "ML-5": 3.33,
+      "S-4": -5.9,
+      "ER-1": 3.18
+     }
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "MF-4"
+     ],
+     "seconds": 0.22,
+     "pool": [
+      "LLM-5",
+      "LC-5",
+      "BD-2",
+      "AC-1",
+      "MF-4",
+      "MM-1",
+      "MM-2",
+      "MM-3",
+      "ML-2",
+      "AI-S-2",
+      "ML-7",
+      "Tr-1",
+      "MnI-1",
+      "MI-1",
+      "CS-2"
+     ],
+     "margins": {
+      "LLM-5": -1.25,
+      "LC-5": 0.54,
+      "BD-2": 5.38,
+      "AC-1": 2.98,
+      "MF-4": 5.65,
+      "MM-1": -4.4,
+      "MM-2": -4.33,
+      "MM-3": -4.38,
+      "ML-2": 2.13,
+      "AI-S-2": -1.86,
+      "ML-7": -0.65,
+      "Tr-1": -4.32,
+      "MnI-1": 4.07,
+      "MI-1": -2.53,
+      "CS-2": -3.55
+     }
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "seconds": 0.331,
+     "pool": [
+      "PL-1",
+      "MI-1",
+      "EI-1",
+      "S-2",
+      "LLM-3",
+      "FC-3",
+      "S-3",
+      "MF-5",
+      "MF-4",
+      "ML-3",
+      "S-5",
+      "H-4",
+      "FC-1",
+      "AC-1",
+      "LLM-5"
+     ],
+     "margins": {
+      "PL-1": 8.95,
+      "MI-1": -2.18,
+      "EI-1": -3.62,
+      "S-2": -4.45,
+      "LLM-3": -0.61,
+      "FC-3": -1.2,
+      "S-3": -6.29,
+      "MF-5": -0.8,
+      "MF-4": 4.14,
+      "ML-3": 3.28,
+      "S-5": -6.42,
+      "H-4": -5.89,
+      "FC-1": -0.69,
+      "AC-1": 3.57,
+      "LLM-5": 2.1
+     }
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-4"
+     ],
+     "seconds": 0.258,
+     "pool": [
+      "LC-5",
+      "LC-4",
+      "LC-6",
+      "AI-S-1",
+      "S-1",
+      "Bld-1",
+      "LC-3",
+      "AI-S-2",
+      "AI-S-3",
+      "Tr-1",
+      "MI-2",
+      "S-4",
+      "S-2",
+      "LC-2",
+      "MM-1"
+     ],
+     "margins": {
+      "LC-5": 4.19,
+      "LC-4": 8.04,
+      "LC-6": 1.11,
+      "AI-S-1": 3.47,
+      "S-1": -3.7,
+      "Bld-1": -5.85,
+      "LC-3": 3.92,
+      "AI-S-2": -1.98,
+      "AI-S-3": 3.39,
+      "Tr-1": -5.09,
+      "MI-2": -5.16,
+      "S-4": -5.09,
+      "S-2": -2.22,
+      "LC-2": -2.4,
+      "MM-1": -4.22
+     }
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "LC-1"
+     ],
+     "seconds": 0.395,
+     "pool": [
+      "LC-1",
+      "Bld-1",
+      "EI-1",
+      "LC-6",
+      "MnI-1",
+      "LC-5",
+      "MM-2",
+      "LC-7",
+      "Tr-1",
+      "AC-1",
+      "BD-2",
+      "DL-1",
+      "FC-1",
+      "LC-3",
+      "S-2"
+     ],
+     "margins": {
+      "LC-1": 1.81,
+      "Bld-1": -5.2,
+      "EI-1": -3.67,
+      "LC-6": 0.89,
+      "MnI-1": 0.2,
+      "LC-5": 0.72,
+      "MM-2": -1.54,
+      "LC-7": 1.73,
+      "Tr-1": -3.14,
+      "AC-1": 0.49,
+      "BD-2": 1.13,
+      "DL-1": 1.37,
+      "FC-1": -0.52,
+      "LC-3": -0.29,
+      "S-2": -3.3
+     }
+    }
+   ]
+  },
+  "catalog_prompt_1.5b": {
+   "summary": {
+    "web_precision": 0.167,
+    "web_hits": 2,
+    "web_predicted": 12,
+    "synthetic_hit_at_1": 0.25,
+    "seconds_web": 0.44
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "MF-2",
+      "BD-2",
+      "LC-4"
+     ],
+     "seconds": 0.482,
+     "answer": "MF-2, BD-2, LC-4"
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "MF-2",
+      "BD-2",
+      "LC-3"
+     ],
+     "seconds": 0.549,
+     "answer": "MF-2, BD-2, LC-3"
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "seconds": 0.195,
+     "answer": "НЕТ"
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "MF-2",
+      "ML-5",
+      "AI-S-3"
+     ],
+     "seconds": 0.471,
+     "answer": "MF-2, ML-5, AI-S-3"
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "ML-2",
+      "PL-1",
+      "LC-4"
+     ],
+     "seconds": 0.482,
+     "answer": "ML-2, PL-1, LC-4"
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "seconds": 0.31,
+     "answer": "BD, ML, PL, LC"
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "seconds": 0.146,
+     "answer": "НЕТ"
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "seconds": 0.177,
+     "answer": "НЕТ"
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "seconds": 0.227,
+     "answer": "НЕТ"
+    }
+   ]
+  },
+  "catalog_prompt_3b": {
+   "summary": {
+    "web_precision": 0.25,
+    "web_hits": 3,
+    "web_predicted": 12,
+    "synthetic_hit_at_1": 0.5,
+    "seconds_web": 0.6
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "BD-4",
+      "BD-5",
+      "LC-4"
+     ],
+     "seconds": 0.836,
+     "answer": "BD-4, BD-5, LC-4"
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "LC-3",
+      "LC-4",
+      "LC-5"
+     ],
+     "seconds": 0.587,
+     "answer": "LC-3, LC-4, LC-5"
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "LLM-1",
+      "LLM-2",
+      "LLM-3"
+     ],
+     "seconds": 0.673,
+     "answer": "LLM-1, LLM-2, LLM-3"
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "BD-4",
+      "ML-5",
+      "LC-4"
+     ],
+     "seconds": 0.549,
+     "answer": "BD-4, ML-5, LC-4"
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "seconds": 0.362,
+     "answer": "NN, NN, NN"
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "seconds": 0.228,
+     "answer": "НЕТ"
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "seconds": 0.261,
+     "answer": "PL-1"
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "seconds": 0.227,
+     "answer": "НЕТ"
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "seconds": 0.224,
+     "answer": "НЕТ"
+    }
+   ]
+  }
+ }
+}
