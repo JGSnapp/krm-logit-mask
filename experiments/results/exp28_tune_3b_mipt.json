@@ -1,0 +1,205 @@
+{
+ "experiment": "exp28_tune_3b_mipt",
+ "model": "Qwen/Qwen2.5-3B-Instruct",
+ "eval_set": "experiments/eval_set_mipt.json",
+ "configs": {
+  "b0.0_p6_w3:quote_first": {
+   "overrides": {
+    "beta": 0.0,
+    "path_beam": 6,
+    "word_branches": 3
+   },
+   "mode": "quote_first",
+   "summary": {
+    "web_precision": 0.5,
+    "web_hits": 5,
+    "web_predicted": 10,
+    "synthetic_hit_at_1": 0.5,
+    "acceptable_in_pool_total": 6,
+    "acceptable_in_pool_web": [
+     0,
+     0,
+     2,
+     1,
+     3
+    ],
+    "pool_size_web": [
+     13,
+     10,
+     14,
+     11,
+     11
+    ],
+    "seconds_web": 4.07
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "ИД-3",
+      "ИД-4",
+      "АД-2",
+      "АД-5",
+      "ППК-ДА2",
+      "ППК-Р4",
+      "ППК-ОС6",
+      "УНК-02"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 13,
+     "search_s": 3.0,
+     "seconds": 5.14
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "ППК-ДА1",
+      "ППК-ДА4",
+      "ППК-ДА5",
+      "ППК-ДА7",
+      "ППК-У2",
+      "МП-1",
+      "МП-2",
+      "МП-5",
+      "УНК-01"
+     ],
+     "selected": [
+      "МПП-2",
+      "МПП-1"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 10,
+     "search_s": 1.94,
+     "seconds": 3.87
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "КБ-1",
+      "КБ-2",
+      "КБ-4",
+      "ППК-У1",
+      "ИТ-10",
+      "ДСО-1",
+      "УНК-01"
+     ],
+     "selected": [
+      "ППК-У1",
+      "КБ-2",
+      "УНК-02"
+     ],
+     "acceptable_in_pool": 2,
+     "pool_size": 14,
+     "search_s": 1.93,
+     "seconds": 3.98
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "МО-1",
+      "МО-2",
+      "УНК-05",
+      "ППК-ДА5",
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "ППК-Р1",
+      "МП-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 11,
+     "search_s": 1.65,
+     "seconds": 3.57
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "ППК-Р1",
+      "ППК-Р2",
+      "ППК-Р3",
+      "ППК-Р4",
+      "ППК-Р5",
+      "ППК-Р6",
+      "ИП-1",
+      "АД-6",
+      "БСА-3"
+     ],
+     "selected": [
+      "ППК-Р2",
+      "ИП-1",
+      "ППК-Р3"
+     ],
+     "acceptable_in_pool": 3,
+     "pool_size": 11,
+     "search_s": 1.77,
+     "seconds": 3.77
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-ДА2"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 5,
+     "search_s": 0.66,
+     "seconds": 0.89
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "ППК-Р1",
+      "УНК-04"
+     ],
+     "selected": [
+      "ППК-Р1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 9,
+     "search_s": 1.1,
+     "seconds": 1.46
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "МО-2"
+     ],
+     "selected": [
+      "АД-6"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 5,
+     "search_s": 0.52,
+     "seconds": 0.74
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 9,
+     "search_s": 1.31,
+     "seconds": 1.7
+    }
+   ]
+  }
+ }
+}

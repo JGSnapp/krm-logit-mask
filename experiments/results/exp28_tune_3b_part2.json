@@ -1,0 +1,1718 @@
+{
+ "experiment": "exp28_tune_3b_part2",
+ "model": "Qwen/Qwen2.5-3B-Instruct",
+ "eval_set": "experiments/eval_set.json",
+ "configs": {
+  "b0.3_p12_w5:quote_first": {
+   "overrides": {
+    "beta": 0.3,
+    "path_beam": 12,
+    "word_branches": 5
+   },
+   "mode": "quote_first",
+   "summary": {
+    "web_precision": 0.6,
+    "web_hits": 6,
+    "web_predicted": 10,
+    "synthetic_hit_at_1": 0.5,
+    "acceptable_in_pool_total": 7,
+    "acceptable_in_pool_web": [
+     1,
+     2,
+     1,
+     2,
+     1
+    ],
+    "pool_size_web": [
+     13,
+     10,
+     13,
+     14,
+     10
+    ],
+    "seconds_web": 6.32
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "BD-3",
+      "E-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 13,
+     "search_s": 6.11,
+     "seconds": 8.04
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "acceptable_in_pool": 2,
+     "pool_size": 10,
+     "search_s": 7.96,
+     "seconds": 9.73
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "SS2",
+      "SS3"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 13,
+     "search_s": 2.0,
+     "seconds": 3.9
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "ML-5",
+      "ER-1",
+      "ML-8"
+     ],
+     "acceptable_in_pool": 2,
+     "pool_size": 14,
+     "search_s": 2.85,
+     "seconds": 5.01
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "HPC-2"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 10,
+     "search_s": 3.2,
+     "seconds": 4.93
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 5,
+     "search_s": 1.81,
+     "seconds": 2.08
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 9,
+     "search_s": 2.07,
+     "seconds": 2.49
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-3"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 5,
+     "search_s": 2.9,
+     "seconds": 3.14
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "LC-1"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 10,
+     "search_s": 4.0,
+     "seconds": 4.58
+    }
+   ]
+  },
+  "b0.6_p6_w3:quote_first": {
+   "overrides": {
+    "beta": 0.6,
+    "path_beam": 6,
+    "word_branches": 3
+   },
+   "mode": "quote_first",
+   "summary": {
+    "web_precision": 0.556,
+    "web_hits": 5,
+    "web_predicted": 9,
+    "synthetic_hit_at_1": 0.5,
+    "acceptable_in_pool_total": 6,
+    "acceptable_in_pool_web": [
+     1,
+     2,
+     1,
+     1,
+     1
+    ],
+    "pool_size_web": [
+     13,
+     13,
+     12,
+     12,
+     11
+    ],
+    "seconds_web": 5.88
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "BD-3",
+      "E-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 13,
+     "search_s": 4.45,
+     "seconds": 11.95
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "acceptable_in_pool": 2,
+     "pool_size": 13,
+     "search_s": 3.08,
+     "seconds": 5.31
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 12,
+     "search_s": 2.62,
+     "seconds": 4.2
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "ML-5",
+      "ML-8",
+      "SS3"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 12,
+     "search_s": 2.19,
+     "seconds": 4.27
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "HPC-2"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 11,
+     "search_s": 1.84,
+     "seconds": 3.66
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 5,
+     "search_s": 1.21,
+     "seconds": 1.28
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 9,
+     "search_s": 1.77,
+     "seconds": 1.96
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-3"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 5,
+     "search_s": 1.05,
+     "seconds": 1.11
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "LC-1"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 10,
+     "search_s": 1.91,
+     "seconds": 2.0
+    }
+   ]
+  },
+  "b0.6_p6_w5:quote_first": {
+   "overrides": {
+    "beta": 0.6,
+    "path_beam": 6,
+    "word_branches": 5
+   },
+   "mode": "quote_first",
+   "summary": {
+    "web_precision": 0.556,
+    "web_hits": 5,
+    "web_predicted": 9,
+    "synthetic_hit_at_1": 0.5,
+    "acceptable_in_pool_total": 6,
+    "acceptable_in_pool_web": [
+     1,
+     2,
+     1,
+     1,
+     1
+    ],
+    "pool_size_web": [
+     13,
+     10,
+     12,
+     14,
+     10
+    ],
+    "seconds_web": 5.09
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "BD-3",
+      "E-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 13,
+     "search_s": 5.35,
+     "seconds": 6.77
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "acceptable_in_pool": 2,
+     "pool_size": 10,
+     "search_s": 5.73,
+     "seconds": 7.28
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 12,
+     "search_s": 2.05,
+     "seconds": 3.54
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "ML-5",
+      "ML-8",
+      "BD-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 14,
+     "search_s": 2.06,
+     "seconds": 3.55
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "HPC-2"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 10,
+     "search_s": 2.99,
+     "seconds": 4.31
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 5,
+     "search_s": 1.5,
+     "seconds": 1.59
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 9,
+     "search_s": 1.66,
+     "seconds": 1.71
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-3"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 5,
+     "search_s": 1.85,
+     "seconds": 1.88
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "LC-1"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 10,
+     "search_s": 2.55,
+     "seconds": 2.62
+    }
+   ]
+  },
+  "b0.6_p12_w3:quote_first": {
+   "overrides": {
+    "beta": 0.6,
+    "path_beam": 12,
+    "word_branches": 3
+   },
+   "mode": "quote_first",
+   "summary": {
+    "web_precision": 0.556,
+    "web_hits": 5,
+    "web_predicted": 9,
+    "synthetic_hit_at_1": 0.5,
+    "acceptable_in_pool_total": 6,
+    "acceptable_in_pool_web": [
+     1,
+     2,
+     1,
+     1,
+     1
+    ],
+    "pool_size_web": [
+     13,
+     13,
+     12,
+     12,
+     11
+    ],
+    "seconds_web": 4.08
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "BD-3",
+      "E-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 13,
+     "search_s": 4.03,
+     "seconds": 5.43
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "acceptable_in_pool": 2,
+     "pool_size": 13,
+     "search_s": 2.83,
+     "seconds": 4.33
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 12,
+     "search_s": 2.68,
+     "seconds": 3.99
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "ML-5",
+      "ML-8",
+      "SS3"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 12,
+     "search_s": 2.1,
+     "seconds": 3.65
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "HPC-2"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 11,
+     "search_s": 1.69,
+     "seconds": 2.99
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 5,
+     "search_s": 1.09,
+     "seconds": 1.13
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 9,
+     "search_s": 1.77,
+     "seconds": 1.83
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-3"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 5,
+     "search_s": 1.04,
+     "seconds": 1.08
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "LC-1"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 10,
+     "search_s": 1.83,
+     "seconds": 1.89
+    }
+   ]
+  },
+  "b0.6_p12_w5:quote_first": {
+   "overrides": {
+    "beta": 0.6,
+    "path_beam": 12,
+    "word_branches": 5
+   },
+   "mode": "quote_first",
+   "summary": {
+    "web_precision": 0.556,
+    "web_hits": 5,
+    "web_predicted": 9,
+    "synthetic_hit_at_1": 0.5,
+    "acceptable_in_pool_total": 6,
+    "acceptable_in_pool_web": [
+     1,
+     2,
+     1,
+     1,
+     1
+    ],
+    "pool_size_web": [
+     13,
+     10,
+     12,
+     14,
+     10
+    ],
+    "seconds_web": 5.69
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "BD-3",
+      "E-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 13,
+     "search_s": 6.41,
+     "seconds": 7.75
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "acceptable_in_pool": 2,
+     "pool_size": 10,
+     "search_s": 6.66,
+     "seconds": 8.16
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 12,
+     "search_s": 2.2,
+     "seconds": 3.66
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "ML-5",
+      "ML-8",
+      "BD-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 14,
+     "search_s": 2.1,
+     "seconds": 3.92
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "HPC-2"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 10,
+     "search_s": 3.3,
+     "seconds": 4.97
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 5,
+     "search_s": 1.78,
+     "seconds": 1.82
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 9,
+     "search_s": 1.77,
+     "seconds": 1.87
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-3"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 5,
+     "search_s": 2.93,
+     "seconds": 2.97
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "LC-1"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 10,
+     "search_s": 2.67,
+     "seconds": 2.75
+    }
+   ]
+  },
+  "b1.0_p6_w3:quote_first": {
+   "overrides": {
+    "beta": 1.0,
+    "path_beam": 6,
+    "word_branches": 3
+   },
+   "mode": "quote_first",
+   "summary": {
+    "web_precision": 0.5,
+    "web_hits": 4,
+    "web_predicted": 8,
+    "synthetic_hit_at_1": 0.5,
+    "acceptable_in_pool_total": 6,
+    "acceptable_in_pool_web": [
+     0,
+     2,
+     1,
+     2,
+     1
+    ],
+    "pool_size_web": [
+     13,
+     13,
+     12,
+     12,
+     11
+    ],
+    "seconds_web": 6.48
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "E-1"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 13,
+     "search_s": 4.59,
+     "seconds": 6.88
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "acceptable_in_pool": 2,
+     "pool_size": 13,
+     "search_s": 4.43,
+     "seconds": 7.67
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 12,
+     "search_s": 3.16,
+     "seconds": 6.35
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "ML-7",
+      "ML-5",
+      "ER-1"
+     ],
+     "acceptable_in_pool": 2,
+     "pool_size": 12,
+     "search_s": 2.53,
+     "seconds": 5.95
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "HPC-2"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 11,
+     "search_s": 2.21,
+     "seconds": 5.55
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 5,
+     "search_s": 0.75,
+     "seconds": 0.8
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 9,
+     "search_s": 1.97,
+     "seconds": 2.09
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-3"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 5,
+     "search_s": 0.64,
+     "seconds": 0.73
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "LC-1"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 10,
+     "search_s": 1.4,
+     "seconds": 1.49
+    }
+   ]
+  },
+  "b1.0_p6_w5:quote_first": {
+   "overrides": {
+    "beta": 1.0,
+    "path_beam": 6,
+    "word_branches": 5
+   },
+   "mode": "quote_first",
+   "summary": {
+    "web_precision": 0.5,
+    "web_hits": 5,
+    "web_predicted": 10,
+    "synthetic_hit_at_1": 0.5,
+    "acceptable_in_pool_total": 6,
+    "acceptable_in_pool_web": [
+     1,
+     2,
+     1,
+     1,
+     1
+    ],
+    "pool_size_web": [
+     13,
+     14,
+     12,
+     15,
+     9
+    ],
+    "seconds_web": 7.34
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "BD-3",
+      "E-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 13,
+     "search_s": 8.57,
+     "seconds": 11.04
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "LC-5",
+      "SS2"
+     ],
+     "acceptable_in_pool": 2,
+     "pool_size": 14,
+     "search_s": 7.76,
+     "seconds": 11.14
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 12,
+     "search_s": 2.8,
+     "seconds": 5.56
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "ML-7",
+      "ML-5",
+      "ML-8"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 15,
+     "search_s": 2.3,
+     "seconds": 4.23
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "HPC-2"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 9,
+     "search_s": 3.86,
+     "seconds": 4.75
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 5,
+     "search_s": 2.0,
+     "seconds": 2.06
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 9,
+     "search_s": 1.46,
+     "seconds": 1.51
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-3"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 5,
+     "search_s": 1.39,
+     "seconds": 1.42
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "LC-1"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 10,
+     "search_s": 1.56,
+     "seconds": 1.61
+    }
+   ]
+  },
+  "b1.0_p12_w3:quote_first": {
+   "overrides": {
+    "beta": 1.0,
+    "path_beam": 12,
+    "word_branches": 3
+   },
+   "mode": "quote_first",
+   "summary": {
+    "web_precision": 0.5,
+    "web_hits": 4,
+    "web_predicted": 8,
+    "synthetic_hit_at_1": 0.5,
+    "acceptable_in_pool_total": 6,
+    "acceptable_in_pool_web": [
+     0,
+     2,
+     1,
+     2,
+     1
+    ],
+    "pool_size_web": [
+     13,
+     13,
+     12,
+     12,
+     11
+    ],
+    "seconds_web": 3.59
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "E-1"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 13,
+     "search_s": 4.55,
+     "seconds": 5.48
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "acceptable_in_pool": 2,
+     "pool_size": 13,
+     "search_s": 3.1,
+     "seconds": 4.18
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 12,
+     "search_s": 2.33,
+     "seconds": 3.15
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "ML-7",
+      "ML-5",
+      "ER-1"
+     ],
+     "acceptable_in_pool": 2,
+     "pool_size": 12,
+     "search_s": 1.83,
+     "seconds": 2.75
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "HPC-2"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 11,
+     "search_s": 1.61,
+     "seconds": 2.41
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 5,
+     "search_s": 0.42,
+     "seconds": 0.45
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 9,
+     "search_s": 1.48,
+     "seconds": 1.52
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-3"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 5,
+     "search_s": 0.52,
+     "seconds": 0.55
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "LC-1"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 10,
+     "search_s": 1.25,
+     "seconds": 1.29
+    }
+   ]
+  },
+  "b1.0_p12_w5:quote_first": {
+   "overrides": {
+    "beta": 1.0,
+    "path_beam": 12,
+    "word_branches": 5
+   },
+   "mode": "quote_first",
+   "summary": {
+    "web_precision": 0.5,
+    "web_hits": 5,
+    "web_predicted": 10,
+    "synthetic_hit_at_1": 0.5,
+    "acceptable_in_pool_total": 6,
+    "acceptable_in_pool_web": [
+     1,
+     2,
+     1,
+     1,
+     1
+    ],
+    "pool_size_web": [
+     13,
+     14,
+     12,
+     15,
+     9
+    ],
+    "seconds_web": 4.77
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "BD-3",
+      "E-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 13,
+     "search_s": 5.85,
+     "seconds": 6.84
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "LC-5",
+      "SS2"
+     ],
+     "acceptable_in_pool": 2,
+     "pool_size": 14,
+     "search_s": 3.73,
+     "seconds": 4.86
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 12,
+     "search_s": 1.94,
+     "seconds": 2.84
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "ML-7",
+      "ML-5",
+      "ML-8"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 15,
+     "search_s": 2.13,
+     "seconds": 3.39
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "HPC-2"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 9,
+     "search_s": 4.12,
+     "seconds": 5.9
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 5,
+     "search_s": 1.68,
+     "seconds": 1.72
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "acceptable_in_pool": 1,
+     "pool_size": 9,
+     "search_s": 1.52,
+     "seconds": 1.58
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-3"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 5,
+     "search_s": 1.4,
+     "seconds": 1.43
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "LC-1"
+     ],
+     "acceptable_in_pool": 0,
+     "pool_size": 10,
+     "search_s": 1.85,
+     "seconds": 1.91
+    }
+   ]
+  }
+ }
+}
