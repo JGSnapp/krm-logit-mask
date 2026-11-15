@@ -1,0 +1,833 @@
+{
+ "experiment": "exp26_modes",
+ "model": "Qwen/Qwen2.5-3B-Instruct",
+ "eval_set": "experiments/eval_set.json",
+ "modes": {
+  "quote_last": {
+   "summary": {
+    "web_precision": 0.5,
+    "web_hits": 3,
+    "web_predicted": 6,
+    "synthetic_hit_at_1": 0.75,
+    "synthetic_selected": [
+     [
+      "BD-1"
+     ],
+     [
+      "PL-1"
+     ],
+     [
+      "LC-4"
+     ],
+     [
+      "LC-1"
+     ]
+    ],
+    "acceptable_in_pool_web": [
+     2,
+     2,
+     1,
+     2,
+     2
+    ],
+    "distinct_quotes_web": [
+     0,
+     1,
+     1,
+     1,
+     2
+    ],
+    "seconds_web": 14.26
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "__NONE__"
+     ],
+     "margins": [],
+     "quotes": [],
+     "pool": [
+      "PL-1",
+      "BD-5",
+      "MF-4",
+      "SS2",
+      "T-1",
+      "SS3",
+      "LC-4",
+      "AI-S-1",
+      "ML-2",
+      "Tr-1",
+      "T-2",
+      "DL-5",
+      "S-4",
+      "H-4",
+      "Bld-1"
+     ],
+     "acceptable_in_pool": 2,
+     "timings": {
+      "search_s": 7.11,
+      "check_s": 1.1,
+      "quote_s": 0.0,
+      "total_s": 8.21
+     }
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "margins": [
+      4.665
+     ],
+     "quotes": [
+      "Работаю над системой, которая помогает инженерам завода заранее замечать отклонения в работе оборудования."
+     ],
+     "pool": [
+      "SS2",
+      "MF-4",
+      "MF-3",
+      "LC-4",
+      "AI-S-3",
+      "MF-1",
+      "SS-1",
+      "DL-1",
+      "S-3",
+      "DL-3",
+      "MF-7",
+      "FC-3",
+      "DL-4",
+      "H-4",
+      "MM-2"
+     ],
+     "acceptable_in_pool": 2,
+     "timings": {
+      "search_s": 8.51,
+      "check_s": 1.05,
+      "quote_s": 1.95,
+      "total_s": 11.5
+     }
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "SS3"
+     ],
+     "margins": [
+      4.054
+     ],
+     "quotes": [
+      "Проверки запускаются в сборочном процессе, результаты сохраняются вместе с версией модели и настройками."
+     ],
+     "pool": [
+      "SS3",
+      "LLM-4",
+      "ER-1",
+      "DL-1",
+      "ER-2",
+      "AI-S-3",
+      "S-1",
+      "SS-1",
+      "BD-1",
+      "ML-8",
+      "ML-6",
+      "MM-1",
+      "MI-2",
+      "S-4",
+      "H-4"
+     ],
+     "acceptable_in_pool": 1,
+     "timings": {
+      "search_s": 7.35,
+      "check_s": 1.11,
+      "quote_s": 1.77,
+      "total_s": 10.23
+     }
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "ER-1",
+      "SS3"
+     ],
+     "margins": [
+      6.96,
+      5.845
+     ],
+     "quotes": [
+      "В лаборатории занимаюсь моделями, которые сопоставляют технические изображения и короткие текстовые описания.",
+      "В лаборатории занимаюсь моделями, которые сопоставляют технические изображения и короткие текстовые описания."
+     ],
+     "pool": [
+      "ER-1",
+      "SS3",
+      "MF-4",
+      "MF-3",
+      "MF-1",
+      "S-1",
+      "CS-1",
+      "S-2",
+      "S-3",
+      "DL-4",
+      "H-3",
+      "E-1",
+      "FC-3",
+      "Tr-1",
+      "S-4"
+     ],
+     "acceptable_in_pool": 2,
+     "timings": {
+      "search_s": 10.07,
+      "check_s": 1.09,
+      "quote_s": 3.0,
+      "total_s": 14.15
+     }
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "HPC-2"
+     ],
+     "margins": [
+      9.092,
+      5.088
+     ],
+     "quotes": [
+      "Использовал Python, FastAPI и Django.",
+      "Система принимала запросы через API, распределяла задачи между обработчиками и сохраняла результаты в базе данных."
+     ],
+     "pool": [
+      "PL-1",
+      "HPC-2",
+      "MF-3",
+      "LC-5",
+      "AI-S-1",
+      "T-1",
+      "S-1",
+      "Tr-1",
+      "T-2",
+      "DL-3",
+      "MI-2",
+      "Bld-1",
+      "DL-5",
+      "S-4",
+      "H-4"
+     ],
+     "acceptable_in_pool": 2,
+     "timings": {
+      "search_s": 23.41,
+      "check_s": 1.09,
+      "quote_s": 2.72,
+      "total_s": 27.21
+     }
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-1"
+     ],
+     "margins": [
+      11.285
+     ],
+     "quotes": [
+      "Осуществлял поиск, сбор, очистку и предварительный анализ данных; проверял пропуски и аномалии, строил воспроизводимый EDA-отчёт."
+     ],
+     "pool": [
+      "BD-1",
+      "ML-8",
+      "AC-1",
+      "BD-5",
+      "LC-1",
+      "SS3",
+      "ML-5",
+      "MM-2",
+      "MF-3",
+      "ML-7",
+      "S-1",
+      "MM-1",
+      "MM-3",
+      "ML-6",
+      "S-3"
+     ],
+     "acceptable_in_pool": 1,
+     "timings": {
+      "search_s": 6.87,
+      "check_s": 0.44,
+      "quote_s": 0.07,
+      "total_s": 7.39
+     }
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "margins": [
+      8.048
+     ],
+     "quotes": [
+      "Проходил вводный онлайн-курс и выполнил учебный ноутбук с pandas."
+     ],
+     "pool": [
+      "PL-1",
+      "BD-4",
+      "MF-4",
+      "BD-5",
+      "SS-1",
+      "LLM-2",
+      "MF-2",
+      "AI-S-3",
+      "S-1",
+      "LLM-1",
+      "S-4",
+      "FC-3",
+      "S-3",
+      "DL-1",
+      "DL-3"
+     ],
+     "acceptable_in_pool": 1,
+     "timings": {
+      "search_s": 11.5,
+      "check_s": 0.4,
+      "quote_s": 0.1,
+      "total_s": 11.99
+     }
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-4"
+     ],
+     "margins": [
+      10.953
+     ],
+     "quotes": [
+      "Спроектировала процесс управления жизненным циклом ИИ-продукта: версионирование данных и моделей, CI/CD, автоматическое развёртывание, мониторинг дрейфа и откат."
+     ],
+     "pool": [
+      "LC-4",
+      "LC-5",
+      "LC-3",
+      "LC-6",
+      "AI-S-1",
+      "ER-2",
+      "H-2",
+      "S-1",
+      "E-1",
+      "LC-7",
+      "MF-5",
+      "S-2",
+      "MI-2",
+      "Tr-1",
+      "Bld-1"
+     ],
+     "acceptable_in_pool": 1,
+     "timings": {
+      "search_s": 11.68,
+      "check_s": 0.45,
+      "quote_s": 0.08,
+      "total_s": 12.2
+     }
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "LC-1"
+     ],
+     "margins": [
+      5.363
+     ],
+     "quotes": [
+      "Отвечал за продажи и организацию мероприятий."
+     ],
+     "pool": [
+      "LC-1",
+      "FC-4",
+      "E-1",
+      "T-1",
+      "ER-2",
+      "MM-1",
+      "T-2",
+      "SS2",
+      "MI-2",
+      "HPC-1",
+      "LLM-5",
+      "HPC-2",
+      "LC-6",
+      "LC-5",
+      "LC-4"
+     ],
+     "acceptable_in_pool": 0,
+     "timings": {
+      "search_s": 14.29,
+      "check_s": 0.41,
+      "quote_s": 0.1,
+      "total_s": 14.81
+     }
+    }
+   ]
+  },
+  "quote_first": {
+   "summary": {
+    "web_precision": 0.556,
+    "web_hits": 5,
+    "web_predicted": 9,
+    "synthetic_hit_at_1": 0.5,
+    "synthetic_selected": [
+     [
+      "BD-1"
+     ],
+     [
+      "PL-1"
+     ],
+     [
+      "LC-3"
+     ],
+     [
+      "LC-1"
+     ]
+    ],
+    "acceptable_in_pool_web": [
+     1,
+     2,
+     1,
+     2,
+     1
+    ],
+    "distinct_quotes_web": [
+     1,
+     1,
+     1,
+     3,
+     2
+    ],
+    "seconds_web": 4.29
+   },
+   "rows": [
+    {
+     "id": "retail-data-platform",
+     "kind": "web",
+     "acceptable": [
+      "BD-1",
+      "BD-2",
+      "BD-3",
+      "BD-4",
+      "BD-5",
+      "LC-5",
+      "SS2"
+     ],
+     "selected": [
+      "BD-3",
+      "E-1"
+     ],
+     "margins": [
+      6.563,
+      1.385
+     ],
+     "quotes": [
+      "Для исторических данных организовал отдельное более дешёвое хранение и правила удаления персональных атрибутов.",
+      "Для исторических данных организовал отдельное более дешёвое хранение и правила удаления персональных атрибутов."
+     ],
+     "pool": [
+      "BD-3",
+      "E-1",
+      "MnI-1",
+      "ML-8",
+      "ML-5",
+      "T-1",
+      "ML-6",
+      "AI-S-1",
+      "ML-2",
+      "Tr-1",
+      "T-2",
+      "ML-7",
+      "Bld-1"
+     ],
+     "acceptable_in_pool": 1,
+     "timings": {
+      "quotes_s": 0.89,
+      "search_s": 3.46,
+      "check_s": 0.96,
+      "total_s": 5.31
+     }
+    },
+    {
+     "id": "industrial-ml-product",
+     "kind": "web",
+     "acceptable": [
+      "LC-1",
+      "LC-2",
+      "LC-4",
+      "ML-2",
+      "AI-S-1",
+      "MnI-1",
+      "LC-7",
+      "SS2"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "margins": [
+      4.665
+     ],
+     "quotes": [
+      "Я веду общий backlog, связываю ожидания производства, службы безопасности, разработчиков и специалистов по данным."
+     ],
+     "pool": [
+      "SS2",
+      "LC-4",
+      "FC-5",
+      "ER-2",
+      "ML-5",
+      "SS-1",
+      "S-3",
+      "MF-7",
+      "FC-3",
+      "HPC-1",
+      "H-4",
+      "MI-1"
+     ],
+     "acceptable_in_pool": 2,
+     "timings": {
+      "quotes_s": 0.98,
+      "search_s": 3.1,
+      "check_s": 0.89,
+      "total_s": 4.96
+     }
+    },
+    {
+     "id": "ai-security-reviewer",
+     "kind": "web",
+     "acceptable": [
+      "AI-S-1",
+      "AI-S-2",
+      "AI-S-3",
+      "ML-5",
+      "PL-1",
+      "SS2"
+     ],
+     "selected": [
+      "SS2"
+     ],
+     "margins": [
+      5.34
+     ],
+     "quotes": [
+      "При обсуждении рисков стараюсь переводить технические находки в понятные последствия: какие данные доступны, кто может инициировать атаку, насколько она повторяема и какие компенсирующие меры уже есть."
+     ],
+     "pool": [
+      "SS2",
+      "LC-4",
+      "LC-1",
+      "DL-4",
+      "LC-6",
+      "DL-2",
+      "S-2",
+      "AC-1",
+      "S-3",
+      "O-2",
+      "DL-3",
+      "HPC-1",
+      "Tr-1"
+     ],
+     "acceptable_in_pool": 1,
+     "timings": {
+      "quotes_s": 0.86,
+      "search_s": 2.25,
+      "check_s": 0.96,
+      "total_s": 4.08
+     }
+    },
+    {
+     "id": "applied-research-engineer",
+     "kind": "web",
+     "acceptable": [
+      "DL-1",
+      "DL-3",
+      "LC-2",
+      "ML-2",
+      "ML-8",
+      "MF-4",
+      "ER-1"
+     ],
+     "selected": [
+      "ML-7",
+      "ML-5",
+      "ER-1"
+     ],
+     "margins": [
+      8.701,
+      7.569,
+      6.96
+     ],
+     "quotes": [
+      "Регулярно читаю новые работы, но не переношу метод в проект только из-за хороших показателей в статье: сначала проверяю лицензию, вычислительную стоимость и соответствие нашим данным.",
+      "Я написал основную часть статьи о методике проверки и подготовил приложение с отрицательными результатами.",
+      "В одном из исследований выяснилось, что более крупная модель почти не улучшает качество, но в четыре раза увеличивает задержку; для демонстрационного сервиса выбрали меньший вариант."
+     ],
+     "pool": [
+      "ML-7",
+      "ML-5",
+      "ER-1",
+      "ML-8",
+      "SS3",
+      "BD-1",
+      "ML-3",
+      "MF-3",
+      "MF-1",
+      "LLM-3",
+      "CS-1",
+      "ML-6",
+      "S-4"
+     ],
+     "acceptable_in_pool": 2,
+     "timings": {
+      "quotes_s": 0.98,
+      "search_s": 1.87,
+      "check_s": 0.96,
+      "total_s": 3.8
+     }
+    },
+    {
+     "id": "backend-llm-agents",
+     "kind": "web",
+     "acceptable": [
+      "LLM-1",
+      "LLM-4",
+      "PL-1",
+      "LC-3",
+      "LC-5"
+     ],
+     "selected": [
+      "PL-1",
+      "HPC-2"
+     ],
+     "margins": [
+      9.092,
+      5.088
+     ],
+     "quotes": [
+      "Самостоятельно проектировал REST API, реализовывал авторизацию на основе JWT, разграничение доступа по ролям, валидацию запросов и обработку исключений.",
+      "В нескольких проектах занимался рефакторингом существующей архитектуры: разделял бизнес-логику, слой доступа к данным и обработчики HTTP-запросов, чтобы упростить тестирование и сопровождение системы."
+     ],
+     "pool": [
+      "PL-1",
+      "HPC-2",
+      "AI-S-3",
+      "HPC-1",
+      "EI-1",
+      "Tr-1",
+      "T-2",
+      "MI-1",
+      "MM-3",
+      "MI-2",
+      "Bld-1",
+      "S-4",
+      "H-4"
+     ],
+     "acceptable_in_pool": 1,
+     "timings": {
+      "quotes_s": 0.86,
+      "search_s": 1.48,
+      "check_s": 0.95,
+      "total_s": 3.29
+     }
+    },
+    {
+     "id": "syn-001",
+     "kind": "synthetic",
+     "acceptable": [
+      "BD-1"
+     ],
+     "selected": [
+      "BD-1"
+     ],
+     "margins": [
+      11.285
+     ],
+     "quotes": [
+      "Осуществлял поиск, сбор, очистку и предварительный анализ данных; проверял пропуски и аномалии, строил воспроизводимый EDA-отчёт."
+     ],
+     "pool": [
+      "BD-1",
+      "ML-8",
+      "BD-5",
+      "ML-5",
+      "ML-7"
+     ],
+     "acceptable_in_pool": 1,
+     "timings": {
+      "quotes_s": 0.03,
+      "search_s": 1.0,
+      "check_s": 0.15,
+      "total_s": 1.18
+     }
+    },
+    {
+     "id": "syn-002",
+     "kind": "synthetic",
+     "acceptable": [
+      "PL-1"
+     ],
+     "selected": [
+      "PL-1"
+     ],
+     "margins": [
+      8.048
+     ],
+     "quotes": [
+      "Проходил вводный онлайн-курс и выполнил учебный ноутбук с pandas."
+     ],
+     "pool": [
+      "PL-1",
+      "ER-2",
+      "LC-1",
+      "S-2",
+      "MF-3",
+      "SS-1",
+      "MF-2",
+      "LLM-1",
+      "FC-3"
+     ],
+     "acceptable_in_pool": 1,
+     "timings": {
+      "quotes_s": 0.05,
+      "search_s": 1.44,
+      "check_s": 0.25,
+      "total_s": 1.74
+     }
+    },
+    {
+     "id": "syn-003",
+     "kind": "synthetic",
+     "acceptable": [
+      "LC-4"
+     ],
+     "selected": [
+      "LC-3"
+     ],
+     "margins": [
+      7.973
+     ],
+     "quotes": [
+      "Спроектировала процесс управления жизненным циклом ИИ-продукта: версионирование данных и моделей, CI/CD, автоматическое развёртывание, мониторинг дрейфа и откат."
+     ],
+     "pool": [
+      "LC-3",
+      "S-2",
+      "MI-2",
+      "MM-2",
+      "Bld-1"
+     ],
+     "acceptable_in_pool": 0,
+     "timings": {
+      "quotes_s": 0.03,
+      "search_s": 1.22,
+      "check_s": 0.15,
+      "total_s": 1.4
+     }
+    },
+    {
+     "id": "syn-004",
+     "kind": "synthetic",
+     "acceptable": [
+      "__NONE__"
+     ],
+     "selected": [
+      "LC-1"
+     ],
+     "margins": [
+      5.363
+     ],
+     "quotes": [
+      "Технических проектов и подтверждений работы с ИИ в профиле нет."
+     ],
+     "pool": [
+      "LC-1",
+      "T-1",
+      "S-2",
+      "T-2",
+      "SS2",
+      "SS3",
+      "Bld-1",
+      "AI-S-1",
+      "S-3",
+      "LC-4"
+     ],
+     "acceptable_in_pool": 0,
+     "timings": {
+      "quotes_s": 0.05,
+      "search_s": 1.65,
+      "check_s": 0.27,
+      "total_s": 1.96
+     }
+    }
+   ]
+  }
+ }
+}

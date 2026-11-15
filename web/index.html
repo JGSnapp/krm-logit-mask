@@ -17,7 +17,7 @@
       <span class="brand-mark"><i></i><i></i><i></i></span>
       <span>KRM <b>TRACE LAB</b></span>
     </a>
-    <nav class="mode-nav"><a class="active" href="/">Подбор компетенций</a><a href="/trace.html#decision">Как модель решает</a><a href="/trace.html#analysis">Компетенция → цитата</a><a href="/quote-first.html">Цитата → компетенции</a><a href="/catalog.html">КРМ</a></nav>
+    <nav class="mode-nav"><a class="active" href="/">Подбор компетенций</a><a href="/catalog.html">КРМ</a></nav>
     <div class="status"><span id="statusDot"></span><span id="statusText">проверяем локальный runtime</span></div>
   </header>
 
@@ -25,12 +25,25 @@
     <section class="hero sel-hero">
       <div class="eyebrow">GENERATE · VERIFY · QUOTE</div>
       <h1>Компетенции из резюме —<br><em>без каталога в промпте.</em></h1>
-      <p>Модель не видит названий компетенций. Она пишет ключевые слова резюме, а маска разрешает только слова каталога, связанные одной фразой. Найденных кандидатов модель проверяет простым вопросом и подтверждает дословной цитатой.</p>
-      <ol class="sel-flow">
-        <li><b>Поиск по словам</b><span>пары слов из одной фразы КРМ, пересечение компетенций → пул кандидатов</span></li>
-        <li><b>Проверка вопросом</b><span>«Имеет ли кандидат указанную компетенцию?» — ДА / НЕТ, по одному кандидату</span></li>
-        <li><b>Цитата</b><span>«Выведи из текста цитату, подтверждающую её больше всего» — дословно, под маской</span></li>
-      </ol>
+      <p>Модель не видит названий компетенций. Она пишет ключевые слова, а маска разрешает только слова каталога, связанные одной фразой. Найденных кандидатов модель проверяет простым вопросом, каждая компетенция подтверждается дословной цитатой из резюме.</p>
+      <div class="sel-modes">
+        <div class="sel-mode-card">
+          <h3>Цитата сначала</h3>
+          <ol class="sel-flow">
+            <li><b>Цитаты</b><span>модель выбирает предложения резюме, которые показывают навык или опыт</span></li>
+            <li><b>Поиск по каждой цитате</b><span>слова каталога по короткому фрагменту → группа компетенций</span></li>
+            <li><b>Проверка вопросом</b><span>«Имеет ли кандидат указанную компетенцию?» — ДА / НЕТ</span></li>
+          </ol>
+        </div>
+        <div class="sel-mode-card">
+          <h3>Цитата в конце</h3>
+          <ol class="sel-flow">
+            <li><b>Поиск по резюме</b><span>пары слов из одной фразы КРМ по всему тексту → пул кандидатов</span></li>
+            <li><b>Проверка вопросом</b><span>«Имеет ли кандидат указанную компетенцию?» — ДА / НЕТ</span></li>
+            <li><b>Цитата</b><span>«Выведи из текста цитату, подтверждающую её больше всего» — дословно</span></li>
+          </ol>
+        </div>
+      </div>
     </section>
 
     <section class="section">
@@ -44,11 +57,16 @@
           <div class="preset-controls"><select id="profilePreset"><option value="">Выбрать пример профиля…</option></select></div>
         </div>
         <textarea id="candidateText" spellcheck="false" placeholder="Опишите опыт, проекты и результаты кандидата…"></textarea>
+        <div class="sel-mode-switch" role="radiogroup" aria-label="Подход">
+          <label><input type="radio" name="mode" value="quote_first" checked><span><b>Цитата сначала</b><small>цитаты → компетенции к каждой</small></span></label>
+          <label><input type="radio" name="mode" value="quote_last"><span><b>Цитата в конце</b><small>компетенции → цитата к каждой</small></span></label>
+        </div>
         <div class="run-row sel-run-row">
           <label class="select-wrap"><span>Каталог компетенций</span><select id="catalogSelect"><option value="">Загружаем…</option></select></label>
           <label class="select-wrap"><span>Модель</span><select id="modelSelect"><option value="">Загружаем…</option></select></label>
           <label class="select-wrap compact"><span>Компетенций</span><select id="maxCompetencies"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></label>
-          <label class="select-wrap compact"><span>Кандидатов на проверку</span><select id="poolSize"><option>5</option><option>10</option><option selected>15</option><option>20</option></select></label>
+          <label class="select-wrap compact" id="quotesField"><span>Цитат сначала</span><select id="quoteCountSelect"><option>2</option><option selected>3</option><option>4</option><option>5</option></select></label>
+          <label class="select-wrap compact hidden" id="poolField"><span>Кандидатов на проверку</span><select id="poolSize"><option>5</option><option>10</option><option selected>15</option><option>20</option></select></label>
           <button class="run-button" id="runBtn"><span class="run-icon">▶</span><span class="run-copy"><b>Подобрать</b><small>локально на CUDA</small></span></button>
         </div>
         <div class="loading-bar" id="loadingBar"><i></i><span id="loadingText">Модель ищет кандидатов, проверяет их и подбирает цитаты…</span></div>
@@ -71,10 +89,18 @@
       </div>
     </section>
 
+    <section class="section hidden" id="quoteSection">
+      <div class="section-head">
+        <div><span class="section-no">03</span><h2>Цитаты и найденные к ним компетенции</h2></div>
+        <p>Сначала модель выбрала предложения резюме, которые показывают навык или опыт. Поиск по словам шёл по каждому предложению отдельно; рядом — уверенность проверки по каждой найденной компетенции.</p>
+      </div>
+      <div class="sel-quote-grid" id="quoteCards"></div>
+    </section>
+
     <section class="section hidden" id="candidateSection">
       <div class="section-head">
-        <div><span class="section-no">03</span><h2>Все кандидаты поиска</h2></div>
-        <p>Порядок — по уверенности ответа на вопрос. Уверенность = log P(ДА) − log P(НЕТ): выше нуля — модель отвечает «ДА». «Место» — позиция в выдаче поиска по словам.</p>
+        <div><span class="section-no" id="candidateSectionNo">03</span><h2>Все кандидаты поиска</h2></div>
+        <p>Порядок — по уверенности ответа на вопрос. Уверенность = log P(ДА) − log P(НЕТ): выше нуля — модель отвечает «ДА»; около нуля — слабое «ДА». «Место» — позиция в выдаче поиска (в режиме «цитата сначала» — номер цитаты, по которой найдено).</p>
       </div>
       <div class="trace-card sel-table-wrap">
         <table class="sel-table">
@@ -86,7 +112,7 @@
     </section>
   </main>
 
-  <footer><span>KRM TRACE LAB · LOCAL RESEARCH INSTRUMENT</span><span>Qwen · word-signal search + yes/no check</span></footer>
+  <footer><span>KRM TRACE LAB · LOCAL RESEARCH INSTRUMENT</span><span>Qwen · quotes · word-signal search · yes/no check</span></footer>
   <script src="/selection.js" defer></script>
 </body>
 </html>
