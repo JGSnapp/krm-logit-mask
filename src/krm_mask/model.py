@@ -155,8 +155,11 @@ class LocalCausalLM:
 
     def next_token_logprobs(
         self, context: list[int], suffixes: list[tuple[int, ...]], wanted: list[list[int]],
+        temperature: float = 1.0,
     ) -> list[list[float]]:
-        """log P(token | context + suffix) for the `wanted` tokens of each suffix, one batch."""
+        """log P(token | context + suffix) for the `wanted` tokens of each suffix, one batch.
+
+        With `temperature`, the distribution is log softmax(logits / T)."""
         import torch
 
         width = max(len(suffix) for suffix in suffixes)
@@ -180,16 +183,19 @@ class LocalCausalLM:
             ).logits
             results: list[list[float]] = []
             for row, suffix in enumerate(suffixes):
-                log_probs = torch.log_softmax(logits[row, len(suffix)].float(), dim=-1)
+                log_probs = torch.log_softmax(
+                    logits[row, len(suffix)].float() / temperature, dim=-1)
                 index = torch.tensor(wanted[row], device=self.device, dtype=torch.long)
                 results.append(log_probs[index].tolist())
         return results
 
     def tail_logprobs(
         self, prefix: list[int], tails: list[tuple[int, ...]], wanted: list[list[int]],
-        chunk: int = 32,
+        chunk: int = 32, temperature: float = 1.0,
     ) -> list[list[float]]:
         """log P(token | prefix + tail) for the `wanted` tokens of each tail.
+
+        With `temperature`, the distribution is log softmax(logits / T).
 
         The prefix (the resume prompt) is run once and its KV cache is kept
         until another prefix comes; every call then runs only the tails, in
@@ -206,12 +212,13 @@ class LocalCausalLM:
             self._prefix_key = key
             self._prefix_layers = [
                 (layer.keys, layer.values) for layer in out.past_key_values.layers]
-            self._prefix_last = torch.log_softmax(out.logits[0, -1].float(), dim=-1)
+            self._prefix_last_logits = out.logits[0, -1].float()
         results: list[list[float] | None] = [None] * len(tails)
         for row, tail in enumerate(tails):
             if not tail:
+                last = torch.log_softmax(self._prefix_last_logits / temperature, dim=-1)
                 index = torch.tensor(wanted[row], device=self.device, dtype=torch.long)
-                results[row] = self._prefix_last[index].tolist()
+                results[row] = last[index].tolist()
         rows = [row for row, tail in enumerate(tails) if tail]
         pad = self.tokenizer.pad_token_id
         pad = self.tokenizer.eos_token_id if pad is None else pad
@@ -242,7 +249,7 @@ class LocalCausalLM:
                 ).logits
                 for position, row in enumerate(batch):
                     log_probs = torch.log_softmax(
-                        logits[position, len(tails[row]) - 1].float(), dim=-1)
+                        logits[position, len(tails[row]) - 1].float() / temperature, dim=-1)
                     index = torch.tensor(wanted[row], device=self.device, dtype=torch.long)
                     results[row] = log_probs[index].tolist()
         return results  # type: ignore[return-value]

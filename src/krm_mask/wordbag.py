@@ -28,8 +28,19 @@ WORD_DELIMITER = "\n"
 SENTENCE_RE = re.compile(r"\.\s+(?=[A-ZА-ЯЁ])")
 
 
-def word_messages(text: str) -> list[dict[str, str]]:
+def word_messages(text: str, language: str = "ru") -> list[dict[str, str]]:
     """Selection prompt for the word mode; no competency names are given."""
+    if language == "en":
+        return [
+            {
+                "role": "system",
+                "content": (
+                    "Choose key words that describe the skills supported by the text. "
+                    "Write one word per line, starting with the most characteristic one."
+                ),
+            },
+            {"role": "user", "content": f"Text:\n{text}\n\nKey words:"},
+        ]
     return [
         {
             "role": "system",
@@ -64,6 +75,42 @@ def pymorphy_lemmatizer() -> Callable[[str], str | None]:
     return lemmatize
 
 
+# English function words (articles, prepositions, conjunctions, pronouns,
+# auxiliaries): never signal words, like the Russian STOP_POS.
+EN_STOP = frozenset("""
+a an the and or nor but if then else of in on at to for from by with without within into onto
+upon about above below over under between among through during before after since until as
+than so such via per vs etc is are was were be been being am do does did done have has had
+having will would shall should can could may might must it its this that these those there
+here which who whom whose what when where why how all any both each either neither every
+some no not only own same other others another more most less least very too also just
+i me my we us our you your he him his she her they them their one ones
+""".split())
+
+
+def english_lemmatizer() -> Callable[[str], str | None]:
+    """Lemma of an English word (simplemma, dictionary-based), or None for function words.
+
+    Abbreviations and mixed tokens ("SQL", "C++", "CI/CD") are kept as written, lowercased.
+    """
+    import simplemma
+
+    cache: dict[str, str | None] = {}
+
+    def lemmatize(word: str) -> str | None:
+        if word not in cache:
+            lower = word.lower()
+            if lower in EN_STOP:
+                cache[word] = None
+            elif not lower.isalpha() or (word.isupper() and len(word) <= 6):
+                cache[word] = lower
+            else:
+                cache[word] = simplemma.lemmatize(lower, lang="en").lower()
+        return cache[word]
+
+    return lemmatize
+
+
 def split_words(text: str) -> list[str]:
     words = [w.rstrip("-") for w in WORD_RE.findall(text)]
     return [w for w in words if len(w) >= 2 and not w.isdigit()]
@@ -73,6 +120,11 @@ def split_words(text: str) -> list[str]:
 class WordIndex:
     competency_lemmas: dict[str, set[str]]
     phrase_lemmas: list[tuple[set[str], set[str]]]  # (competency ids, lemmas) per phrase
+    # Reverse maps avoid scanning every phrase for each signal.  They are built
+    # once with the catalog, so request-time work depends on the active branch,
+    # rather than the total number of ESCO labels.
+    competency_phrases: dict[str, frozenset[int]]
+    lemma_phrases: dict[str, frozenset[int]]
     surfaces: dict[str, str]  # writable surface form -> lemma
     idf: dict[str, float]
     # Word positions of each lemma inside its phrase (parallel to phrase_lemmas).
@@ -106,18 +158,31 @@ class WordIndex:
                     competency_lemmas[competency_id].update(lemmas)
                 phrase_lemmas.append((competency_ids, lemmas))
                 phrase_positions.append(dict(positions))
+        competency_phrases: dict[str, set[int]] = defaultdict(set)
+        lemma_phrases: dict[str, set[int]] = defaultdict(set)
+        for phrase_id, (ids, lemmas) in enumerate(phrase_lemmas):
+            for competency_id in ids:
+                competency_phrases[competency_id].add(phrase_id)
+            for lemma in lemmas:
+                lemma_phrases[lemma].add(phrase_id)
         total = len(competency_lemmas)
         frequency: dict[str, int] = defaultdict(int)
         for lemmas in competency_lemmas.values():
             for lemma in lemmas:
                 frequency[lemma] += 1
         idf = {lemma: math.log(total / count) for lemma, count in frequency.items()}
-        return cls(dict(competency_lemmas), phrase_lemmas, surfaces, idf, phrase_positions)
+        return cls(
+            dict(competency_lemmas), phrase_lemmas,
+            {key: frozenset(value) for key, value in competency_phrases.items()},
+            {key: frozenset(value) for key, value in lemma_phrases.items()},
+            surfaces, idf, phrase_positions,
+        )
 
     def best_phrase_coverage(self, competency_id: str, lemmas: Iterable[str]) -> int:
         wanted = set(lemmas)
         return max(
-            (len(wanted & phrase) for ids, phrase in self.phrase_lemmas if competency_id in ids),
+            (len(wanted & self.phrase_lemmas[phrase_id][1])
+             for phrase_id in self.competency_phrases.get(competency_id, ())),
             default=0,
         )
 
@@ -180,6 +245,15 @@ class WordBagConfig:
     # group of at most that many competencies instead of being dropped.
     group_size: int | None = None
     group_at_cap: int | None = None
+    # Temperature (experiment 29). Beam search (`samples` None): word
+    # log-probabilities become log softmax(logits / T); the search stays
+    # deterministic. Sampling (`samples` = N): N paths are drawn under the same
+    # mask and signal rules, every next token is drawn among the allowed ones in
+    # proportion to P^(1/T) (the model's own distribution, no IDF/PMI); a path's
+    # score is its untempered log P. With aggregate "count", competencies are
+    # ranked by how many sampled paths reached them. Priors stay at T = 1.
+    temperature: float = 1.0
+    samples: int | None = None
 
 
 @dataclass
@@ -324,6 +398,8 @@ class WordBagSelector:
         calls = 0
         if not coherent:
             search = self._path_search
+        elif self.config.samples:
+            search = self._sampled_search
         elif self.config.corridor_search:
             search = self._corridor_search
         else:
@@ -343,7 +419,9 @@ class WordBagSelector:
                     if competency_id not in best or path.score > best[competency_id].score:
                         best[competency_id] = path
 
-            def rank(item: tuple[str, WordPath]) -> float:
+            def rank(item: tuple[str, WordPath]) -> float | tuple[int, float]:
+                if self.config.aggregate == "count":
+                    return (-len(scores[item[0]]), -item[1].score)
                 if self.config.aggregate == "sum":
                     values = scores[item[0]]
                     top = max(values)
@@ -356,9 +434,108 @@ class WordBagSelector:
             for competency_id, path in ranked[: count - len(found)]:
                 found.append((competency_id, path))
                 blocked.add(competency_id)
-            if self.config.single_pass:
-                break
+            if self.config.single_pass or self.config.samples:
+                break  # One round of samples already covers what it can reach.
         return found, calls
+
+    def _sampled_search(self, text: str, blocked: set[str]) -> tuple[list[WordPath], int]:
+        """`samples` paths drawn under the mask, all advanced in lockstep.
+
+        Same signals, phrase coherence and intersection as the signal search
+        (`_allowed`, `_extend`); only the choice of the next word differs: it is
+        drawn, not taken from a beam. Finished paths are returned with
+        repetitions, so the number of paths per competency is its frequency.
+        """
+        config = self.config
+        rng = random.Random(f"{config.seed}:{text}")
+        start = SignalPath(
+            [], frozenset(set(self.index.competency_lemmas) - blocked), list(self.prompt(text)), 0.0,
+        )
+        self.prefix = list(start.context)
+        live: list[SignalPath] = [start] * config.samples
+        finished: list[WordPath] = []
+        calls = 0
+        for _ in range(config.max_signals * config.words_per_signal):
+            requests, owners = [], []
+            for path in live:
+                phrases, allowed = self._allowed(path)
+                if allowed:
+                    requests.append((path.context, allowed))
+                    owners.append((path, phrases))
+            if not requests:
+                break
+            options, used = self._sample_words(requests, rng)
+            calls += used
+            live = []
+            for (path, phrases), option in zip(owners, options):
+                result = self._extend(path, phrases, option) if option else None
+                if result is not None:
+                    child, status = result
+                    (finished if status == "finished" else live).append(child)
+            if not live:
+                break
+        return finished, calls
+
+    def _sample_words(
+        self, requests: list[tuple[list[int], set[str]]], rng: random.Random,
+    ) -> tuple[list[WordChoice | None], int]:
+        """One word per request, drawn token by token in proportion to P^(1/T)."""
+        temperature = self.config.temperature
+        tries = []
+        for _, allowed in requests:
+            children: dict[tuple[int, ...], set[int]] = defaultdict(set)
+            terminal: dict[tuple[int, ...], str] = {}
+            for surface, lemma in self.index.surfaces.items():
+                if lemma in allowed:
+                    sequence = self.tokens[surface]
+                    for depth in range(len(sequence)):
+                        children[sequence[:depth]].add(sequence[depth])
+                    terminal.setdefault(sequence, surface)
+            tries.append((children, terminal))
+        nodes: list[tuple[int, ...] | None] = [() if c else None for c, _ in tries]
+        log_probs = [0.0] * len(requests)
+        prefix = self.prefix if self.config.batch_paths else None
+        batched = (
+            prefix is not None and hasattr(self.lm, "tail_logprobs")
+            and all(context[: len(prefix)] == prefix for context, _ in requests)
+        )
+        calls = 0
+        while True:
+            active = [
+                i for i, node in enumerate(nodes)
+                if node is not None and node not in tries[i][1] and tries[i][0].get(node)
+            ]
+            if not active:
+                break
+            wanted = [sorted(tries[i][0][nodes[i]]) for i in active]
+            if batched:
+                tails = [tuple(requests[i][0][len(prefix):]) + nodes[i] for i in active]
+                rows = self.lm.tail_logprobs(prefix, tails, wanted)
+                calls += 1
+            else:
+                rows = []
+                for i, tokens in zip(active, wanted):
+                    rows += self.lm.next_token_logprobs(requests[i][0], [nodes[i]], [tokens])
+                    calls += 1
+            for i, tokens, values in zip(active, wanted, rows):
+                top = max(values)
+                weights = [math.exp((value - top) / temperature) for value in values]
+                pick = rng.choices(range(len(tokens)), weights)[0]
+                nodes[i] = nodes[i] + (tokens[pick],)
+                log_probs[i] += values[pick]
+        options: list[WordChoice | None] = []
+        for i, node in enumerate(nodes):
+            surface = tries[i][1].get(node) if node is not None else None
+            if surface is None:
+                options.append(None)
+                continue
+            lemma = self.index.surfaces[surface]
+            options.append(WordChoice(
+                word=surface, lemma=lemma, log_probability=log_probs[i],
+                log_prior=self.prior.get(node, 0.0), idf=self.index.idf.get(lemma, 0.0),
+                score=log_probs[i], candidates_after=0,
+            ))
+        return options, calls
 
     def _path_search(self, text: str, blocked: set[str]) -> tuple[list[WordPath], int]:
         """Beam search over word sequences: alternative branches between words.
@@ -477,7 +654,10 @@ class WordBagSelector:
         config = self.config
         index = self.index
         used = path.lemmas
-        kept = frozenset(p for p in phrases if option.lemma in self._near(p, path.current))
+        # The reverse index performs the cheap membership filter first.  `_near`
+        # still enforces the optional positional window exactly as before.
+        possible = phrases & self.index.lemma_phrases.get(option.lemma, frozenset())
+        kept = frozenset(p for p in possible if option.lemma in self._near(p, path.current))
         current = path.current | {option.lemma}
         left = {lemma for phrase in kept for lemma in self._near(phrase, current)} - used
         closes = len(current) >= config.words_per_signal or not left
@@ -591,10 +771,19 @@ class WordBagSelector:
     def _open_phrases(self, path: "SignalPath") -> frozenset[int]:
         """Phrases a new signal may come from: phrases of the remaining candidates,
         except phrases that already contain an earlier signal (no repeating it)."""
+        # At the root this is the full catalog (no scan necessary); after a
+        # signal it is normally a small union of candidate-owned phrases.
+        if len(path.candidates) == len(self.index.competency_lemmas):
+            candidates = range(len(self.index.phrase_lemmas))
+        else:
+            candidates = set().union(
+                *(self.index.competency_phrases.get(c, frozenset()) for c in path.candidates)
+            )
         return frozenset(
-            i for i, (competencies, lemmas) in enumerate(self.index.phrase_lemmas)
-            if competencies & path.candidates and i not in self.blocked_phrases
-            and not any(signal <= lemmas for signal in path.signals)
+            phrase_id for phrase_id in candidates
+            if phrase_id not in self.blocked_phrases
+            and not any(signal <= self.index.phrase_lemmas[phrase_id][1]
+                        for signal in path.signals)
         )
 
     def _anchor_lemmas(self, competency_id: str) -> set[str]:
@@ -656,6 +845,8 @@ class WordBagSelector:
             and all(beam.context[: len(prefix)] == prefix for beam in beams)
         )
         calls = 0
+        # Passed only when set, so models without the argument keep working.
+        extra = {} if self.config.temperature == 1.0 else {"temperature": self.config.temperature}
         while any(beam.live for beam in beams):
             active = [beam for beam in beams if beam.live]
             if batched:
@@ -666,7 +857,7 @@ class WordBagSelector:
                     for node in beam.live:
                         tails.append(tail + node)
                         wanted.append(sorted(beam.children[node]))
-                rows = self.lm.tail_logprobs(prefix, tails, wanted)
+                rows = self.lm.tail_logprobs(prefix, tails, wanted, **extra)
                 calls += 1
                 offset = 0
                 for beam in active:
@@ -676,7 +867,7 @@ class WordBagSelector:
             else:
                 for beam in active:
                     wanted = [sorted(beam.children[node]) for node in beam.live]
-                    rows = self.lm.next_token_logprobs(beam.context, beam.live, wanted)
+                    rows = self.lm.next_token_logprobs(beam.context, beam.live, wanted, **extra)
                     calls += 1
                     beam.advance(wanted, rows)
         return [beam.options() for beam in beams], calls

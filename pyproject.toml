@@ -19,7 +19,7 @@ gpu = [
   "transformers>=4.48,<6",
 ]
 dev = ["pytest>=8,<10"]
-lemma = ["pymorphy3>=2.0,<3"]
+lemma = ["pymorphy3>=2.0,<3", "simplemma>=1.1,<2"]
 web = [
   "fastapi>=0.115,<1",
   "uvicorn[standard]>=0.34,<1",

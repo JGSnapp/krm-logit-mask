@@ -30,7 +30,9 @@ from time import perf_counter
 from .catalog import Catalog, Competency
 from .graph import NONE_ID, PhraseGraph
 from .masking import SourceSpanMask
-from .wordbag import WordBagConfig, WordBagSelector, WordIndex, pymorphy_lemmatizer, word_messages
+from .wordbag import (
+    WordBagConfig, WordBagSelector, WordIndex, english_lemmatizer, pymorphy_lemmatizer, word_messages,
+)
 
 QUESTION = "Имеет ли кандидат указанную компетенцию? Ответь ДА или НЕТ."
 QUOTE_REQUEST = (
@@ -51,6 +53,54 @@ YES = ["ДА", "Да", "да"]
 NO = ["НЕТ", "Нет", "нет"]
 
 
+@dataclass(frozen=True)
+class Prompts:
+    """All texts the selector shows the model, per language (`SelectionConfig.language`)."""
+    question: str = QUESTION
+    profile: str = "Профиль кандидата"
+    item: str = "Компетенция"
+    quote_request: str = QUOTE_REQUEST
+    neutral_quote_request: str = NEUTRAL_QUOTE_REQUEST
+    fragment_request: str = FRAGMENT_REQUEST
+    yes: tuple[str, ...] = tuple(YES)
+    no: tuple[str, ...] = tuple(NO)
+    words: str = "ru"  # word-search prompt and lemmatizer (wordbag.py)
+    nothing_found: str = "Подходящих компетенций не найдено"
+
+
+PROMPTS: dict[str, Prompts] = {
+    "ru": Prompts(),
+    # English, candidate profiles (resumes).
+    "en": Prompts(
+        question="Does the candidate have the specified skill? Answer YES or NO.",
+        profile="Candidate profile",
+        item="Skill",
+        quote_request="Quote the passage of the text that confirms it best. Copy it verbatim.",
+        neutral_quote_request=(
+            "Quote the passage of the text that best describes the candidate's experience. "
+            "Copy it verbatim."),
+        fragment_request=(
+            "Quote the passage of the text that shows a skill or experience of the candidate. "
+            "Copy it verbatim."),
+        yes=("YES", "Yes", "yes"), no=("NO", "No", "no"),
+        words="en", nothing_found="No matching skills found",
+    ),
+    # English, job ads (Skill-XL): the text requires skills, nobody "has" them.
+    "en_jobs": Prompts(
+        question="Does this job ad text require the specified skill? Answer YES or NO.",
+        profile="Job ad text",
+        item="Skill",
+        quote_request="Quote the passage of the text that requires it most clearly. Copy it verbatim.",
+        neutral_quote_request=(
+            "Quote the passage of the text that best describes the job. Copy it verbatim."),
+        fragment_request=(
+            "Quote the passage of the text that names a skill the job requires. Copy it verbatim."),
+        yes=("YES", "Yes", "yes"), no=("NO", "No", "no"),
+        words="en", nothing_found="No matching skills found",
+    ),
+}
+
+
 @dataclass
 class SelectionConfig:
     pool: int = 15  # candidates proposed by the word search
@@ -66,6 +116,8 @@ class SelectionConfig:
     # Quote-first mode (experiment 25): quotes chosen first, candidates per quote.
     first_quotes: int = 3
     per_quote: int = 5
+    # Prompt set and lemmatizer: "ru" (default), "en" (resumes), "en_jobs" (job ads).
+    language: str = "ru"
 
 
 SENTENCE_END = re.compile(r"(?<=[.!?…])\s+|\n+")
@@ -102,25 +154,25 @@ def split_sentences(text: str, min_chars: int = 12) -> list[tuple[int, int]]:
     return merged
 
 
-def check_messages(text: str, competency_name: str) -> list[dict[str, str]]:
+def check_messages(
+    text: str, competency_name: str, prompts: Prompts = PROMPTS["ru"],
+) -> list[dict[str, str]]:
     return [{"role": "user", "content": (
-        f"{QUESTION}\nПрофиль кандидата: {text}\nКомпетенция: {competency_name}"
+        f"{prompts.question}\n{prompts.profile}: {text}\n{prompts.item}: {competency_name}"
     )}]
 
 
-def neutral_quote_messages(text: str) -> list[dict[str, str]]:
-    return [{"role": "user", "content": (
-        f"Профиль кандидата: {text}\n{NEUTRAL_QUOTE_REQUEST}"
-    )}]
+def neutral_quote_messages(text: str, prompts: Prompts = PROMPTS["ru"]) -> list[dict[str, str]]:
+    return [{"role": "user", "content": f"{prompts.profile}: {text}\n{prompts.neutral_quote_request}"}]
 
 
-def quote_messages(text: str, competency_name: str) -> list[dict[str, str]]:
+def quote_messages(
+    text: str, competency_name: str, prompts: Prompts = PROMPTS["ru"],
+) -> list[dict[str, str]]:
     return [
-        {"role": "user", "content": (
-            f"{QUESTION}\nПрофиль кандидата: {text}\nКомпетенция: {competency_name}"
-        )},
-        {"role": "assistant", "content": "ДА"},
-        {"role": "user", "content": QUOTE_REQUEST},
+        *check_messages(text, competency_name, prompts),
+        {"role": "assistant", "content": prompts.yes[0]},
+        {"role": "user", "content": prompts.quote_request},
     ]
 
 
@@ -130,25 +182,27 @@ class CompetencySelector:
         self.catalog = catalog
         self.config = config or SelectionConfig()
         self.competencies: dict[str, Competency] = {c.id: c for c in catalog.competencies}
+        self.prompts = PROMPTS[self.config.language]
         graph = PhraseGraph.from_catalog(catalog, None, {"indicators", "keywords"})
-        self.index = WordIndex.build(graph, pymorphy_lemmatizer())
+        lemmatizer = english_lemmatizer() if self.prompts.words == "en" else pymorphy_lemmatizer()
+        self.index = WordIndex.build(graph, lemmatizer)
         self.words = WordBagSelector(
             lm, self.index, self._word_prompt,
             WordBagConfig(alpha=0.0, beta=0.3, batch_paths=True),
         )
         tokenizer = lm.tokenizer
-        self.yes_ids = sorted({tokenizer.encode(w, add_special_tokens=False)[0] for w in YES})
-        self.no_ids = sorted({tokenizer.encode(w, add_special_tokens=False)[0] for w in NO})
+        self.yes_ids = sorted({tokenizer.encode(w, add_special_tokens=False)[0] for w in self.prompts.yes})
+        self.no_ids = sorted({tokenizer.encode(w, add_special_tokens=False)[0] for w in self.prompts.no})
         self._neutral: tuple[str, list[tuple[int, int]], list[list[int]], list[float]] | None = None
 
     def _word_prompt(self, text: str) -> list[int]:
-        return self.lm.prompt_ids(word_messages(text))[0].tolist()
+        return self.lm.prompt_ids(word_messages(text, self.prompts.words))[0].tolist()
 
     def check(self, text: str, competency: Competency) -> tuple[float, float]:
         """(margin, P(ДА) among ДА/НЕТ) for one competency, one forward."""
         import torch
 
-        ids = self.lm.prompt_ids(check_messages(text, competency.name))
+        ids = self.lm.prompt_ids(check_messages(text, competency.name, self.prompts))
         with torch.inference_mode():
             logits = self.lm.model(input_ids=ids, logits_to_keep=1).logits[0, -1].float()
         logp = torch.log_softmax(logits, dim=-1)
@@ -171,14 +225,14 @@ class CompetencySelector:
                 self.lm.tokenizer.encode(text[start:end], add_special_tokens=False) + [eos]
                 for start, end in sentences
             ]
-            means = self._sentence_means(neutral_quote_messages(text), continuations) if sentences else []
+            means = self._sentence_means(neutral_quote_messages(text, self.prompts), continuations) if sentences else []
             self._neutral = (text, sentences, continuations, means)
         return self._neutral[1:]
 
     def quote_scores(self, text: str, competency: Competency) -> dict[str, object]:
         """Per-sentence mean log-probabilities with the competency and neutral."""
         sentences, continuations, neutral = self._neutral_scores(text)
-        means = self._sentence_means(quote_messages(text, competency.name), continuations) if sentences else []
+        means = self._sentence_means(quote_messages(text, competency.name, self.prompts), continuations) if sentences else []
         return {"sentences": sentences, "means": means, "neutral": neutral}
 
     def quote(self, text: str, competency: Competency) -> dict[str, object]:
@@ -216,7 +270,7 @@ class CompetencySelector:
 
     def quote_span(self, text: str, competency: Competency) -> dict[str, object]:
         """Greedy copy under a source-span mask (first version, kept for comparison)."""
-        prompt = self.lm.prompt_ids(quote_messages(text, competency.name))
+        prompt = self.lm.prompt_ids(quote_messages(text, competency.name, self.prompts))
         encoded = self.lm.tokenizer(text, add_special_tokens=False, return_offsets_mapping=True)
         source_ids, offsets = encoded["input_ids"], encoded["offset_mapping"]
         mask = SourceSpanMask(
@@ -280,7 +334,7 @@ class CompetencySelector:
             "catalog": {"framework_id": self.catalog.framework_id,
                         "competencies": len(self.catalog.competencies)},
             "config": asdict(config) | {"max_competencies": limit},
-            "selected": selected or [{"id": NONE_ID, "name": "Подходящих компетенций не найдено"}],
+            "selected": selected or [{"id": NONE_ID, "name": self.prompts.nothing_found}],
             "candidates": ranked,
             "search_forward_calls": calls,
             "timings": timings,
@@ -297,7 +351,8 @@ class CompetencySelector:
             self.lm.tokenizer.encode(text[start:end], add_special_tokens=False) + [eos]
             for start, end in sentences
         ]
-        messages = [{"role": "user", "content": f"Профиль кандидата: {text}\n{FRAGMENT_REQUEST}"}]
+        messages = [{"role": "user", "content": (
+            f"{self.prompts.profile}: {text}\n{self.prompts.fragment_request}")}]
         means = self._sentence_means(messages, continuations)
         order = sorted(range(len(sentences)), key=lambda i: -means[i])[:count]
         return [
@@ -368,7 +423,7 @@ class CompetencySelector:
                         "competencies": len(self.catalog.competencies)},
             "config": asdict(config) | {"max_competencies": limit},
             "quotes": quotes,
-            "selected": selected or [{"id": NONE_ID, "name": "Подходящих компетенций не найдено"}],
+            "selected": selected or [{"id": NONE_ID, "name": self.prompts.nothing_found}],
             "candidates": ranked,
             "search_forward_calls": calls,
             "timings": timings,

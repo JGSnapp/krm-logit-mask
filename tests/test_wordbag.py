@@ -371,3 +371,65 @@ def test_group_narrowing_keeps_indistinguishable_competencies():
     assert "PY" not in found()  # The well-supported pair is dropped at the cap.
     assert set(found(group_at_cap=3)[:2]) == {"PY", "LANG"}
     assert set(found(group_size=2)[:2]) == {"PY", "LANG"}
+
+
+def test_search_temperature_reaches_the_model_only_when_set():
+    phrases = {"python инструменты": {"PY"}, "угрозы аудит": {"SEC"}}
+    likes = {"python": -0.1, "инструменты": -0.2, "угрозы": -2.0, "аудит": -2.5}
+    base = dict(alpha=0.0, beta=0.0, beam=4, path_beam=4, word_branches=3,
+                words_per_signal=2, min_signals=1, batch_paths=True)
+
+    def run(**extra):
+        selector = _table_selector(phrases, likes, {}, WordBagConfig(**base, **extra))
+        original = selector.lm.tail_logprobs
+        seen = []
+
+        def tail_logprobs(prefix, tails, wanted, **kwargs):
+            seen.append(kwargs.get("temperature"))
+            rows = original(prefix, tails, wanted)
+            # Stand-in for log softmax(logits / T): log-probabilities shrink by T.
+            return [[v / kwargs.get("temperature", 1.0) for v in row] for row in rows]
+
+        selector.lm.tail_logprobs = tail_logprobs
+        found, _ = selector.select_paths("text", count=2, coherent=True)
+        return {c: p.score for c, p in found}, seen
+
+    plain, seen_plain = run()
+    hot, seen_hot = run(temperature=2.0)
+    assert seen_plain and all(t is None for t in seen_plain)  # Old models keep working.
+    assert seen_hot and all(t == 2.0 for t in seen_hot)
+    assert hot["PY"] == pytest.approx(plain["PY"] / 2)
+
+
+def _sampling_selector(**extra):
+    phrases = {
+        "python инструменты": {"PY"},
+        "угрозы аудит": {"SEC"},
+        "тестирование качество": {"QA"},
+    }
+    likes = {"python": -0.1, "инструменты": -0.2, "угрозы": -3.0, "аудит": -0.5,
+             "тестирование": -3.5, "качество": -0.5}
+    config = WordBagConfig(alpha=0.0, beta=0.0, words_per_signal=2, min_signals=1,
+                           max_signals=2, batch_paths=True, aggregate="count", **extra)
+    return _table_selector(phrases, likes, {}, config)
+
+
+def test_sampling_low_temperature_follows_the_model_high_temperature_spreads():
+    cold = _sampling_selector(samples=32, temperature=0.02)
+    found, _ = cold.select_paths("text", count=3, coherent=True)
+    assert [c for c, _ in found] == ["PY"]  # Almost greedy: every path takes "python".
+    hot = _sampling_selector(samples=32, temperature=3.0)
+    found, calls = hot.select_paths("text", count=3, coherent=True)
+    assert {c for c, _ in found} == {"PY", "SEC", "QA"}
+    assert found[0][0] == "PY"  # Ranked by how many paths reached it.
+    assert calls == hot.lm.batched_calls  # All paths share one call per token step.
+    # A path's score is its untempered log P (each word + its newline).
+    assert dict(found)["PY"].score == pytest.approx((-0.1 - 0.01) + (-0.2 - 0.01))
+
+
+def test_sampling_is_reproducible_per_seed():
+    def run(seed):
+        selector = _sampling_selector(samples=8, temperature=2.0, seed=seed)
+        return [(c, round(p.score, 6)) for c, p in selector.select_paths("t", 3, coherent=True)[0]]
+
+    assert run(0) == run(0)
